@@ -4,6 +4,7 @@ import { MyApp } from './app.component';
 import { Http } from "@angular/http";
 import { WeekPage } from '../pages/week/week';
 import { TodayPage } from '../pages/today/today';
+import { ReportPage } from '../pages/report/report';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
@@ -16,6 +17,7 @@ export function createTranslateLoader(http: Http) {
     MyApp,
     WeekPage,
     TodayPage,
+    ReportPage,
     TabsPage
   ],
   imports: [
@@ -31,6 +33,7 @@ export function createTranslateLoader(http: Http) {
     MyApp,
     WeekPage,
     TodayPage,
+    ReportPage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]

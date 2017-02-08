@@ -6,6 +6,7 @@ import { NavController } from 'ionic-angular';
   selector: 'page-today',
   templateUrl: 'today.html'
 })
+
 export class TodayPage {
 
   constructor(public navCtrl: NavController) {
