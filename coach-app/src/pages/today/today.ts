@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import moment from 'moment';
 
 @Component({
   selector: 'page-today',
@@ -9,8 +10,14 @@ import { NavController } from 'ionic-angular';
 
 export class TodayPage {
 
-  constructor(public navCtrl: NavController) {
+  today;
+  tomorrow;
+  afterTomorrow;
 
+  constructor(public navCtrl: NavController) {
+    this.today = moment();
+    this.tomorrow = moment().add(1, 'day');
+    this.afterTomorrow = moment().add(2, 'day');
   }
 
 }
