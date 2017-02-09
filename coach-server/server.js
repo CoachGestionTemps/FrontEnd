@@ -111,28 +111,28 @@ app.get('/events/:user_id/:id', function(req, res) {
     if (event = _und.findWhere(events, {user_id: parseInt(req.params.user_id), id: parseInt(req.params.id)})) {
         res.json(event)
     } else {
-        res.sendStatus(400)
+        res.sendStatus(404)
     }
 })
 
 app.get('*', function(req, res) {
     log(req)
-    res.sendStatus(404)
+    res.sendStatus(405)
 })
 
 app.post('*', function(req, res) {
     log(req)
-    res.sendStatus(404)
+    res.sendStatus(405)
 })
 
 app.put('*', function(req, res) {
     log(req)
-    res.sendStatus(404)
+    res.sendStatus(405)
 })
 
 app.delete('*', function(req, res) {
     log(req)
-    res.sendStatus(404)
+    res.sendStatus(405)
 })
 
 app.listen(3000)
