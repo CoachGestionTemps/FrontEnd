@@ -8,6 +8,7 @@ page-today {
     padding: 0;
     margin: 0;
     height: 20%;
+    width: 100%;
   }
 
   .backgroundTomorrow {
@@ -15,6 +16,7 @@ page-today {
     padding: 0;
     margin: 0;
     height: 20%;
+    width: 100%;
   }
 
   .backgroundAfterTomorrow {
@@ -22,12 +24,13 @@ page-today {
     padding: 0;
     margin: 0;
     height: 20%;
+    width: 100%;
   }
 
   .day {
     position: relative;
     top: 30%;
-    right: 43.75%;
+    right: 42%;
     font-size: 10px;
     color: $beige2;
     text-align: center;
@@ -43,7 +46,8 @@ page-today {
 
   .day-title {
     position: relative;
-    left: 50%;
+    left: 40%;
+    top: -10%;
     font-size: 18px;
     color: $beige2
   }
