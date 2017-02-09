@@ -125,10 +125,6 @@ app.post('*', function(req, res) {
     res.sendStatus(404)
 })
 
-app.put('/events', function(req, res) {
-    console.log(JSON.stringify(req.body))
-})
-
 app.put('*', function(req, res) {
     log(req)
     res.sendStatus(404)
