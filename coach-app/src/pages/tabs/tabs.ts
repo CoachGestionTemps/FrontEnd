@@ -22,8 +22,7 @@ export class TabsPage {
   tab3Root: any = ReportPage;
 
   constructor() {
-      // TODO Load this information from settings (either en-ca or fr-ca)
-      // Will also be used for the translate files in /i18n
-      moment.locale('en-ca');
+      // TODO : Load from settings (either en-ca or fr-ca)
+      moment.locale('fr-ca');
   }
 }
