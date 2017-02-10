@@ -1,35 +1,51 @@
 page-today {
-    ion-content {
-        background-color: $green1;
+    ion-content.content-md {
+        background-color: $green2;
     }
-}
 
+  .backgroundToday {
+    background-color: $green2;
+    padding: 0;
+    margin: 0;
+    height: 20%;
+  }
 
-.card-background-page {
+  .backgroundTomorrow {
+    background-color: $green1;
+    padding: 0;
+    margin: 0;
+    height: 20%;
+  }
 
-  .background {
-    height: 50%;
+  .backgroundAfterTomorrow {
+    background-color: $green3;
+    padding: 0;
+    margin: 0;
+    height: 20%;
   }
 
   .day {
-    position: absolute;
-    top: -10%;
-    left: 5%;
-    font-size: 10px ;
+    position: relative;
+    top: 30%;
+    right: 43.75%;
+    font-size: 10px;
+    color: $beige2;
+    text-align: center;
   }
 
   .date {
-    position: absolute;
-    top: 10%;
+    position: relative;
+    top: 30%;
     left: 5%;
     font-size: 18px;
+    color: $beige2
   }
 
   .day-title {
-    position: absolute;
-    top: -5%;
-    left: 45%;
+    position: relative;
+    left: 50%;
     font-size: 18px;
+    color: $beige2
   }
 
   .calendar {

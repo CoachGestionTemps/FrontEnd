@@ -1,48 +1,22 @@
 <ion-content class="card-background-page">
 
-  <ion-list>
-    <ion-item color="green2">
-      <ion-card class="background">
-        <ion-card-content class = "day">
-          WED
-        </ion-card-content>
-        <ion-card-content class = "date">
-          07
-        </ion-card-content>
-        <ion-card-content class = "day-title">
-          TODAY
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
+  <ion-card class="backgroundToday">
+    <p class="day"> {{ today.format('ddd').toUpperCase() }} </p>
+    <p class="date"> {{ today.format('DD') }} </p>
+    <p class="day-title"> TODAY </p>
+  </ion-card>
 
-    <ion-item color="green2">
-      <ion-card>
-        <ion-card-content class = "day">
-          WED
-        </ion-card-content>
-        <ion-card-content class = "date">
-          07
-        </ion-card-content>
-        <ion-card-content class = "day-title">
-          TOMORROW
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
+  <ion-card class="backgroundTomorrow">
+    <p class="day"> {{ tomorrow.format('ddd').toUpperCase() }} </p>
+    <p class="date"> {{ tomorrow.format('DD') }} </p>
+    <p class="day-title"> TOMORROW </p>
+  </ion-card>
 
-    <ion-item color="green2">
-      <ion-card>
-        <ion-card-content class = "day">
-          WED
-        </ion-card-content>
-        <ion-card-content class = "date">
-          07
-        </ion-card-content>
-        <ion-card-content class = "day-title">
-          FRIDAY
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
-  </ion-list>
+    <ion-card class="backgroundAfterTomorrow ">
+      <p class="day"> {{ afterTomorrow.format('ddd').toUpperCase() }} </p>
+      <p class="date"> {{ afterTomorrow.format('DD') }} </p>
+      <p class="day-title"> {{ afterTomorrow.format('dddd').toUpperCase() }} </p>
+    </ion-card>
 
 
   <ion-item color="green2">
