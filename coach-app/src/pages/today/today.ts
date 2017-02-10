@@ -11,15 +11,22 @@ import moment from 'moment';
 })
 
 export class TodayPage {
-
-  today;
-  tomorrow;
-  afterTomorrow;
+  selectedDays: any;
 
   constructor(public navCtrl: NavController) {
-    this.today = moment();
-    this.tomorrow = moment().add(1, 'day');
-    this.afterTomorrow = moment().add(2, 'day');
+    this.selectedDays = [moment(), moment().add(1, 'day'), moment().add(2, 'day')];
+
+    // TODO : Load custom calendar using this.selectedDays[0]
   }
 
+  getDayName(day) {
+    if (moment(day).isSame(moment().add(-1, "days"), 'day')){
+      return "yesterday";
+    } else if (moment(day).isSame(moment(), 'day')){
+      return "today";
+    } else if (moment(day).isSame(moment().add(1, "days"), 'day')){
+      return "tomorrow";
+    }
+    return "";
+  }
 }

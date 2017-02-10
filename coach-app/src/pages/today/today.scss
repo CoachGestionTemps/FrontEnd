@@ -1,55 +1,71 @@
 page-today {
-    ion-content.content-md {
-        background-color: $green2;
+  
+  ion-content.content {
+      background-color: $green2;
+  }
+
+  ion-list .selectedDays {
+    margin: 0;
+    height: 100px;
+    width: 100%;
+    border-radius: 0px;
+  }
+
+  .list-ios {
+    margin: -1px 0 0px 0;
+  }
+
+  .item.item-block div.item-inner {
+    border: none;
+  }
+
+  ion-list .selectedDays:nth-child(1) {
+      background-color: $green2;
+
+      &.card-ios {
+        height: 112px;
+
+        ion-col {
+          padding-top: 20px;
+        }
+      }
+  }
+
+  ion-list .selectedDays:nth-child(2) {
+      background-color: $green1;
+  }
+
+  ion-list .selectedDays:nth-child(3) {
+      background-color: $green3;
+  }
+
+  ion-list ion-card.card ion-col:nth-child(2) {
+    text-align: center;
+
+    h1 {
+      line-height: 44px;
+    }
+  }
+
+  ion-list ion-card.card ion-col:nth-child(1) {
+    padding-top: 8px;
+  }
+
+  ion-list ion-card.card ion-col {
+    
+    h1, h2, p {
+      color: #ffffff;
     }
 
-  .backgroundToday {
-    background-color: $green2;
-    padding: 0;
-    margin: 0;
-    height: 20%;
-    width: 100%;
-  }
+    p {
+      line-height: 1;
+      margin: 0;
+    }
 
-  .backgroundTomorrow {
-    background-color: $green1;
-    padding: 0;
-    margin: 0;
-    height: 20%;
-    width: 100%;
-  }
-
-  .backgroundAfterTomorrow {
-    background-color: $green3;
-    padding: 0;
-    margin: 0;
-    height: 20%;
-    width: 100%;
-  }
-
-  .day {
-    position: relative;
-    top: 30%;
-    right: 42%;
-    font-size: 10px;
-    color: $beige2;
-    text-align: center;
-  }
-
-  .date {
-    position: relative;
-    top: 30%;
-    left: 5%;
-    font-size: 18px;
-    color: $beige2
-  }
-
-  .day-title {
-    position: relative;
-    left: 40%;
-    top: -10%;
-    font-size: 18px;
-    color: $beige2
+    div.date {
+      width: 3.2rem;
+      text-align: center;
+    }  
   }
 
   .calendar {
