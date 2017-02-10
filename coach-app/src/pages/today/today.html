@@ -5,16 +5,12 @@
       <ion-card-content>
         <ion-grid>
           <ion-row>
-            <ion-col>
-              <div class="date">
-                <p> {{ day.format('ddd').toUpperCase().substring(0, 3) }} </p>
-                <h1> {{ day.format('DD') }} </h1>
-              </div>
+            <ion-col width-20>
+              <p> {{ day.format('ddd').toUpperCase().substring(0, 3) }} </p>
+              <h1> {{ day.format('DD') }} </h1>
             </ion-col>
-            <ion-col>
+            <ion-col width-80>
               <h1>{{ ((getDayName(day) | translate) || day.format('dddd')).toUpperCase() }}</h1>
-            </ion-col>
-            <ion-col>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -23,71 +19,38 @@
   </ion-list>
 
   <ion-item color="green2">
-    <ion-col class = "calendar">
-      <ion-row>
-        <ion-col>S</ion-col>
-        <ion-col>M</ion-col>
-        <ion-col>T</ion-col>
-        <ion-col>W</ion-col>
-        <ion-col>T</ion-col>
-        <ion-col>F</ion-col>
-        <ion-col>S</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col>1</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>2</ion-col>
-        <ion-col>3</ion-col>
-        <ion-col>4</ion-col>
-        <ion-col>5</ion-col>
-        <ion-col>6</ion-col>
-        <ion-col>7</ion-col>
-        <ion-col>8</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>9</ion-col>
-        <ion-col>10</ion-col>
-        <ion-col>11</ion-col>
-        <ion-col>12</ion-col>
-        <ion-col>13</ion-col>
-        <ion-col>14</ion-col>
-        <ion-col>15</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>16</ion-col>
-        <ion-col>17</ion-col>
-        <ion-col>18</ion-col>
-        <ion-col>19</ion-col>
-        <ion-col>20</ion-col>
-        <ion-col>21</ion-col>
-        <ion-col>22</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>23</ion-col>
-        <ion-col>24</ion-col>
-        <ion-col>25</ion-col>
-        <ion-col>26</ion-col>
-        <ion-col>27</ion-col>
-        <ion-col>28</ion-col>
-        <ion-col>29</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>30</ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-        <ion-col> </ion-col>
-      </ion-row>
+    <ion-row>
+    <ion-col width-20 class="left-arrow">
+        <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousMonth()"></ion-icon>
     </ion-col>
+    <ion-col width-60 class="month-name">
+      <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
+    </ion-col>
+    <ion-col width-20 class="right-arrow">
+        <ion-icon name="arrow-dropright-circle" color="white" medium (click)="getNextMonth()"></ion-icon>
+    </ion-col>
+    </ion-row>
   </ion-item>
 
+  <ion-item color="green2" class="calendar">
+    <ion-grid>
+      <ion-row>
+        <ion-col>{{ 'sundayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'mondayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'tuesdayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'wednesdayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'thursdayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'fridayLetter' | translate }}</ion-col>
+        <ion-col>{{ 'saturdayLetter' | translate }}</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let week of month">
+        <ion-col *ngFor="let day of week" 
+                  [ngClass]="{'is-selected': selectedDays[0].isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }" 
+                  (click)="setSelectedDay(day)">
+          {{ day ? day.getDate() : "" }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 </ion-content>

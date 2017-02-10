@@ -1,9 +1,4 @@
 page-today {
-  
-  ion-content.content {
-      background-color: $green2;
-  }
-
   ion-list .selectedDays {
     margin: 0;
     height: 100px;
@@ -11,7 +6,7 @@ page-today {
     border-radius: 0px;
   }
 
-  .list-ios {
+  .list {
     margin: -1px 0 0px 0;
   }
 
@@ -40,8 +35,6 @@ page-today {
   }
 
   ion-list ion-card.card ion-col:nth-child(2) {
-    text-align: center;
-
     h1 {
       line-height: 44px;
     }
@@ -60,15 +53,29 @@ page-today {
     p {
       line-height: 1;
       margin: 0;
-    }
-
-    div.date {
-      width: 3.2rem;
-      text-align: center;
-    }  
+    } 
   }
 
   .calendar {
     text-align: center;
+  }
+
+  .right-arrow ion-icon{
+    float: right;
+  }
+
+  .month-name {
+    text-align: center;
+  }
+
+  ion-col.is-selected,  ion-col.is-selected.is-today{
+    background-color: white;
+    color: $green2;
+    border-radius: 5px;
+  }
+
+  ion-col.is-today{
+    background-color: $green3;
+    border-radius: 5px;
   }
 }

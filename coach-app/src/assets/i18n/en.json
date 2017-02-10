@@ -3,5 +3,12 @@
     "yesterday": "Yesterday",
     "tomorrow": "Tomorrow",
     "week": "Week",
-    "reports": "Reports"
+    "reports": "Reports",
+    "sundayLetter": "S",
+    "mondayLetter": "M",
+    "tuesdayLetter": "T",
+    "wednesdayLetter": "W",
+    "thursdayLetter": "T",
+    "fridayLetter": "F",
+    "saturdayLetter": "S"
 }
