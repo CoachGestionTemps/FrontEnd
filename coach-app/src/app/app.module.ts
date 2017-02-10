@@ -7,6 +7,7 @@ import { TodayPage } from '../pages/today/today';
 import { ReportPage } from '../pages/report/report';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+import * as Enums from "../services/enums";
 
 export function createTranslateLoader(http: Http) {
     return new TranslateStaticLoader(http, 'assets/i18n', '.json');

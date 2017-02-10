@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs";
-
 @Injectable()
 export class EventService {
   url = ''; // THIS WILL BE OUR API ENDPOINT
@@ -9,7 +8,7 @@ export class EventService {
   events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
 
   constructor(private http: Http) {
-
+      
   }
 
   public getAll() {
