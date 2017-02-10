@@ -14,3 +14,37 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+.tabs .tab-button[aria-selected=true] .tab-button-icon.icon {
+    color: #ffffff;
+}
+
+.tabs .tab-button:hover:not(.disable-hover), .tabs .tab-button[aria-selected=true] {
+    color: #ffffff;
+}
+
+.tabs div.tabbar {
+    background: $green2;
+    border-top: none;
+}
+
+.tabs .tab-button-icon.icon {
+    color: #8c8c8c;
+}
+
+.tabs .tab-button {
+    color: #8c8c8c;
+}
+
+.tabs .tab-button-text {
+    color: #ffffff;
+}
+
+.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+    background-image: none;
+}
+
+ion-content.content {
+    background-color: $green2;
+}
