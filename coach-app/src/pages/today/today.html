@@ -1,21 +1,43 @@
 <ion-content>
 
   <ion-list>
-    <ion-card class="selectedDays" *ngFor="let day of selectedDays">
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col width-20>
-              <p> {{ day.format('ddd').toUpperCase().substring(0, 3) }} </p>
-              <h1> {{ day.format('DD') }} </h1>
-            </ion-col>
-            <ion-col width-80>
-              <h1>{{ ((getDayName(day) | translate) || day.format('dddd')).toUpperCase() }}</h1>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
+
+    <div *ngFor="let day of selectedDays">
+      <ion-card class="selectedDays" (click)="setClickedDate(day)">
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col width-20>
+                <p> {{ day.format('ddd').toUpperCase().substring(0, 3) }} </p>
+                <h1> {{ day.format('DD') }} </h1>
+              </ion-col>
+              <ion-col width-80>
+                <h1>{{ ((getDayName(day) | translate) || day.format('dddd')).toUpperCase() }}</h1>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <div  *ngIf="day.isSame(clickedDate)">
+        <ion-card *ngFor="let event of selectedEvents">
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col width-20 >
+                  <p> {{  event.start_datetime }} </p>
+                  <h1> {{ event.location }} </h1>
+                </ion-col>
+                <ion-col width-80>
+                  <h1>{{ event.title }}</h1>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+    </div>
   </ion-list>
 
   <ion-item color="green2">
@@ -45,8 +67,8 @@
       </ion-row>
 
       <ion-row *ngFor="let week of month">
-        <ion-col *ngFor="let day of week" 
-                  [ngClass]="{'is-selected': selectedDays[0].isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }" 
+        <ion-col *ngFor="let day of week"
+                  [ngClass]="{'is-selected': selectedDays[0].isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }"
                   (click)="setSelectedDay(day)">
           {{ day ? day.getDate() : "" }}
         </ion-col>

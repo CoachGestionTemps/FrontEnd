@@ -44,8 +44,20 @@ page-today {
     padding-top: 8px;
   }
 
+  ion-list selectedEvents ion-col {
+    h1, h2, p {
+      color: $black1;
+    }
+
+    p {
+      line-height: 1;
+      margin: 0;
+    }
+  }
+
+
   ion-list ion-card.card ion-col {
-    
+
     h1, h2, p {
       color: #ffffff;
     }
@@ -53,7 +65,7 @@ page-today {
     p {
       line-height: 1;
       margin: 0;
-    } 
+    }
   }
 
   .calendar {
@@ -68,6 +80,17 @@ page-today {
     text-align: center;
   }
 
+  .calendar {
+    h1, h2, p {
+      color: $black1;
+    }
+
+    p {
+      line-height: 1;
+      margin: 0;
+    }
+  }
+
   ion-col.is-selected,  ion-col.is-selected.is-today{
     background-color: white;
     color: $green2;
@@ -77,5 +100,9 @@ page-today {
   ion-col.is-today{
     background-color: $green3;
     border-radius: 5px;
+  }
+
+  ion-list ion-card.card ion-col:nth-child(1) {
+    padding-top: 8px;
   }
 }
