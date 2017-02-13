@@ -1,21 +1,22 @@
 var express = require('express')
 var moment = require('moment')
-var _und = require('underscore')
+var bodyParser = require('body-parser')
+var _ = require('lodash')
 
 var isLoging = process.argv.indexOf("debug") > -1
 
 if (isLoging)
-    console.log("Server started at %s", moment().format("LLL"))
+    console.log("Server started at %s", moment().format())
 
 function log(req) {
     if (isLoging)
-        console.log("%s %s at %s", req.method, req.path, moment().format('LLL'))
+        console.log("%s %s at %s", req.method, req.path, moment().format())
 }
 
 var events = [
     {
         id: 0,
-        start_datetime: moment().format("LLL"),
+        start_datetime: moment().format(),
         end_datetime: null,
         category: 0,
         user_id: 1,
@@ -27,8 +28,8 @@ var events = [
     },
     {
         id: 2,
-        start_datetime: moment().date(moment().date() + 1).format("LLL"),
-        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 2).format("LLL"),
+        start_datetime: moment().date(moment().date() + 1).format(),
+        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 2).format(),
         category: 2,
         user_id: 1,
         title: "Étude pour ADM111",
@@ -39,8 +40,8 @@ var events = [
     },
     {
         id: 3,
-        start_datetime: moment().hour(moment().hour() + 2).format("LLL"),
-        end_datetime: moment().hour(moment().hour() + 4).format("LLL"),
+        start_datetime: moment().hour(moment().hour() + 2).format(),
+        end_datetime: moment().hour(moment().hour() + 4).format(),
         category: 1,
         user_id: 1,
         title: "ADM111",
@@ -51,8 +52,8 @@ var events = [
     },
     {
         id: 4,
-        start_datetime: moment().hour(moment().hour() + 4).format("LLL"),
-        end_datetime: moment().hour(moment().hour() + 6).format("LLL"),
+        start_datetime: moment().hour(moment().hour() + 4).format(),
+        end_datetime: moment().hour(moment().hour() + 6).format(),
         category: 3,
         user_id: 1,
         title: "Volley!",
@@ -63,8 +64,8 @@ var events = [
     },
     {
         id: 5,
-        start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format("LLL"),
-        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format("LLL"),
+        start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
+        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
         category: 5,
         user_id: 1,
         title: "Shift McDo",
@@ -75,8 +76,8 @@ var events = [
     },
     {
         id: 6,
-        start_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 2).format("LLL"),
-        end_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 4).format("LLL"),
+        start_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 2).format(),
+        end_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 4).format(),
         category: 1,
         user_id: 1,
         title: "ADM111",
@@ -87,8 +88,8 @@ var events = [
     },
     {
         id: 7,
-        start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format("LLL"),
-        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format("LLL"),
+        start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
+        end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
         category: 5,
         user_id: 2,
         title: "Shift Subway",
@@ -99,16 +100,26 @@ var events = [
     },
 ]
 
+function validateEvent(event) {
+    if (!event.start_datetime || !event.id || !event.parent_id) {
+        return false
+    }
+    return true
+}
+
 var app = express()
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/events/:user_id', function(req, res) {
     log(req)
-    res.json(_und.where(events, {user_id: parseInt(req.params.user_id)}))
+    res.json(_.filter(events, ['user_id', parseInt(req.params.user_id)]))
 })
 
 app.get('/events/:user_id/:id', function(req, res) {
     log(req)
-    if (event = _und.findWhere(events, {user_id: parseInt(req.params.user_id), id: parseInt(req.params.id)})) {
+    if (event = _.find(events, {'user_id': parseInt(req.params.user_id), 'id': parseInt(req.params.id)})) {
         res.json(event)
     } else {
         res.sendStatus(404)
@@ -120,9 +131,32 @@ app.get('*', function(req, res) {
     res.sendStatus(405)
 })
 
+app.post('/events', function(req, res) {
+    log(req)
+    if (validateEvent(req.body)) {
+        req.body.start_datetime = moment(req.body.start_datetime).format()
+        events.push(req.body)
+        res.json({'message': "Event created!"})
+    } else {
+        res.sendStatus(500)
+    }
+})
+
 app.post('*', function(req, res) {
     log(req)
     res.sendStatus(405)
+})
+
+app.put('/events/:id', function(req, res) {
+    log(req)
+    if ((index = _.findIndex(events, ['id', parseInt(req.params.id)])) > -1) {
+        _.forEach(req.body, function(value, key) {
+            events[index][key] = value
+        })
+        res.json({'message': "Event updated!"})
+    } else {
+        res.sendStatus(404)
+    }
 })
 
 app.put('*', function(req, res) {
