@@ -4,6 +4,20 @@ page-today {
     height: 100px;
     width: 100%;
     border-radius: 0px;
+
+    
+  }
+
+  .events {
+    .card {
+      width: 100%;
+      margin: 0px;
+      border-bottom: 1px solid black;
+
+      p, h1, h2 {
+        color: black;
+      }
+    }
   }
 
   .list {
