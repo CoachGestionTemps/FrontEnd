@@ -48,3 +48,33 @@
 ion-content.content {
     background-color: $green2;
 }
+
+.category-undefined {
+    background-color: $grey2;
+    color: $white;
+}
+
+.category-class {
+    background-color: $primary;
+    color: $white;
+}
+
+.category-study {
+    background-color: $green3;
+    color: $white;
+}
+
+.category-sport {
+    background-color: $orange;
+    color: $white;
+}
+
+.category-leisure {
+    background-color: $danger;
+    color: $white;
+}
+
+.category-work {
+    background-color: $purple;
+    color: $white;
+}

@@ -4,18 +4,27 @@ page-today {
     height: 100px;
     width: 100%;
     border-radius: 0px;
-
-    
   }
 
   .events {
-    .card {
-      width: 100%;
-      margin: 0px;
-      border-bottom: 1px solid black;
+    transition: 300ms ease-out;
+    max-height: 0px;
+    transform: translatex(100%);
+    box-shadow: 0px 1px 10px black;
 
-      p, h1, h2 {
-        color: black;
+    &.selected {
+      transform: translatex(0);
+      max-height: 100%;
+    }
+    ion-col span {
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    ion-item-sliding {
+      ion-item {
+        height: 100px;
+        border-bottom: 1px solid rgb(222, 222, 222);
       }
     }
   }
@@ -28,7 +37,7 @@ page-today {
     border: none;
   }
 
-  ion-list .selectedDays:nth-child(1) {
+  ion-list .day-container:nth-child(1) .selectedDays {
       background-color: $green2;
 
       &.card-ios {
@@ -40,11 +49,11 @@ page-today {
       }
   }
 
-  ion-list .selectedDays:nth-child(2) {
+  ion-list .day-container:nth-child(2) .selectedDays {
       background-color: $green1;
   }
 
-  ion-list .selectedDays:nth-child(3) {
+  ion-list .day-container:nth-child(3) .selectedDays {
       background-color: $green3;
   }
 
@@ -58,7 +67,7 @@ page-today {
     padding-top: 8px;
   }
 
-  ion-list selectedEvents ion-col {
+  ion-list .selectedEvents ion-col {
     h1, h2, p {
       color: $black1;
     }

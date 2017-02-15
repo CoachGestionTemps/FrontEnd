@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
@@ -11,166 +11,67 @@ import moment from 'moment';
 })
 
 export class TodayPage {
-  selectedDays: any;
   month: any;
-  displayedMonth: any;
-  displayedYear: any;
-  moment: any;
   today: any;
+  moment: any;
+  events: any;
   clickedDate: any;
-  selectedEvents: any;
-  pastSelectedDay: any;
+  selectedDays: any;
+  displayedYear: any;
+  displayedMonth: any;
 
-  events = [
-  {
-    id: 0,
-    start_datetime: moment().format("LLL"),
-    end_datetime: null,
-    category: 0,
-    user_id: 1,
-    title: "Fête de môman",
-    passed_time: null,
-    summary: "À chaque année, ma mère vieillit d'un année... Encore et encore!",
-    location: "123 ave DesMères, Ville Père, Q1W 2E3, Qc, Ca",
-    parent_id: 0,
-    date: moment().add(1, "days")
-  },
-  {
-    id: 2,
-    start_datetime: moment().date(moment().date() + 1).format("LLL"),
-    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 2).format("LLL"),
-    category: 2,
-    user_id: 1,
-    title: "Étude pour ADM111",
-    passed_time: null,
-    summary: "Pu capable de ce cours-là...",
-    location: "Chez nous...",
-    parent_id: 2,
-    date: moment().add(1, "days")
-  },
-  {
-    id: 3,
-    start_datetime: moment().hour(moment().hour() + 2).format("LLL"),
-    end_datetime: moment().hour(moment().hour() + 4).format("LLL"),
-    category: 1,
-    user_id: 1,
-    title: "ADM111",
-    passed_time: null,
-    summary: "Principe d'administration",
-    location: "K3-2021",
-    parent_id: 3,
-    date: moment()
-  },
-  {
-    id: 4,
-    start_datetime: moment().hour(moment().hour() + 4).format("LLL"),
-    end_datetime: moment().hour(moment().hour() + 6).format("LLL"),
-    category: 3,
-    user_id: 1,
-    title: "Volley!",
-    passed_time: null,
-    summary: null,
-    location: "Centre Sportif",
-    parent_id: 4,
-    date: moment()
-  },
-  {
-    id: 5,
-    start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format("LLL"),
-    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format("LLL"),
-    category: 5,
-    user_id: 1,
-    title: "Shift McDo",
-    passed_time: null,
-    summary: null,
-    location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-    parent_id: 5,
-    date: moment()
-  },
-  {
-    id: 6,
-    start_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 2).format("LLL"),
-    end_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 4).format("LLL"),
-    category: 1,
-    user_id: 1,
-    title: "ADM111",
-    passed_time: null,
-    summary: "Principe d'administration",
-    location: "K3-2021",
-    parent_id: 3,
-    date: moment()
-  },
-  {
-    id: 7,
-    start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format("LLL"),
-    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format("LLL"),
-    category: 5,
-    user_id: 2,
-    title: "Shift Subway",
-    passed_time: null,
-    summary: null,
-    location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-    parent_id: 7,
-    date: moment()
-  },
-]
-
-
-
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private eventService : EventService) {
     this.moment = moment;
     this.today = moment();
-    this.setSelectedDay(null);
-    // TODO : Load custom calendar using this.selectedDays[0]
+    this.displayedYear = this.today.get("year");
+    this.displayedMonth = this.today.get("month");
+
+    this.eventService.getAll().then(events => {
+      this.events = events;
+      this.setSelectedDay(null);
+    });
   }
 
   getDayName(day) {
-    if (moment(day).isSame(moment().add(-1, "days"), 'day')){
-      return "yesterday";
-    } else if (moment(day).isSame(moment(), 'day')){
-      return "today";
-    } else if (moment(day).isSame(moment().add(1, "days"), 'day')){
-      return "tomorrow";
-    }
+    ["yesterday", "today", "tomorrow"].forEach((day, i) => {
+      if (moment(day).isSame(moment().add(i - 1, "days"), 'day')){
+        return day;
+      }
+    });
     return "";
   }
 
   setSelectedDay(day) {
-    if (day){
-      this.selectedDays = [moment(day), moment(day).add(1, 'day'), moment(day).add(2, 'day')];
-    } else {
-      this.selectedDays = [moment(), moment().add(1, 'day'), moment().add(2, 'day')];
-    }
-    this.displayedMonth = this.selectedDays[0].get("month");
-    this.displayedYear = this.selectedDays[0].get("year");
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth + 1);
+    var generateDays = date => [ date, moment(date).add(1, 'day'), moment(date).add(2, 'day')];
+
+    var days = day ? generateDays(moment(day)) : generateDays(moment());
+    this.selectedDays = days.map(d => ({ day : d, events: this.getEventsForDay(d) }));
+
+    this.displayedMonth = this.selectedDays[0].day.get("month");
+    this.displayedYear = this.selectedDays[0].day.get("year");
+    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
   }
 
   getNextMonth(){
-    if (this.displayedMonth == 11){
+    if (++this.displayedMonth > 11) {
       this.displayedMonth = 0;
       this.displayedYear++;
-    } else {
-      this.displayedMonth++;
     }
 
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth + 1);
-    console.log(this.month);
+    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
   }
 
   getPreviousMonth(){
-    if (this.displayedMonth == 0){
+    if (--this.displayedMonth < 0){
       this.displayedMonth = 11;
       this.displayedYear--;
-    } else {
-      this.displayedMonth--;
     }
 
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth + 1);
+    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
   }
 
   getMonthArray(year, month) {
-    var date = new Date(year, month-1, 1);
+    var date = new Date(year, month, 1);
     var result = [];
     var preFill = [], postFill = [], tmp = [new Date(date.getTime())];
 
@@ -187,10 +88,10 @@ export class TodayPage {
 
     tmp = [];
 
-    while (date.getMonth() == month-1) {
+    while (date.getMonth() == month) {
       date.setDate(date.getDate() + 1);
 
-      if (date.getMonth() == month-1){
+      if (date.getMonth() == month){
         tmp.push(new Date(date.getTime()));
         if (date.getDay() == 6) {
           result.push(tmp);
@@ -204,27 +105,19 @@ export class TodayPage {
     }
 
     result.push(tmp.concat(postFill));
-
     return result;
   }
 
+  getCategoryClass(category){
+    var categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
+    return 'category-' + categories[category];
+  }
 
-  setClickedDate(day){
-    this.selectedEvents = [];
-    this.clickedDate = day;
+  setClickedDate (day) {
+    this.clickedDate = this.clickedDate === day ? null : day;
+  }
 
-    if (!day.isSame(this.pastSelectedDay)) {
-      // ToDo : need to get real way to get events
-
-      for (var i=0; i < this.events.length; i++) {
-        if (moment(day).isSame(this.events[i].date, 'day')) {
-          this.selectedEvents.push(this.events[i]);
-        }
-      }
-      this.pastSelectedDay = day;
-    }
-    else {
-      this.pastSelectedDay = null;
-    }
+  getEventsForDay(day) {
+    return this.events.filter(e => this.moment(day).isSame(this.moment(e.start_datetime), 'day'));
   }
 }

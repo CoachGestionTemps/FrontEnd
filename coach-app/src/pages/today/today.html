@@ -1,42 +1,43 @@
 <ion-content>
-
   <ion-list>
-
-    <div *ngFor="let day of selectedDays">
-      <ion-card class="selectedDays" (click)="setClickedDate(day)">
+    <div class="day-container" *ngFor="let date of selectedDays">
+      <ion-card class="selectedDays" (click)="setClickedDate(date.day)">
         <ion-card-content>
           <ion-grid>
             <ion-row>
               <ion-col width-20>
-                <p> {{ day.format('ddd').toUpperCase().substring(0, 3) }} </p>
-                <h1> {{ day.format('DD') }} </h1>
+                <p> {{ date.day.format('ddd').toUpperCase().substring(0, 3) }} </p>
+                <h1> {{ date.day.format('DD') }} </h1>
               </ion-col>
               <ion-col width-80>
-                <h1>{{ ((getDayName(day) | translate) || day.format('dddd')).toUpperCase() }}</h1>
+                <h1>{{ ((getDayName(date.day) | translate) || date.day.format('dddd')).toUpperCase() }}</h1>
               </ion-col>
             </ion-row>
           </ion-grid>
         </ion-card-content>
       </ion-card>
 
-      <div *ngIf="day.isSame(clickedDate)" class="events">
-        <ion-card *ngFor="let event of selectedEvents">
-          <ion-card-content>
+      <ion-list class="events" [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}" >
+        <ion-item-sliding *ngFor="let event of date.events"  #item>
+          <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col width-20 >
-                  <p> {{  event.start_datetime }} </p>
-                  <h1> {{ event.location }} </h1>
+                    <span class="{{ getCategoryClass(event.category) }}">
+                      {{  moment(event.start_datetime).format('HH:MM') }}
+                    </span>
                 </ion-col>
                 <ion-col width-80>
-                  <h1>{{ event.title }}</h1>
+                  <h2>{{ event.title }}</h2>
                 </ion-col>
               </ion-row>
             </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </div>
-
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button class="{{ getCategoryClass(event.category) }}">{{ event.location }}</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </div>
   </ion-list>
 
@@ -68,7 +69,7 @@
 
       <ion-row *ngFor="let week of month">
         <ion-col *ngFor="let day of week"
-                  [ngClass]="{'is-selected': selectedDays[0].isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }"
+                  [ngClass]="{'is-selected': selectedDays[0].day.isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }"
                   (click)="setSelectedDay(day)">
           {{ day ? day.getDate() : "" }}
         </ion-col>

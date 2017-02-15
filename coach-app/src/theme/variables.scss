@@ -37,14 +37,24 @@ $green2:     #164b28;
 $green3:     #2d9d5f;
 $green4:     #016734;
 $green5:     #73a743;
+$purple: #4849A4;
+$primary:    #387ef5;
+$secondary:  #32db64;
+$danger:     #f53d3d;
+$orange:    #E6A82A;
+$light:      #f4f4f4;
+$white:    #ffffff;
+$dark:       #222;
 
 $colors: (
-  primary:    #387ef5,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  white:    #ffffff,
-  dark:       #222,
+  primary:    $primary,
+  secondary:  $secondary,
+  danger:     $danger,
+  light:      $light,
+  orange:   $orange,
+  white:    $white,
+  purple:   $purple,
+  dark:       $dark,
   beige1:     $beige1,
   beige2:     $beige2,
   beige3:     $beige3,
