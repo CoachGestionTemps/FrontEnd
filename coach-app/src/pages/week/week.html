@@ -14,7 +14,6 @@
     </ion-row>
   </ion-item>
 
-  <ion-item color="green2">
     <ion-grid>
         <ion-row class="week-days">
             <ion-col>
@@ -36,14 +35,18 @@
                 <ion-row *ngFor="let hour of hours" class="hour">
                     <ion-col>
                         <div class="{{ getCategoryClass(event.category) }}" *ngFor="let event of getIndexedEvents(date, hour)" [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event)}">
-
+                            <span>
+                                {{ event.title }}
+                            </span>
+                            <p>
+                                Début<br>
+                                {{ moment(event.start_datetime).format("HH:MM") }}
+                            </p>
                         </div>
                     </ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
     </ion-grid>
-  </ion-item>
-
 
 </ion-content>

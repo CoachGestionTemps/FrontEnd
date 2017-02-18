@@ -16,6 +16,14 @@
 // automatically applied to the <body> element in the app.
 
 
+.ios .ion-page.show-page {
+    background-color: $green2;
+
+    .content.content-ios {
+        margin-top: 20px;
+    }
+}
+
 .tabs .tab-button[aria-selected=true] .tab-button-icon.icon {
     color: #ffffff;
 }

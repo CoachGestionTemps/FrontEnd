@@ -39,14 +39,6 @@ page-today {
 
   ion-list .day-container:nth-child(1) .selectedDays {
       background-color: $green2;
-
-      &.card-ios {
-        height: 112px;
-
-        ion-col {
-          padding-top: 20px;
-        }
-      }
   }
 
   ion-list .day-container:nth-child(2) .selectedDays {
