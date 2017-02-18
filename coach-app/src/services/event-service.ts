@@ -8,12 +8,13 @@ export class EventService {
   url = ''; // THIS WILL BE OUR API ENDPOINT
   storageKey = "events";
   events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+  moment: any;
 
   constructor(private http: Http) {
-      
+      this.moment = moment;
   }
 
-  public getAll() {
+  public getAll(): Promise<any[]> {
       // TODO : Replace this with an http.get method
       var self = this;
     return new Promise(
@@ -24,7 +25,7 @@ export class EventService {
                 {
                     id: 0,
                     start_datetime: moment().format(),
-                    end_datetime: null,
+                    end_datetime: moment().hour(moment().hour() + 2).format(),
                     category: 0,
                     user_id: 1,
                     title: "Fête de môman",
@@ -116,6 +117,18 @@ export class EventService {
                 localStorage.setItem(self.storageKey, JSON.stringify(self.events));
             }
             resolve(self.events)
+        }
+    );
+  }
+
+  public getEventsForDays(days): Promise<any[]> {
+      var self = this;
+      return new Promise(
+        function(resolve, reject) {
+            self.getAll().then(events => {
+                var isSameDay = (d, e) => d.isSame(self.moment(e.start_datetime), 'day');
+                resolve(days.map(d => { return { day: d, events : events.filter(e => isSameDay(d, e)) }; }))
+            });
         }
     );
   }

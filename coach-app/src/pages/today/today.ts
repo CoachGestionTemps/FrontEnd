@@ -14,7 +14,6 @@ export class TodayPage {
   month: any;
   today: any;
   moment: any;
-  events: any;
   clickedDate: any;
   selectedDays: any;
   displayedYear: any;
@@ -25,11 +24,7 @@ export class TodayPage {
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
-
-    this.eventService.getAll().then(events => {
-      this.events = events;
-      this.setSelectedDay(null);
-    });
+    this.setSelectedDay(null);
   }
 
   getDayName(day) {
@@ -43,13 +38,14 @@ export class TodayPage {
 
   setSelectedDay(day) {
     var generateDays = date => [ date, moment(date).add(1, 'day'), moment(date).add(2, 'day')];
-
     var days = day ? generateDays(moment(day)) : generateDays(moment());
-    this.selectedDays = days.map(d => ({ day : d, events: this.getEventsForDay(d) }));
 
-    this.displayedMonth = this.selectedDays[0].day.get("month");
-    this.displayedYear = this.selectedDays[0].day.get("year");
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+    this.eventService.getEventsForDays(days).then(eventDays => {
+      this.selectedDays = eventDays;
+      this.displayedMonth = this.selectedDays[0].day.get("month");
+      this.displayedYear = this.selectedDays[0].day.get("year");
+      this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+    });
   }
 
   getNextMonth(){
@@ -115,9 +111,5 @@ export class TodayPage {
 
   setClickedDate (day) {
     this.clickedDate = this.clickedDate === day ? null : day;
-  }
-
-  getEventsForDay(day) {
-    return this.events.filter(e => this.moment(day).isSame(this.moment(e.start_datetime), 'day'));
   }
 }

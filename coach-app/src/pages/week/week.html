@@ -1,3 +1,49 @@
-<ion-content padding>
+<ion-content>
+
+  <ion-item color="green2">
+    <ion-row>
+    <ion-col width-20 class="left-arrow">
+        <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousWeek()"></ion-icon>
+    </ion-col>
+    <ion-col width-60 class="month-name">
+      <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
+    </ion-col>
+    <ion-col width-20 class="right-arrow">
+        <ion-icon name="arrow-dropright-circle" color="white" medium (click)="getNextWeek()"></ion-icon>
+    </ion-col>
+    </ion-row>
+  </ion-item>
+
+  <ion-item color="green2">
+    <ion-grid>
+        <ion-row class="week-days">
+            <ion-col>
+            </ion-col>
+            <ion-col *ngFor="let date of week">
+                <span>{{ date.day.format("D") }}</span>
+                {{ date.day.format('ddd').toUpperCase().substring(0, 3) }}
+            </ion-col>
+        </ion-row>
+        <ion-row class="events">
+            <ion-col>
+                <ion-row *ngFor="let hour of hours" class="hour">
+                    <ion-col>
+                        {{ displayHour(hour) }}
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+            <ion-col *ngFor="let date of week" class="day">
+                <ion-row *ngFor="let hour of hours" class="hour">
+                    <ion-col>
+                        <div class="{{ getCategoryClass(event.category) }}" *ngFor="let event of getIndexedEvents(date, hour)" [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event)}">
+
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+  </ion-item>
+
 
 </ion-content>
