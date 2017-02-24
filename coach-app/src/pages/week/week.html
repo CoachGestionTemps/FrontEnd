@@ -27,20 +27,23 @@
             <ion-col>
                 <ion-row *ngFor="let hour of hours" class="hour">
                     <ion-col>
-                        {{ displayHour(hour) }}
+                        {{ utils.displayHour(hour) }}
                     </ion-col>
                 </ion-row>
             </ion-col>
-            <ion-col *ngFor="let date of week" class="day">
+            <ion-col *ngFor="let date of week" class="day" [ngClass]="{'is-today': today.isSame(date.day, 'day') }">
                 <ion-row *ngFor="let hour of hours" class="hour">
                     <ion-col>
-                        <div class="{{ getCategoryClass(event.category) }}" *ngFor="let event of getIndexedEvents(date, hour)" [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event)}">
+                        <div class="{{ utils.getCategoryClass(event.category) }}" 
+                            *ngFor="let event of getIndexedEvents(date, hour)" 
+                            [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event), width: getEventWidth(date, hour)}"
+                            (click)="navigateToEvent(event)">
                             <span>
                                 {{ event.title }}
                             </span>
                             <p>
                                 Début<br>
-                                {{ moment(event.start_datetime).format("HH:MM") }}
+                                {{ moment(event.start_datetime).format("HH:mm") }}
                             </p>
                         </div>
                     </ion-col>

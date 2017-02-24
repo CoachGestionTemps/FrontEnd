@@ -1,5 +1,9 @@
 page-week {
 
+
+    ion-col {
+        padding: 5px 0px;
+    }
     .content ion-grid {
         color: $white;
     }
@@ -26,30 +30,42 @@ page-week {
             padding: 10px 0px;
             height: 50px;
             font-size: 0.8em;
+
         }
 
-        ion-col.day {
-            background-color: $green1;
-            ion-row.hour {
-                padding: 0px;
+        ion-col {
+            padding: 0px;
+            
+            &.day {
+                background-color: $green1;
+                border-left: 1px solid white;
 
-                ion-col {
+                ion-row.hour {
                     padding: 0px;
 
-                    div {
-                        width: 100%;
-                        opacity: 0.9;
-                        font-size: 0.5em;
-                        padding: 0.2em;
+                    ion-col {
+                        padding: 0px;
 
-                        span {
-                            font-size: 1.7em;
-                            text-decoration: underline;
+                        div {
+                            max-width: 100%;
+                            opacity: 0.9;
+                            font-size: 0.5em;
+                            padding: 0.2em;
+                            display: inline-block;
+                            border: 1px solid rgba(0, 0, 0, 0.4);
+
+                            span {
+                                font-size: 1.7em;
+                                text-decoration: underline;
+                            }
                         }
                     }
                 }
-            }
 
+                &.is-today {
+                    background-color: $green3;
+                }
+            }
         }
     }
 

@@ -3,6 +3,8 @@ import { Component, trigger, state, style, transition, animate, keyframes } from
 import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { EventCategories } from '../../services/enums';
+import { Utils } from '../../services/utils';
+import { EventPage } from "../event/event";
 import moment from 'moment';
 
 @Component({
@@ -19,7 +21,7 @@ export class TodayPage {
   displayedYear: any;
   displayedMonth: any;
 
-  constructor(public navCtrl: NavController, private eventService : EventService) {
+  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
@@ -55,6 +57,10 @@ export class TodayPage {
     }
 
     this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+  }
+
+  navigateToEvent(event){
+    this.navCtrl.push(EventPage, { event: event });
   }
 
   getPreviousMonth(){
@@ -102,11 +108,6 @@ export class TodayPage {
 
     result.push(tmp.concat(postFill));
     return result;
-  }
-
-  getCategoryClass(category){
-    var categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
-    return 'category-' + categories[category];
   }
 
   setClickedDate (day) {

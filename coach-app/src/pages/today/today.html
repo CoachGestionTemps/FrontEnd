@@ -18,12 +18,12 @@
       </ion-card>
 
       <ion-list class="events" [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}" >
-        <ion-item-sliding *ngFor="let event of date.events"  #item>
+        <ion-item-sliding *ngFor="let event of date.events"  #item (click)="navigateToEvent(event)">
           <ion-item>
             <ion-grid>
               <ion-row>
                 <ion-col width-20 >
-                    <span class="{{ getCategoryClass(event.category) }}">
+                    <span class="{{ utils.getCategoryClass(event.category) }}">
                       {{  moment(event.start_datetime).format('HH:MM') }}
                     </span>
                 </ion-col>
@@ -34,7 +34,7 @@
             </ion-grid>
           </ion-item>
           <ion-item-options side="left">
-            <button ion-button class="{{ getCategoryClass(event.category) }}">{{ event.location }}</button>
+            <button ion-button class="{{ utils.getCategoryClass(event.category) }}">{{ event.location }}</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

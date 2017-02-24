@@ -1,0 +1,30 @@
+<ion-header class="{{ utils.getCategoryClass(event.category) }}">
+  <ion-navbar hide-tabs>
+     {{ moment(event.start_datetime).format("ll") }} 
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+        <h1>
+            {{ event.title }}
+        </h1>
+        <p> 
+            {{ event.summary }} 
+        </p>
+    </ion-item>
+    <ion-item>
+        <h2>
+            {{ event.location }} 
+        </h2>
+        <p> 
+            {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }} 
+        </p>
+    </ion-item>
+    <ion-item>
+        <span class="{{ utils.getCategoryClass(event.category) }}">
+            <button full large ion-button>Démarrer cette activité</button>
+        </span>
+    </ion-item>
+  </ion-list>
+</ion-content>

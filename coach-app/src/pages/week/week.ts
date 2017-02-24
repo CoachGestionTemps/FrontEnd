@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
+import { Utils } from '../../services/utils';
+import { EventPage } from "../event/event";
 import moment from 'moment';
 
 @Component({
@@ -16,12 +18,12 @@ export class WeekPage {
   displayedMonth: any;
   hours: any;
 
-  constructor(public navCtrl: NavController, private eventService : EventService) {
+  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
-    this.hours = this.generateHours();
+    this.hours = this.utils.generateHours();
     this.setSelectedWeek(this.today);
   }
 
@@ -37,7 +39,7 @@ export class WeekPage {
     days.push(day);
 
     for (i = dayOfWeek + 1; i < 7; i++){
-      days.push(moment(day).add(dayOfWeek, 'day'));
+      days.push(moment(day).add(i - dayOfWeek, 'day'));
     }
 
     this.eventService.getEventsForDays(days).then(dayEvents => {
@@ -59,28 +61,20 @@ export class WeekPage {
     });
   }
 
-  generateHours() {
-    var hours = [];
-    for (var j = 1; j <= 24; j++){
-      hours.push(j % 24);
-    }
-    return hours;
-  }
-
-  displayHour(h){
-    return ('0' + h).slice(-2) + ":00";
-  }
-
   getNextWeek(){
-    
+    this.setSelectedWeek(moment(this.week[0].day).add(7, 'days'))
+  }
+
+  getPreviousWeek(){
+    this.setSelectedWeek(moment(this.week[0].day).add(-7, 'days'))
   }
 
   getIndexedEvents(date, h){
     return date.indexedEvents[h] || [];
   }
 
-  getPreviousMonth(){
-    
+  getEventWidth(date, h){
+    return ((100 / (this.getIndexedEvents(date, h).length)) - 1) + "%";
   }
 
   getEventMargin(event){
@@ -92,8 +86,7 @@ export class WeekPage {
     return ((diff / 60) * 100) + '%';
   }
 
-  getCategoryClass(category){
-    var categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
-    return 'category-' + categories[category];
+  navigateToEvent(event) {
+    this.navCtrl.push(EventPage, { event: event });
   }
 }
