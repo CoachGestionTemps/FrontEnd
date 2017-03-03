@@ -33,9 +33,9 @@
             </ion-col>
             <ion-col *ngFor="let date of week" class="day" [ngClass]="{'is-today': today.isSame(date.day, 'day') }">
                 <ion-row *ngFor="let hour of hours" class="hour">
-                    <ion-col>
-                        <div class="{{ utils.getCategoryClass(event.category) }}" 
-                            *ngFor="let event of getIndexedEvents(date, hour)" 
+                    <ion-col (click)="navigateToEventCreation(date, hour)">
+                        <div class="{{ utils.getCategoryClass(event.category) }}"
+                            *ngFor="let event of getIndexedEvents(date, hour)"
                             [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event), width: getEventWidth(date, hour)}"
                             (click)="navigateToEvent(event)">
                             <span>

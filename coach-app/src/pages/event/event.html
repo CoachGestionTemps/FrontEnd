@@ -1,6 +1,6 @@
 <ion-header class="{{ utils.getCategoryClass(event.category) }}">
   <ion-navbar hide-tabs>
-     {{ moment(event.start_datetime).format("ll") }} 
+     {{ moment(event.start_datetime).format("ll") }}
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -9,16 +9,16 @@
         <h1>
             {{ event.title }}
         </h1>
-        <p> 
-            {{ event.summary }} 
+        <p>
+            {{ event.summary }}
         </p>
     </ion-item>
     <ion-item>
         <h2>
-            {{ event.location }} 
+            {{ event.location }}
         </h2>
-        <p> 
-            {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }} 
+        <p>
+            {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }}
         </p>
     </ion-item>
     <ion-item>

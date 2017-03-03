@@ -1,0 +1,59 @@
+<ion-header class="category-study">
+  <ion-navbar hide-tabs>
+    Créer un événement
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label fixed>Titre</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Lieu</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="location"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Description</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Type d'activité</ion-label>
+      <ion-select [(ngModel)]="activityType">
+        <ion-option value=0>Aucun</ion-option>
+        <ion-option value=1>Cours</ion-option>
+        <ion-option value=2>Étude</ion-option>
+        <ion-option value=3>Sport</ion-option>
+        <ion-option value=4>Loisir</ion-option>
+        <ion-option value=5>Travail</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Start time</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="startTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>End time</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="endTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Rappel</ion-label>
+      <ion-select [(ngModel)]="reminder">
+        <ion-option value="none">Aucun</ion-option>
+        <ion-option value="15m">15 minutes</ion-option>
+        <ion-option value="30m">30 minutes</ion-option>
+        <ion-option value="1h">1 heure</ion-option>
+        <ion-option value="2h">2 heures</ion-option>
+        <ion-option value="1d">1 journée</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button (click)="createEvent()">Créer</button>
+</ion-content>

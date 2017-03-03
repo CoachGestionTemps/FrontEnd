@@ -6,6 +6,7 @@ import { WeekPage } from '../pages/week/week';
 import { TodayPage } from '../pages/today/today';
 import { ReportPage } from '../pages/report/report';
 import { EventPage } from '../pages/event/event';
+import { EventCreationPage } from "../pages/eventCreation/eventCreation";
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import * as Enums from "../services/enums";
@@ -21,6 +22,7 @@ export function createTranslateLoader(http: Http) {
     TodayPage,
     ReportPage,
     EventPage,
+    EventCreationPage,
     TabsPage
   ],
   imports: [
@@ -38,6 +40,7 @@ export function createTranslateLoader(http: Http) {
     TodayPage,
     ReportPage,
     EventPage,
+    EventCreationPage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]

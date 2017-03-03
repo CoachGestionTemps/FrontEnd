@@ -9,9 +9,11 @@ export class EventService {
   storageKey = "events";
   events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
   moment: any;
+  nextKey: any;
 
   constructor(private http: Http) {
       this.moment = moment;
+      this.nextKey = 8;
   }
 
   public getAll(): Promise<any[]> {
@@ -32,8 +34,7 @@ export class EventService {
                     passed_time: null,
                     summary: "À chaque année, ma mère vieillit d'un année... Encore et encore!",
                     location: "123 ave DesMères, Ville Père, Q1W 2E3, Qc, Ca",
-                    parent_id: 0,
-                    date: moment().add(1, "days")
+                    parent_id: 0
                 },
                 {
                     id: 2,
@@ -45,8 +46,7 @@ export class EventService {
                     passed_time: null,
                     summary: "Pu capable de ce cours-là...",
                     location: "Chez nous...",
-                    parent_id: 2,
-                    date: moment().add(1, "days")
+                    parent_id: 2
                 },
                 {
                     id: 3,
@@ -58,8 +58,7 @@ export class EventService {
                     passed_time: null,
                     summary: "Principe d'administration",
                     location: "K3-2021",
-                    parent_id: 3,
-                    date: moment()
+                    parent_id: 3
                 },
                 {
                     id: 4,
@@ -71,8 +70,7 @@ export class EventService {
                     passed_time: null,
                     summary: null,
                     location: "Centre Sportif",
-                    parent_id: 4,
-                    date: moment()
+                    parent_id: 4
                 },
                 {
                     id: 5,
@@ -84,8 +82,7 @@ export class EventService {
                     passed_time: null,
                     summary: null,
                     location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-                    parent_id: 5,
-                    date: moment()
+                    parent_id: 5
                 },
                 {
                     id: 6,
@@ -97,8 +94,7 @@ export class EventService {
                     passed_time: null,
                     summary: "Principe d'administration",
                     location: "K3-2021",
-                    parent_id: 3,
-                    date: moment()
+                    parent_id: 3
                 },
                 {
                     id: 7,
@@ -110,8 +106,7 @@ export class EventService {
                     passed_time: null,
                     summary: null,
                     location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-                    parent_id: 7,
-                    date: moment()
+                    parent_id: 7
                 },
                 ]
                 localStorage.setItem(self.storageKey, JSON.stringify(self.events));
@@ -121,7 +116,7 @@ export class EventService {
     );
   }
 
-  public getEventsForDays(days): Promise<any[]> {
+   getEventsForDays(days): Promise<any[]> {
       var self = this;
       return new Promise(
         function(resolve, reject) {
@@ -131,5 +126,12 @@ export class EventService {
             });
         }
     );
+  }
+
+  public add(event) {
+    event[ 'id' ] = this.nextKey;
+      event[ 'parent_id' ] = this.nextKey;
+      this.events.push(event);
+      ++this.nextKey;
   }
 }

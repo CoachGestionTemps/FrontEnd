@@ -4,6 +4,7 @@ import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
+import { EventCreationPage } from "../eventCreation/eventCreation";
 import moment from 'moment';
 
 @Component({
@@ -61,6 +62,11 @@ export class WeekPage {
     });
   }
 
+  refreshWeekEvents()
+  {
+    this.setSelectedWeek(moment(this.week[0].day));
+  }
+
   getNextWeek(){
     this.setSelectedWeek(moment(this.week[0].day).add(7, 'days'))
   }
@@ -88,5 +94,9 @@ export class WeekPage {
 
   navigateToEvent(event) {
     this.navCtrl.push(EventPage, { event: event });
+  }
+
+  navigateToEventCreation(date, hour) {
+    this.navCtrl.push(EventCreationPage,{ date: date, hour: hour });
   }
 }

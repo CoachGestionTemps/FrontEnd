@@ -1,0 +1,21 @@
+page-eventCreation {
+  ion-content.content {
+    background-color: $white;
+  }
+
+  .button-md {
+    background-color: $green3;
+    float: right;
+  }
+
+
+  .category-study {
+    .toolbar-background, button, .button:hover:not(.disable-hover) {
+      background-color: $green3;
+      color: $white;
+    }
+    .back-button.bar-button {
+      color: $white;
+    }
+  }
+}
