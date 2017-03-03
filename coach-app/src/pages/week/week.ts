@@ -105,6 +105,6 @@ export class WeekPage {
   navigateToEventCreation(date, hour) {
     var datetime = this.moment(date.format("MM-DD-YYYY"), "MM-DD-YYYY");
     datetime.set({ hour: hour});
-    this.navCtrl.push(EventCreationPage, { date: datetime });
+    this.navCtrl.push(EventCreationPage, { date: datetime, isModify: false });
   }
 }

@@ -1,6 +1,6 @@
 <ion-header class="category-study">
   <ion-navbar hide-tabs>
-    Créer un événement
+    {{ headerTitle }}
   </ion-navbar>
 </ion-header>
 
@@ -9,15 +9,15 @@
   <ion-list>
     <ion-item>
       <ion-label fixed>Titre</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="title"></ion-input>
+      <ion-input type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Lieu</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="location"></ion-input>
+      <ion-input type="text" [(ngModel)]="location"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Description</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+      <ion-input type="text" [(ngModel)]="description"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -55,5 +55,5 @@
     </ion-item>
   </ion-list>
 
-  <button ion-button (click)="createEvent()">Créer</button>
+  <button ion-button (click)="saveEvent()">Sauvegarder</button>
 </ion-content>

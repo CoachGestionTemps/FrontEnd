@@ -3,6 +3,10 @@ page-event {
         background-color: $white;
     }
 
+    .modifyButton {
+      float: right;
+    }
+
     .category-undefined {
         .toolbar-background, button, .button:hover:not(.disable-hover) {
             background-color: $grey2;
@@ -10,6 +14,9 @@ page-event {
         }
         .back-button.bar-button {
             color: $white;
+        }
+        .button {
+          float: right;
         }
     }
 
@@ -22,7 +29,6 @@ page-event {
             color: $white;
         }
     }
-        
 
     .category-study {
         .toolbar-background, button, .button:hover:not(.disable-hover) {
@@ -42,7 +48,7 @@ page-event {
         .back-button.bar-button {
             color: $white;
         }
-    } 
+    }
 
     .category-leisure {
         .toolbar-background, button, .button:hover:not(.disable-hover) {
