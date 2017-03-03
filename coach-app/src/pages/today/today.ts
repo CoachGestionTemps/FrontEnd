@@ -1,6 +1,6 @@
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { EventCategories } from '../../services/enums';
 import { Utils } from '../../services/utils';
@@ -21,12 +21,16 @@ export class TodayPage {
   displayedYear: any;
   displayedMonth: any;
 
-  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, private events: Events, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
-    this.setSelectedDay(null);
+    this.setSelectedDay(this.today);
+
+    this.events.subscribe('event:update', () => {
+        this.setSelectedDay(this.selectedDays[0].day);
+    });
   }
 
   getDayName(day) {
@@ -40,9 +44,8 @@ export class TodayPage {
 
   setSelectedDay(day) {
     var generateDays = date => [ date, moment(date).add(1, 'day'), moment(date).add(2, 'day')];
-    var days = day ? generateDays(moment(day)) : generateDays(moment());
 
-    this.eventService.getEventsForDays(days).then(eventDays => {
+    this.eventService.getEventsForDays(generateDays(moment(day))).then(eventDays => {
       this.selectedDays = eventDays;
       this.displayedMonth = this.selectedDays[0].day.get("month");
       this.displayedYear = this.selectedDays[0].day.get("year");

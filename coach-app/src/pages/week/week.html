@@ -33,11 +33,11 @@
             </ion-col>
             <ion-col *ngFor="let date of week" class="day" [ngClass]="{'is-today': today.isSame(date.day, 'day') }">
                 <ion-row *ngFor="let hour of hours" class="hour">
-                    <ion-col (click)="navigateToEventCreation(date, hour)">
+                    <ion-col (click)="navigateToEventCreation(date.day, hour)">
                         <div class="{{ utils.getCategoryClass(event.category) }}"
                             *ngFor="let event of getIndexedEvents(date, hour)"
                             [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event), width: getEventWidth(date, hour)}"
-                            (click)="navigateToEvent(event)">
+                            (click)="navigateToEvent(event, $event)">
                             <span>
                                 {{ event.title }}
                             </span>

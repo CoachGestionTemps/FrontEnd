@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
@@ -19,13 +19,18 @@ export class WeekPage {
   displayedMonth: any;
   hours: any;
 
-  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, private events : Events, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
     this.hours = this.utils.generateHours();
     this.setSelectedWeek(this.today);
+
+
+    this.events.subscribe('event:update', () => {
+        this.setSelectedWeek(this.week[0].day);
+    });
   }
 
   setSelectedWeek(day) {
@@ -92,11 +97,14 @@ export class WeekPage {
     return ((diff / 60) * 100) + '%';
   }
 
-  navigateToEvent(event) {
+  navigateToEvent(event, htmlEvent) {
+    htmlEvent.stopPropagation();
     this.navCtrl.push(EventPage, { event: event });
   }
 
   navigateToEventCreation(date, hour) {
-    this.navCtrl.push(EventCreationPage,{ date: date, hour: hour });
+    var datetime = this.moment(date.format("MM-DD-YYYY"), "MM-DD-YYYY");
+    datetime.set({ hour: hour});
+    this.navCtrl.push(EventCreationPage, { date: datetime });
   }
 }

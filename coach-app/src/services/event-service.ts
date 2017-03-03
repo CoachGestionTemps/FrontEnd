@@ -18,12 +18,11 @@ export class EventService {
 
   public getAll(): Promise<any[]> {
       // TODO : Replace this with an http.get method
-      var self = this;
     return new Promise(
-        function(resolve, reject) {
-            if (self.events.length === 0){
+        (resolve, reject) => {
+            if (this.events.length === 0){
                 // TODO : Replace this with an http.get method
-                self.events = [
+                this.events = [
                 {
                     id: 0,
                     start_datetime: moment().format(),
@@ -108,30 +107,34 @@ export class EventService {
                     location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
                     parent_id: 7
                 },
-                ]
-                localStorage.setItem(self.storageKey, JSON.stringify(self.events));
+                ];
+                this.updateCache();
             }
-            resolve(self.events)
+            resolve(this.events)
         }
     );
   }
 
    getEventsForDays(days): Promise<any[]> {
-      var self = this;
       return new Promise(
-        function(resolve, reject) {
-            self.getAll().then(events => {
-                var isSameDay = (d, e) => d.isSame(self.moment(e.start_datetime), 'day');
+        (resolve, reject) => {
+            this.getAll().then(events => {
+                var isSameDay = (d, e) => d.isSame(this.moment(e.start_datetime), 'day');
                 resolve(days.map(d => { return { day: d, events : events.filter(e => isSameDay(d, e)) }; }))
             });
         }
     );
   }
 
-  public add(event) {
+  add(event) {
     event[ 'id' ] = this.nextKey;
-      event[ 'parent_id' ] = this.nextKey;
-      this.events.push(event);
-      ++this.nextKey;
+    event[ 'parent_id' ] = this.nextKey;
+    this.events.push(event);
+    this.updateCache();
+    ++this.nextKey;
+  }
+
+  private updateCache(){
+      localStorage.setItem(this.storageKey, JSON.stringify(this.events));
   }
 }
