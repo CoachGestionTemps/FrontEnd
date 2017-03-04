@@ -1,14 +1,29 @@
-page-event {
+page-event-start {
     ion-content.content {
         background-color: $white;
     }
 
-    ion-icon {
-        font-size: 5em;
+    div.scroll-content div {
+        text-align: center;
+        margin: 1em 0em;
     }
 
-    .button-large {
-        margin-bottom: 1em;
+    div.play-pause {
+        &.paused button, &.paused button.button:hover:not(.disable-hover) {
+            background-color: $green3;
+        }
+        button, button.button:hover:not(.disable-hover) {
+            height: 5em;
+            width: 5em;
+            border-radius: 50%;
+            font-size: 3em;
+            background-color: $danger;
+        }
+    }
+
+    div.elapsed-time {
+        font-size: 5em;
+        font-weight: 300;
     }
 
     .category-undefined {

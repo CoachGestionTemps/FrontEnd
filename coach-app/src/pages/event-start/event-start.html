@@ -1,0 +1,15 @@
+<ion-header class="{{ utils.getCategoryClass(event.category) }}">
+  <ion-navbar hide-tabs>
+     {{ event.title }}
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="elapsed-time">
+    {{ moment.utc(event.passedTime * 1000).format("HH:mm:ss") }}
+    </div>
+    <div class="play-pause" [ngClass]="{ 'paused' : !playing }">
+        <button ion-button (click)="playPauseToggle()">
+            <ion-icon name="{{ playing ? 'pause' : 'play'}}" color="{{ playing ? danger : secondary }}"></ion-icon>
+        </button>
+    </div>
+</ion-content>

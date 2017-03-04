@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
+import { EventStartPage } from '../event-start/event-start';
 import moment from 'moment';
 
 @Component({
@@ -20,17 +21,20 @@ export class EventPage {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
   }
 
-  ionViewWillEnter()
-    {
+  navigateToEventStart(){
+    this.navCtrl.push(EventStartPage, { event: this.event });
+  }
 
-        this.tabBarElement.style.display = 'none';
+  getPassedTimeDuration(passedTime){
+    var duration = this.moment.duration(passedTime);
+    return duration.hours() + ":" + duration.minutes();
+  }
 
-    }
+  ionViewWillEnter(){
+    this.tabBarElement.style.display = 'none';
+  }
 
-    ionViewWillLeave()
-    {
-
-        this.tabBarElement.style.display = 'flex';
-
-    }
+  ionViewWillLeave(){
+    this.tabBarElement.style.display = 'flex';
+  }
 }

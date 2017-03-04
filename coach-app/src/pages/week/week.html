@@ -42,7 +42,8 @@
                                 {{ event.title }}
                             </span>
                             <p>
-                                Début<br>
+                                {{ 'start' | translate }}
+                                <br>
                                 {{ moment(event.start_datetime).format("HH:mm") }}
                             </p>
                         </div>

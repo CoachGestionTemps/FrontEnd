@@ -4,9 +4,13 @@ import moment from 'moment';
 @Injectable()
 export class Utils {
   moment: any;
+  categories: any;
+  categoryicons: any;
 
   constructor() {
       this.moment = moment;
+      this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
+      this.categoryicons = ['list-box', 'school','book', 'basketball', 'game-controller-b', 'briefcase'];
   }
 
 
@@ -23,7 +27,10 @@ export class Utils {
   }
 
   getCategoryClass(category){
-    var categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
-    return 'category-' + categories[category];
+    return 'category-' + this.categories[category];
+  }
+
+  getIconName(category){
+    return this.categoryicons[category];
   }
 }
