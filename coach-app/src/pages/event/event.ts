@@ -4,12 +4,14 @@ import { NavParams, NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventStartPage } from '../event-start/event-start';
+import { EventCreationPage } from "../eventCreation/eventCreation";
 import moment from 'moment';
 
 @Component({
   selector: 'page-event',
   templateUrl: 'event.html'
 })
+
 export class EventPage {
   event: any;
   moment: any;
@@ -23,6 +25,10 @@ export class EventPage {
 
   navigateToEventStart(){
     this.navCtrl.push(EventStartPage, { event: this.event });
+  }
+
+  navigateToEventCreation(event) {
+      this.navCtrl.push(EventCreationPage, { event: event, isModify: true });
   }
 
   getPassedTimeDuration(passedTime){

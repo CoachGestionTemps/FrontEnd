@@ -16,6 +16,7 @@
     "startTime": "Date de début",
     "endTime": "Date de fin",
     "createAnEvent": "Créer un évènement",
+    "editAnEvent": "Modifier un évènement",
     "title": "Titre",
     "location": "Lieu",
     "description": "Description",
@@ -36,5 +37,6 @@
     "start": "Début",
     "timePassed": "Temps écoulé",
     "enterTimePassed": "Entrer le temps écoulé",
-    "editTimePassed": "Modifier l'entrée de temps écoulé"
+    "editTimePassed": "Modifier l'entrée de temps écoulé",
+    "save": "Sauvegarder"
 }

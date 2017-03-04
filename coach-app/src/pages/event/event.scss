@@ -10,6 +10,10 @@ page-event {
     .button-large {
         margin-bottom: 1em;
     }
+    
+    .modifyButton {
+      float: right;
+    }
 
     .category-undefined {
         background-color: $white;
@@ -22,6 +26,9 @@ page-event {
         }
         .back-button.bar-button ion-icon {
             color: $white;
+        }
+        .button {
+          float: right;
         }
     }
 
@@ -38,7 +45,6 @@ page-event {
             color: $white;
         }
     }
-        
 
     .category-study {
         background-color: $white;
@@ -66,7 +72,7 @@ page-event {
         .back-button.bar-button ion-icon{
             color: $white;
         }
-    } 
+    }
 
     .category-leisure {
         background-color: $white;

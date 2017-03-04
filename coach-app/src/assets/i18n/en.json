@@ -16,6 +16,7 @@
     "startTime": "Start time",
     "endTime": "End time",
     "createAnEvent": "Create an event",
+    "editAnEvent": "Edit an event",
     "title": "Title",
     "location": "Location",
     "description": "Description",
@@ -36,5 +37,6 @@
     "start": "Starts at",
     "timePassed": "Elapsed time",
     "enterTimePassed": "Enter the elapsed time",
-    "editTimePassed": "Edit the elapsed time"
+    "editTimePassed": "Edit the elapsed time",
+    "save": "Save"
 }

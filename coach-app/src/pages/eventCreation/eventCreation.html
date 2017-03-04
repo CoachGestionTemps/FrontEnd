@@ -1,6 +1,6 @@
 <ion-header class="category-study">
   <ion-navbar hide-tabs>
-    {{ 'createAnEvent' | translate }}
+    {{ (isModify ? 'editAnEvent' : 'createAnEvent') | translate }}
   </ion-navbar>
 </ion-header>
 
@@ -8,15 +8,15 @@
   <ion-list>
     <ion-item>
       <ion-label fixed>{{ 'title' | translate }}</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="title"></ion-input>
+      <ion-input type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>{{ 'location' | translate }}</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="location"></ion-input>
+      <ion-input type="text" [(ngModel)]="location"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>{{ 'description' | translate }}</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="description"></ion-input>
+      <ion-input type="text" [(ngModel)]="description"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -53,6 +53,5 @@
       </ion-select>
     </ion-item>
   </ion-list>
-
-  <button ion-button (click)="createEvent()">{{ 'create' | translate }}</button>
+  <button ion-button (click)="saveEvent()">{{ 'save' | translate }}</button>
 </ion-content>
