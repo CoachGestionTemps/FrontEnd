@@ -41,6 +41,7 @@ export class EventStartPage {
   pause(){
     this.pauser.next(true);
     this.playing = false;
+    this.eventService.edit(this.event);
   }
 
   playPauseToggle(){

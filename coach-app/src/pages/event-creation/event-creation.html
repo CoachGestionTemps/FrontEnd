@@ -1,11 +1,11 @@
-<ion-header class="category-study">
+<ion-header class="{{ event ? utils.getCategoryClass(event.category) : 'category-study' }}">
   <ion-navbar hide-tabs>
-    {{ (isModify ? 'editAnEvent' : 'createAnEvent') | translate }}
+    {{ (event ? 'editAnEvent' : 'createAnEvent') | translate }}
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list class="{{ event ? utils.getCategoryClass(event.category) : 'category-study' }}">
     <ion-item>
       <ion-label fixed>{{ 'title' | translate }}</ion-label>
       <ion-input type="text" [(ngModel)]="title"></ion-input>
@@ -42,7 +42,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>{{ 'rappel' | translate }}</ion-label>
+      <ion-label>{{ 'reminder' | translate }}</ion-label>
       <ion-select [(ngModel)]="reminder">
         <ion-option value="none">{{ 'none' | translate }}</ion-option>
         <ion-option value="15m">{{ '15minutes' | translate }}</ion-option>
@@ -52,6 +52,6 @@
         <ion-option value="1d">{{ '1day' | translate }}</ion-option>
       </ion-select>
     </ion-item>
+  <button ion-button class="save-button" (click)="saveEvent()">{{ 'save' | translate }}</button>
   </ion-list>
-  <button ion-button (click)="saveEvent()">{{ 'save' | translate }}</button>
 </ion-content>

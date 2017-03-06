@@ -4,7 +4,7 @@ import { NavParams, NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventStartPage } from '../event-start/event-start';
-import { EventCreationPage } from "../eventCreation/eventCreation";
+import { EventCreationPage } from "../event-creation/event-creation";
 import moment from 'moment';
 
 @Component({
@@ -28,7 +28,11 @@ export class EventPage {
   }
 
   navigateToEventCreation(event) {
-      this.navCtrl.push(EventCreationPage, { event: event, isModify: true });
+      this.navCtrl.push(EventCreationPage, { event: event });
+  }
+
+  promptDeleteEvent(event) {
+
   }
 
   getPassedTimeDuration(passedTime){

@@ -1,3 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="rangetype" color="secondary">
+      <ion-segment-button value="week" (click)="setActualSelection()">
+        Semaine
+      </ion-segment-button>
+      <ion-segment-button value="month" (click)="setActualSelection()">
+        Mois
+      </ion-segment-button>
+      <ion-segment-button value="session" (click)="setActualSelection()">
+        Session
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  
+    <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content>{{ 'refreshing' | translate }}</ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+      <ion-item color="green2">
+        <ion-row>
+        <ion-col width-20 class="left-arrow">
+            <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousSelection()"></ion-icon>
+        </ion-col>
+        <ion-col width-60 class="month-name">
+        <h2>{{ selectionTitle }} </h2>
+        </ion-col>
+        <ion-col width-20 class="right-arrow">
+            <ion-icon name="arrow-dropright-circle" color="white" medium (click)="getNextSelection()"></ion-icon>
+        </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item class="pie-chart">
+
+    </ion-item>
+    <ion-item class="diagram" *ngFor="let stat of stats">
+        <div *ngIf="stat" class="{{ utils.getCategoryClass(stat.categoryKey) }}">
+            <div class="full-width">
+                <span>
+                    {{ (utils.getCategoryTranslationKey(stat.categoryKey)) | translate }}
+                </span>
+                <span class="passed-time">
+                    {{ moment.utc(stat.passedTime * 1000).format("H:mm") }}
+                </span>
+                <div [ngStyle]="{ width: (stat.passedTime / stat.plannedTime) + '%' }">
+                </div>
+            </div>
+        </div>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -134,14 +134,15 @@ export class EventService {
     ++this.nextKey;
   }
 
-  modify(event)
-  {
+  edit(event) {
     for (var i in this.events) {
       if (this.events[i].id == event.id) {
         this.events[i] = event;
+        this.updateCache();
         break;
       }
     }
+
   }
 
   private updateCache(){

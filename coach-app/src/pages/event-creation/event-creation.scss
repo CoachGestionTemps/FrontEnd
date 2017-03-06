@@ -1,26 +1,22 @@
-page-event {
+page-event-creation {
     ion-content.content {
         background-color: $white;
     }
-
-    ion-icon {
-        font-size: 5em;
-    }
-
-    .button-large {
-        margin-bottom: 1em;
-    }
-    
     ion-header .toolbar ion-icon {
         color: $white;
     }
 
+    .button {
+        float: right;
+        margin: 1em;
+    }
+    
     .category-undefined {
         background-color: $white;
         ion-icon {
             color: $grey2;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $grey2;
             color: $white;
         }
@@ -34,7 +30,7 @@ page-event {
         ion-icon {
             color: $primary;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $primary;
             color: $white;
         }
@@ -48,7 +44,7 @@ page-event {
         ion-icon {
             color: $green3;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $green3;
             color: $white;
         }
@@ -62,7 +58,7 @@ page-event {
         ion-icon {
             color: $orange;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $orange;
             color: $white;
         }
@@ -76,7 +72,7 @@ page-event {
         ion-icon {
             color: $danger;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $danger;
             color: $white;
         }
@@ -90,7 +86,7 @@ page-event {
         ion-icon {
             color: $purple;
         }
-        .toolbar-background, button, .button:hover:not(.disable-hover) {
+        .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
             background-color: $purple;
             color: $white;
         }
