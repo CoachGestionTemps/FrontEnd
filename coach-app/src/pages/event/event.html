@@ -1,7 +1,14 @@
 <ion-header class="{{ utils.getCategoryClass(event.category) }}">
   <ion-navbar hide-tabs>
     {{ moment(event.start_datetime).format("ll") }}
-    <button ion-button class= "modifyButton" (click)="navigateToEventCreation(event)">Modifier</button>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="navigateToEventCreation(event)">
+            <ion-icon name="create"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="promptDeleteEvent(event)">
+            <ion-icon name="trash"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>

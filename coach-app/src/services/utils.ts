@@ -30,6 +30,10 @@ export class Utils {
     return 'category-' + this.categories[category];
   }
 
+  getCategoryTranslationKey(category){
+    return this.categories[category];
+  }
+
   getIconName(category){
     return this.categoryicons[category];
   }

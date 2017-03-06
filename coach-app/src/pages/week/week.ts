@@ -4,7 +4,7 @@ import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
-import { EventCreationPage } from "../eventCreation/eventCreation";
+import { EventCreationPage } from "../event-creation/event-creation";
 import moment from 'moment';
 
 @Component({
@@ -105,6 +105,6 @@ export class WeekPage {
   navigateToEventCreation(date, hour) {
     var datetime = this.moment(date.format("MM-DD-YYYY"), "MM-DD-YYYY");
     datetime.set({ hour: hour});
-    this.navCtrl.push(EventCreationPage, { date: datetime, isModify: false });
+    this.navCtrl.push(EventCreationPage, { date: datetime });
   }
 }

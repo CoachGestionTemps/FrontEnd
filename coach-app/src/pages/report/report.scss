@@ -1,3 +1,56 @@
 page-report {
+    ion-content.content {
+        background-color: $white;
+    }
 
+    .segment {
+        .segment-button.segment-activated, .segment-button {
+            border-color: $white;
+            color: $white;
+        }
+    }
+
+    .toolbar-background {
+        background-color: $green2;
+    }
+
+    .list .item-block .item-inner {
+        border: none;
+    }
+
+    ion-item.pie-chart{
+        margin:1em 0;
+    }
+
+    ion-item.diagram {
+        ion-label div {
+            border-radius: 5px;
+
+            div.full-width {
+                height: 3em;
+                width: 100%;
+
+                div {
+                    height: 3em;
+                    border-radius: 5px;
+                    background: rgba(255, 255, 255, 0.4);
+                }
+
+                span {
+                    position: absolute;
+                    line-height: 2em;
+                    font-size: 2em;
+                    margin: 0 0.1em;
+
+                    &.passed-time{
+                        right: 0.6em;
+                    }
+                }
+            }
+        }
+        
+    }
+    .has-refresher > .scroll-content {
+        border-top: none;
+    }
 }
