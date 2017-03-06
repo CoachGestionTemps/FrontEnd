@@ -13,7 +13,7 @@ export class EventService {
 
   constructor(private http: Http) {
       this.moment = moment;
-      this.nextKey = 8;
+      this.nextKey = this.events.length;
   }
 
   public getAll(): Promise<any[]> {
