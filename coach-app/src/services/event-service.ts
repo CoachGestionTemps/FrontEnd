@@ -142,7 +142,6 @@ export class EventService {
         break;
       }
     }
-
   }
 
   private updateCache(){

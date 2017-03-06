@@ -36,6 +36,7 @@ export class EventCreationPage {
       var dateEndTime = this.moment(this.event.end_datetime);
       this.endTime = dateEndTime.format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
     } else {
+      this.date = navParams.get("date");
       this.startTime = this.moment(this.date).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
       var dateEndTime = this.moment(this.date);
       dateEndTime.add(1, 'hour');
