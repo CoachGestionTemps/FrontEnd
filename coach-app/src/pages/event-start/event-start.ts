@@ -25,11 +25,11 @@ export class EventStartPage {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.event.passedTime = this.event.passedTime || 0;
+    this.event.passed_time = this.event.passed_time || 0;
     this.pauser = new Subject();
     this.timer = Observable.timer(0, 1000);
     this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
-    this.pausable.subscribe(() => this.event.passedTime++);
+    this.pausable.subscribe(() => this.event.passed_time++);
     this.play();
   }
 

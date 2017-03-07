@@ -38,6 +38,8 @@
     "create": "Create",
     "start": "Starts at",
     "timePassed": "Elapsed time",
+    "dedicatedTime": "Dedicated time",
+    "noStatsForSelectedPeriod": "No available statistics for the selected period",
     "enterTimePassed": "Enter the elapsed time",
     "editTimePassed": "Edit the elapsed time",
     "save": "Save"

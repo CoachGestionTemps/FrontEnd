@@ -20,6 +20,10 @@ page-report {
 
     ion-item.pie-chart{
         margin:1em 0;
+        text-align: center;
+        h1 {
+            margin-bottom: 0.5em;
+        }
     }
 
     ion-item.diagram {

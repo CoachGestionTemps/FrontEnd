@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
+import { Chart } from 'chart.js';
 import moment from 'moment';
 
 @Component({
@@ -18,11 +19,20 @@ export class ReportPage {
   actualDate: any;
   events: any;
   selectionTitle: any;
+  pieChart: any;
+  chartData: number[];
+  chartLabels: string[];
+  viewLoaded: boolean;
+
+  @ViewChild('pieCanvas') pieCanvas;
 
   constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.rangetype = "week";
     this.actualDate = this.moment();
+    this.chartData = [];
+    this.chartLabels = [];
+    this.viewLoaded = false;
     this.refresh(null);
   }
 
@@ -52,14 +62,19 @@ export class ReportPage {
     }
 
     var stats = [];
+    var chartLabels = [];
+    var chartData = [];
 
     this.events.filter(e => this.moment(e.start_datetime).isAfter(this.minDate) && this.moment(e.end_datetime).isBefore(this.maxDate)).forEach(e => {
       if (stats[e.category]){
-        stats[e.category].passedTime += e.passedTime || 0;
+        chartData[e.category] += e.passed_time || 0;
+        stats[e.category].passed_time += chartData[e.category];
         stats[e.category].plannedTime += this.moment(e.end_datetime).diff(this.moment(e.start_datetime), 'minutes');
       } else {
+        chartLabels[e.category] = e.category;
+        chartData[e.category] = e.passed_time || 0;
         stats[e.category] = {
-          passedTime: e.passedTime || 0,
+          passed_time: chartData[e.category],
           plannedTime: this.moment(e.end_datetime).diff(this.moment(e.start_datetime), 'minutes'),
           categoryKey: e.category
         }
@@ -67,6 +82,32 @@ export class ReportPage {
     });
 
     this.stats = stats.filter(e => e);
+    this.updateChart(chartLabels.filter(e => e != null), chartData.filter(e => e != null));
+  }
+
+  updateChart(chartLabels, chartData){
+    if (this.viewLoaded){
+      
+      if (this.pieChart){
+        this.pieChart.destroy();
+      }
+
+      this.pieChart = new Chart(this.pieCanvas.nativeElement, {
+            type: 'pie',
+            data: {
+                labels: chartLabels.map(l => this.utils.getCategoryName(l)),
+                datasets: [{
+                    label: '# of Votes',
+                    data: chartData,
+                    backgroundColor: chartLabels.map(l => this.utils.getCategoryColors(l))
+                }]
+            }
+        });
+    }
+  }
+
+  ionViewDidLoad(){
+    this.viewLoaded = true;
   }
 
   getSessionRanges(){
