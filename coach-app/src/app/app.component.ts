@@ -3,10 +3,12 @@ import { Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import {TranslateService} from 'ng2-translate';
 import { TabsPage } from '../pages/tabs/tabs';
+import {GuidService} from "../services/guid-service";
 
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [GuidService]
 })
 export class MyApp {
   rootPage = TabsPage;
