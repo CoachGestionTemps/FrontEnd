@@ -38,6 +38,8 @@
     "create": "Créer",
     "start": "Début",
     "timePassed": "Temps écoulé",
+    "dedicatedTime": "Temps dédié",
+    "noStatsForSelectedPeriod": "Aucune statistique disponible pour la période sélectionnée",
     "enterTimePassed": "Entrer le temps écoulé",
     "editTimePassed": "Modifier l'entrée de temps écoulé",
     "save": "Sauvegarder"

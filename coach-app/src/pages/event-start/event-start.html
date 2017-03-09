@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content>
     <div class="elapsed-time">
-    {{ moment.utc(event.passedTime * 1000).format("HH:mm:ss") }}
+    {{ moment.utc(event.passed_time * 1000).format("HH:mm:ss") }}
     </div>
     <div class="play-pause" [ngClass]="{ 'paused' : !playing }">
         <button ion-button (click)="playPauseToggle()">

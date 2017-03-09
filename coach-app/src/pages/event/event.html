@@ -33,15 +33,15 @@
         <ion-icon name="calendar" item-left></ion-icon>
         {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }}
     </ion-item>
-    <ion-item *ngIf="event.passedTime != null">
+    <ion-item *ngIf="event.passed_time != null">
         <h2> 
-            {{ 'timePassed' | translate }} : {{ moment.utc(event.passedTime * 1000).format("HH:mm") }}
+            {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passed_time * 1000).format("H[h]mm") }}
         </h2>
     </ion-item>
     <ion-item>
         <span class="{{ utils.getCategoryClass(event.category) }}">
-            <button full large ion-button (click)="navigateToEventStart()">{{ (event.passedTime == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
-            <button full large ion-button>{{ (event.passedTime == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
+            <button full large ion-button (click)="navigateToEventStart()">{{ (event.passed_time == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
+            <button full large ion-button>{{ (event.passed_time == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
         </span>
     </ion-item>
   </ion-list>
