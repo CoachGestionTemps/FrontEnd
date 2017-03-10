@@ -145,6 +145,16 @@ export class EventService {
     }
   }
 
+  delete(event){
+    for (var i in this.events) {
+      if (this.events[i].id == event.id) {
+        this.events.splice(i, 1);
+        this.updateCache();
+        break;
+      }
+    }
+  }
+
   private updateCache(){
       localStorage.setItem(this.storageKey, JSON.stringify(this.events));
   }
