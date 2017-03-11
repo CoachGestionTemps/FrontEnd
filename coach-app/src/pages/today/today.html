@@ -46,7 +46,7 @@
     <ion-col width-20 class="left-arrow">
         <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousMonth()"></ion-icon>
     </ion-col>
-    <ion-col width-60 class="month-name">
+    <ion-col width-60 class="month-name" (click)="navigateToAuth()">
       <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
     </ion-col>
     <ion-col width-20 class="right-arrow">
