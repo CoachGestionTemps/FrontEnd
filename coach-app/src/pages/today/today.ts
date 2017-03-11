@@ -62,6 +62,10 @@ export class TodayPage {
     this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
   }
 
+  navigateToAuth(){
+    window.location.replace("https://www.usherbrooke.ca/~desp2714/app-start/auth/connexion");
+  }
+
   navigateToEvent(event){
     this.navCtrl.push(EventPage, { event: event });
   }
