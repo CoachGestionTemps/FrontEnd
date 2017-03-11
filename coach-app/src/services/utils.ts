@@ -10,7 +10,7 @@ export class Utils {
     categoryNames: string[];
     categoryColors: string[];
 
-    constructor(private translate: TranslateService) {
+      constructor(private translate: TranslateService) {
         this.moment = moment;
         this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
         this.categoryColors = ['#3d4641', '#387ef5', '#2d9d5f', '#E6A82A', '#f53d3d', '#4849A4'];
@@ -62,9 +62,20 @@ export class Utils {
       }
 
       this.translate.get(categories[0]).subscribe((res: string) => {
-        categories.splice(0, 1); 
+        categories.splice(0, 1);
         this.categoryNames.push(res);
         this._getCategoryName(categories);
-    });
-  }
+      });
+    }
+
+    translateWord(word){
+      var wordTranslated;
+
+      this.translate.get(word).subscribe((res: string) => {
+        wordTranslated = res;
+      });
+
+      return wordTranslated;
+    }
+
 }

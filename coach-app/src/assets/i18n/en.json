@@ -42,5 +42,8 @@
     "noStatsForSelectedPeriod": "No available statistics for the selected period",
     "enterTimePassed": "Enter the elapsed time",
     "editTimePassed": "Edit the elapsed time",
-    "save": "Save"
+    "save": "Save",
+    "delete": "Delete",
+    "sureToDelete": "Are you sure you want to delete this event?",
+    "cancel": "cancel"
 }

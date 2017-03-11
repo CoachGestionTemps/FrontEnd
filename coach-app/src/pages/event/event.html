@@ -5,14 +5,14 @@
         <button ion-button icon-only (click)="navigateToEventCreation(event)">
             <ion-icon name="create"></ion-icon>
         </button>
-        <button ion-button icon-only (click)="promptDeleteEvent(event)">
+        <button ion-button icon-only (click)="showDeletePrompt(event)">
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-list class="{{ utils.getCategoryClass(event.category) }}">
+  <ion-list class="{{ utils.getCategoryClass(event. category) }}">
     <ion-item>
         <ion-thumbnail item-left>
             <ion-icon name="{{ utils.getIconName(event.category) }}"></ion-icon>
@@ -34,7 +34,7 @@
         {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }}
     </ion-item>
     <ion-item *ngIf="event.passed_time != null">
-        <h2> 
+        <h2>
             {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passed_time * 1000).format("H[h]mm") }}
         </h2>
     </ion-item>
