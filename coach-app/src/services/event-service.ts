@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs";
 import moment from 'moment';
+import { GuidService } from '../services/guid-service';
 
 @Injectable()
 export class EventService {
@@ -11,7 +12,7 @@ export class EventService {
   moment: any;
   nextKey: any;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private guidService : GuidService) {
       this.moment = moment;
       this.nextKey = this.events.length;
   }
@@ -127,7 +128,7 @@ export class EventService {
   }
 
   add(event) {
-    event[ 'id' ] = this.nextKey;
+    event[ 'id' ] = this.guidService.getGuid();
     event[ 'parent_id' ] = this.nextKey;
     this.events.push(event);
     this.updateCache();
@@ -138,6 +139,16 @@ export class EventService {
     for (var i in this.events) {
       if (this.events[i].id == event.id) {
         this.events[i] = event;
+        this.updateCache();
+        break;
+      }
+    }
+  }
+
+  delete(event){
+    for (var i in this.events) {
+      if (this.events[i].id == event.id) {
+        this.events.splice(i, 1);
         this.updateCache();
         break;
       }

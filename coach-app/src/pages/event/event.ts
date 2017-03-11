@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavParams, NavController } from 'ionic-angular';
+import { NavParams, NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventStartPage } from '../event-start/event-start';
@@ -17,7 +17,7 @@ export class EventPage {
   moment: any;
   tabBarElement: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private eventService : EventService, private events: Events, private utils : Utils) {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
@@ -32,7 +32,9 @@ export class EventPage {
   }
 
   promptDeleteEvent(event) {
-
+      this.eventService.delete(event);
+      this.navCtrl.pop();
+      this.events.publish('event:update');
   }
 
   getPassedTimeDuration(passedTime){
