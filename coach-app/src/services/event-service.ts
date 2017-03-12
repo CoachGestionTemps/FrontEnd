@@ -1,20 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Http} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs";
+import { SettingService } from '../services/setting-service';
 import moment from 'moment';
-import { GuidService } from '../services/guid-service';
 
 @Injectable()
 export class EventService {
-  url = ''; // THIS WILL BE OUR API ENDPOINT
-  storageKey = "events";
-  events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
+  url: string;
+  storageKey: string;
+  events: any[];
   moment: any;
-  nextKey: any;
 
-  constructor(private http: Http, private guidService : GuidService) {
+  constructor(private http: Http, private setting: SettingService) {
+      this.url = setting.getEndPointURL();
+      this.storageKey = "events";
+      this.events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
       this.moment = moment;
-      this.nextKey = this.events.length;
   }
 
   public getAll(): Promise<any[]> {
@@ -128,28 +129,33 @@ export class EventService {
   }
 
   add(event) {
-    event[ 'id' ] = this.guidService.getGuid();
-    event[ 'parent_id' ] = this.nextKey;
+    event.id = this.guid();
+    event.parent_id = event.id;
+    // TODO : PUT request, if success :
     this.events.push(event);
     this.updateCache();
-    ++this.nextKey;
+    // else : error message
   }
 
   edit(event) {
     for (var i in this.events) {
       if (this.events[i].id == event.id) {
+        // TODO : POST request, if success:
         this.events[i] = event;
         this.updateCache();
+        // else : error message
         break;
       }
     }
   }
 
   delete(event){
-    for (var i in this.events) {
+    for (var i = 0; i < this.events.length; i++) {
       if (this.events[i].id == event.id) {
+        // TODO : DELETE request, if success :
         this.events.splice(i, 1);
         this.updateCache();
+        // else : error message
         break;
       }
     }
@@ -157,5 +163,12 @@ export class EventService {
 
   private updateCache(){
       localStorage.setItem(this.storageKey, JSON.stringify(this.events));
+  }
+
+  private guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 }

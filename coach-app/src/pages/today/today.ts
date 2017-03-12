@@ -34,12 +34,14 @@ export class TodayPage {
   }
 
   getDayName(day) {
-    ["yesterday", "today", "tomorrow"].forEach((day, i) => {
-      if (moment(day).isSame(moment().add(i - 1, "days"), 'day')){
-        return day;
+    var self = this;
+    var response = "";
+    ["yesterday", "today", "tomorrow"].forEach((dayName, i) => {
+      if (self.moment(day).isSame(self.moment().add(i - 1, "days"), 'day')){
+        response = dayName;
       }
     });
-    return "";
+    return response;
   }
 
   setSelectedDay(day) {
