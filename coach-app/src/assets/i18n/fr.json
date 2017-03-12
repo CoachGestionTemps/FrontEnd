@@ -45,5 +45,7 @@
     "save": "Sauvegarder",
     "delete": "Supprimer",
     "sureToDelete": "Êtes-vous sur de vouloir supprimer cet événement?",
-    "cancel": "cancel"
+    "cancel": "Annuler",
+    "from": "De",
+    "to": "À"
 }

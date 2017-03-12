@@ -25,23 +25,30 @@
         <ion-icon name="list" item-left></ion-icon>
         {{ event.summary }}
     </ion-item>
-    <ion-item *ngIf="event.location">
-        <ion-icon name="navigate" item-left></ion-icon>
-        {{ event.location }}
-    </ion-item>
     <ion-item>
         <ion-icon name="calendar" item-left></ion-icon>
         {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }}
+    </ion-item>
+    <ion-item>
+        <ion-icon name="clock" item-left></ion-icon>
+        {{ ('from' | translate) + ' ' + moment(event.start_datetime).format("H:mm") + ' ' + ('to' | translate) + ' ' + moment(event.end_datetime).format("H:mm") }}
+    </ion-item>
+    <ion-item *ngIf="event.location">
+        <ion-icon name="navigate" item-left></ion-icon>
+        {{ event.location }}
     </ion-item>
     <ion-item *ngIf="event.passed_time != null">
         <h2>
             {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passed_time * 1000).format("H[h]mm") }}
         </h2>
     </ion-item>
+    <ion-item hidden="true">
+        <ion-datetime #datePicker (ionChange)="passedTimeUpdated()" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="passedTime"></ion-datetime>
+    </ion-item>
     <ion-item>
         <span class="{{ utils.getCategoryClass(event.category) }}">
             <button full large ion-button (click)="navigateToEventStart()">{{ (event.passed_time == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
-            <button full large ion-button>{{ (event.passed_time == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
+            <button full large ion-button (click)="datePicker.open()">{{ (event.passed_time == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
         </span>
     </ion-item>
   </ion-list>

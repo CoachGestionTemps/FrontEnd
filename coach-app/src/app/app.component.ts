@@ -29,13 +29,13 @@ export class MyApp {
                       self.setting.setEventToken(keyValue[1]);
                   }
               }
-          })
+          });
           window.location.search = "";
       }
 
       // TODO : Uncomment when the Auth is done server side
       if (!setting.getCIP() || !setting.getEventToken()){
-        //window.location = 'https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(setting.getEndPointURL() + '/auth/retourcas' + (setting.isProd() ? "" : "?isDev=true"));
+        //window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(setting.getEndPointURL() + '/auth/retourcas' + (setting.isProd() ? "" : "?isDev=true")));
       }
 
       StatusBar.styleDefault();

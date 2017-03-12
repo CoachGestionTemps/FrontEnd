@@ -64,10 +64,6 @@ export class TodayPage {
     this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
   }
 
-  navigateToAuth(){
-    window.location.replace("https://www.usherbrooke.ca/~desp2714/app-start/auth/connexion");
-  }
-
   navigateToEvent(event){
     this.navCtrl.push(EventPage, { event: event });
   }
@@ -82,6 +78,22 @@ export class TodayPage {
   }
 
   getMonthArray(year, month) {
+    var date = this.moment([year, month]).startOf('week');
+    var result = [];
+
+    for (var i = 0; i < 5; i++){
+      var tmp = [];
+      for (var j = 0; j < 7; j++){
+        tmp.push(this.moment(date).add(j, 'days'));
+      }
+      result.push(tmp);
+      date.add(7, 'days');
+    }
+
+    return result;
+  }
+
+  getMonthArray2(year, month) {
     var date = new Date(year, month, 1);
     var result = [];
     var preFill = [], postFill = [], tmp = [new Date(date.getTime())];
