@@ -4,6 +4,7 @@ import { TodayPage } from '../today/today';
 import { WeekPage } from '../week/week';
 import { ReportPage } from '../report/report';
 import { EventService } from "../../services/event-service";
+import { SettingService } from "../../services/setting-service";
 import { Utils } from "../../services/utils";
 
 import moment from 'moment';
@@ -13,7 +14,7 @@ import 'moment/src/locale/en-ca';
 
 @Component({
   templateUrl: 'tabs.html',
-  providers: [EventService, Utils],
+  providers: [EventService, SettingService, Utils],
 })
 export class TabsPage {
   // this tells the tabs component which Pages

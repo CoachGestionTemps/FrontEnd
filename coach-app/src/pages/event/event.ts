@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { NavParams, NavController, Events, AlertController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
@@ -15,15 +15,18 @@ import moment from 'moment';
 })
 
 export class EventPage {
+  @ViewChild('datePicker') datePicker;
   event: any;
   moment: any;
   tabBarElement: any;
+  passedTime: any;
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
               private eventService : EventService, private events: Events, private utils : Utils, private translate: TranslateService) {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    this.passedTime = this.moment.utc((this.event.passed_time || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
   }
 
   navigateToEventStart(){
@@ -43,6 +46,11 @@ export class EventPage {
   getPassedTimeDuration(passedTime){
     var duration = this.moment.duration(passedTime);
     return duration.hours() + ":" + duration.minutes();
+  }
+
+  passedTimeUpdated(){
+    this.event.passed_time = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
+    this.eventService.edit(this.event);
   }
 
   ionViewWillEnter(){

@@ -46,7 +46,7 @@
     <ion-col width-20 class="left-arrow">
         <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousMonth()"></ion-icon>
     </ion-col>
-    <ion-col width-60 class="month-name" (click)="navigateToAuth()">
+    <ion-col width-60 class="month-name">
       <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
     </ion-col>
     <ion-col width-20 class="right-arrow">
@@ -71,7 +71,7 @@
         <ion-col *ngFor="let day of week"
                   [ngClass]="{'is-selected': selectedDays[0].day.isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }"
                   (click)="setSelectedDay(day)">
-          {{ day ? day.getDate() : "" }}
+          {{ day ? day.date() : "" }}
         </ion-col>
       </ion-row>
     </ion-grid>
