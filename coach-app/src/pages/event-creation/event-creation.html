@@ -21,7 +21,7 @@
 
     <ion-item>
       <ion-label>{{ 'category' | translate }}</ion-label>
-      <ion-select [(ngModel)]="activityType">
+      <ion-select  interface="action-sheet" [(ngModel)]="activityType">
         <ion-option value=0>{{ 'none' | translate }}</ion-option>
         <ion-option value=1>{{ 'class' | translate }}</ion-option>
         <ion-option value=2>{{ 'study' | translate }}</ion-option>
@@ -32,18 +32,23 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>{{ 'Date' }}</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="eventDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
       <ion-label>{{ 'startTime' | translate }}</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="startTime"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="startTime"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label>{{ 'endTime' | translate }}</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY HH:mm" pickerFormat="DD MMMM YYYY HH:mm" [(ngModel)]="endTime"></ion-datetime>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
 
     <ion-item>
       <ion-label>{{ 'reminder' | translate }}</ion-label>
-      <ion-select [(ngModel)]="reminder">
+      <ion-select interface="action-sheet" [(ngModel)]="reminder">
         <ion-option value="none">{{ 'none' | translate }}</ion-option>
         <ion-option value="15m">{{ '15minutes' | translate }}</ion-option>
         <ion-option value="30m">{{ '30minutes' | translate }}</ion-option>

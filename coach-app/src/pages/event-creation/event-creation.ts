@@ -22,8 +22,8 @@ export class EventCreationPage {
   title: any;
   location: any;
   description: any;
-  headerTitle: any;
   event: any;
+  eventDate: any;
 
   constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private eventService : EventService, private utils : Utils) {
     this.moment = moment;
@@ -32,11 +32,13 @@ export class EventCreationPage {
       this.location = this.event.location;
       this.description = this.event.summary;
       this.activityType = this.event.category;
+      this.eventDate = this.moment(this.event.start_datetime).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
       this.startTime = this.moment(this.event.start_datetime).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
       var dateEndTime = this.moment(this.event.end_datetime);
       this.endTime = dateEndTime.format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
     } else {
       this.date = navParams.get("date");
+      this.eventDate = this.moment(this.date).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
       this.startTime = this.moment(this.date).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
       var dateEndTime = this.moment(this.date);
       dateEndTime.add(1, 'hour');
@@ -49,38 +51,36 @@ export class EventCreationPage {
   }
 
   saveEvent(){
-      var start_datetime = this.moment(this.startTime);
-      var end_datetime = this.moment(this.endTime);
+    var start_datetime = this.moment(this.startTime);
+    var end_datetime = this.moment(this.endTime);
+    /*start_datetime = moment(this.eventDate).set({'hour' : moment(this.startTime).get('hour'),
+                                                      'minute' : moment(this.startTime).get('minute')
+                                                    });
+    end_datetime = moment(this.eventDate).set({'hour' : moment(this.endTime).get('hour'),
+                                        'minute' : moment(this.endTime).get('minute')
+                                      });*/
       start_datetime.add(-start_datetime.utcOffset(), 'minute');
       end_datetime.add(-end_datetime.utcOffset(), 'minute');
 
+    var eventToSave = {
+      start_datetime: start_datetime.format(),
+      end_datetime: end_datetime.format(),
+      category: this.activityType,
+      user_id: 1,
+      title: this.title,
+      passed_time: null,
+      summary: this.description,
+      location: this.location
+    };
+
     if (this.event){
-      var eventModify = {
-        id: this.event.id,
-        start_datetime: start_datetime.format(),
-        end_datetime: end_datetime.format(),
-        category: this.activityType,
-        user_id: 1,
-        title: this.title,
-        passed_time: null,
-        summary: this.description,
-        location: this.location
-      };
-      this.eventService.edit(eventModify);
+      eventToSave[ 'id' ] = this.event.id;
+
+      this.eventService.edit(eventToSave);
       this.navCtrl.pop();
     }
     else{
-      var eventCreated = {
-        start_datetime: start_datetime.format(),
-        end_datetime: end_datetime.format(),
-        category: this.activityType,
-        user_id: 1,
-        title: this.title,
-        passed_time: null,
-        summary: this.description,
-        location: this.location
-      };
-      this.eventService.add(eventCreated);
+      this.eventService.add(eventToSave);
     }
     this.events.publish('event:update');
     this.navCtrl.pop();
