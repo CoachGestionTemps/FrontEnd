@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
@@ -12,6 +11,7 @@ import moment from 'moment';
   templateUrl: 'week.html'
 })
 export class WeekPage {
+  @ViewChild('week-content') private container: ElementRef;
   week: any;
   today: any;
   moment: any;
@@ -52,7 +52,7 @@ export class WeekPage {
       for (var dayEvent of dayEvents) {
         dayEvent.indexedEvents = new Array(24);
         for (var event of dayEvent.events){
-          var hour = moment(event.start_datetime).get('h');
+          var hour = moment(event.start_time).get('h');
           if (dayEvent.indexedEvents[hour]){
             dayEvent.indexedEvents[hour].push(event);
           } else {
@@ -89,11 +89,11 @@ export class WeekPage {
   }
 
   getEventMargin(event){
-    return ((this.moment(event.start_datetime).minutes() / 60) * 50) + 'px';
+    return ((this.moment(event.start_time).minutes() / 60) * 50) + 'px';
   }
 
   getEventHeight(event){
-    var diff = this.moment.duration(this.moment(event.end_datetime).diff(this.moment(event.start_datetime))).asMinutes();
+    var diff = this.moment.duration(this.moment(event.end_time).diff(this.moment(event.start_time))).asMinutes();
     return ((diff / 60) * 100) + '%';
   }
 
@@ -106,5 +106,10 @@ export class WeekPage {
     var datetime = this.moment(date.format("MM-DD-YYYY"), "MM-DD-YYYY");
     datetime.set({ hour: hour});
     this.navCtrl.push(EventCreationPage, { date: datetime });
+  }
+
+  ionViewDidLoad(){
+
+    document.getElementById(this.moment().format("H") + "H").scrollIntoView();
   }
 }

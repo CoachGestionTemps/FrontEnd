@@ -2,7 +2,6 @@ import { Component, trigger, state, style, transition, animate, keyframes } from
 
 import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
-import { EventCategories } from '../../services/enums';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
 import moment from 'moment';
@@ -68,6 +67,10 @@ export class TodayPage {
     this.navCtrl.push(EventPage, { event: event });
   }
 
+  navigateToAuth(){
+    window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent('https://www.usherbrooke.ca/~desp2714/app-start/auth/retourcas'));
+  }
+
   getPreviousMonth(){
     if (--this.displayedMonth < 0){
       this.displayedMonth = 11;
@@ -81,7 +84,7 @@ export class TodayPage {
     var date = this.moment([year, month]).startOf('week');
     var result = [];
 
-    for (var i = 0; i < 5; i++){
+    while (this.monthArrayCondition(month, date)){
       var tmp = [];
       for (var j = 0; j < 7; j++){
         tmp.push(this.moment(date).add(j, 'days'));
@@ -93,42 +96,14 @@ export class TodayPage {
     return result;
   }
 
-  getMonthArray2(year, month) {
-    var date = new Date(year, month, 1);
-    var result = [];
-    var preFill = [], postFill = [], tmp = [new Date(date.getTime())];
-
-    while (date.getDay() < 6) {
-      date.setDate(date.getDate() + 1);
-      tmp.push(new Date(date.getTime()));
+  private monthArrayCondition(month, date){
+    if (month === 0){
+      return date.month() === 11 || date.month() <= month;
+    } else if (month === 11){
+      return date.month() !== 0;
+    } else {
+      return date.month() <= month;
     }
-
-    for (var i = 0; i < 7 - tmp.length; i++){
-      preFill.push(null);
-    }
-
-    result.push(preFill.concat(tmp));
-
-    tmp = [];
-
-    while (date.getMonth() == month) {
-      date.setDate(date.getDate() + 1);
-
-      if (date.getMonth() == month){
-        tmp.push(new Date(date.getTime()));
-        if (date.getDay() == 6) {
-          result.push(tmp);
-          tmp = [];
-        }
-      }
-    }
-
-    for (var i = 0; i < 7 - tmp.length; i++){
-      postFill.push(null);
-    }
-
-    result.push(tmp.concat(postFill));
-    return result;
   }
 
   setClickedDate (day) {

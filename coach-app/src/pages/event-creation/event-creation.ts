@@ -32,9 +32,9 @@ export class EventCreationPage {
       this.location = this.event.location;
       this.description = this.event.summary;
       this.activityType = this.event.category;
-      this.eventDate = this.moment(this.event.start_datetime).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
-      this.startTime = this.moment(this.event.start_datetime).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
-      var dateEndTime = this.moment(this.event.end_datetime);
+      this.eventDate = this.moment(this.event.start_time).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
+      this.startTime = this.moment(this.event.start_time).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
+      var dateEndTime = this.moment(this.event.end_time);
       this.endTime = dateEndTime.format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
     } else {
       this.date = navParams.get("date");

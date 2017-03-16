@@ -8,66 +8,76 @@ export class SettingService {
     isSSPSupportKey: string;
     cipKey: string;
     eventTokenKey: string;
+    isSSPKey: string;
 
     constructor(private translate: TranslateService) {
         this.langKey = 'lang';
         this.isSSPSupportKey = 'isSSPSupportKey';
         this.cipKey = 'cip';
         this.eventTokenKey = 'eventToken';
+        this.isSSPKey = 'isSSP';
     }
 
     /* GETTERS */
 
-    getLanguage(){
+    getLanguage() : string{
         return localStorage.getItem(this.langKey) || 'fr';
     }
 
-    getMomentLanguage(){
+    getMomentLanguage() : string{
         return this.getLanguage() + '-ca';
     }
 
-    getCIP(){
+    getCIP() : string{
         return localStorage.getItem(this.cipKey);
     }
 
-    getEventToken(){
+    getEventToken() : string{
         return localStorage.getItem(this.eventTokenKey);
     }
 
-    getEndPointURL(){
+    getEndPointURL() : string{
         // TODO : Add production back end URL
-        return this.isProd() ? "" : "https://www.usherbrooke.ca/~desp2714/";
+        return this.isProd() ? "https://www.usherbrooke.ca/~desp2714/app-start" : "https://www.usherbrooke.ca/~desp2714/app-start";
     }
 
-    isProd(){
-        return window.location.href.indexOf("localhost") === -1;
+    isSSP() : boolean{
+        return localStorage.getItem(this.eventTokenKey) == 'true';
+    }
+
+    isProd() : boolean{
+        return (window.location.href.indexOf("localhost") === -1);
     }
 
     /* SETTERS */
 
-    setLanguage(lang){
+    setLanguage(lang: string) : void{
         this.validateAndSave(this.langKey, lang, this.validateLanguage);
     }
 
-    setCIP(cip){
+    setCIP(cip: string) : void{
         this.validateAndSave(this.cipKey, cip, this.validateCIP);
     }
 
-    setEventToken(token){
+    setEventToken(token: string) : void{
         this.validateAndSave(this.eventTokenKey, token, null);
+    }
+
+    setIsSSP(isSSP: boolean) : void{
+        this.validateAndSave(this.isSSPKey, isSSP.toString(), null);
     }
 
     /* PRIVATE METHODS */
 
-    private validateLanguage(lang){
+    private validateLanguage(lang: string) : boolean{
         return ['fr', 'en'].indexOf(lang) != -1;
     }
 
-    private validateCIP(cip){
-        return cip.length === 8 && /^\d+$/.test(cip);
+    private validateCIP(cip: string) : boolean{
+        return /^[a-z]{4}\d{4}$/.test(cip);
     }
 
-    private validateAndSave(key, data, validate){
+    private validateAndSave(key, data, validate) : void{
         if (!validate || validate(data)){
             localStorage.setItem(key, data);
         }

@@ -5,6 +5,7 @@ import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventStartPage } from '../event-start/event-start';
 import { EventCreationPage } from "../event-creation/event-creation";
+import { EventCategories } from '../../services/enums';
 import {TranslateService} from 'ng2-translate';
 import moment from 'moment';
 
@@ -20,9 +21,11 @@ export class EventPage {
   moment: any;
   tabBarElement: any;
   passedTime: any;
+  eventCategories = EventCategories;
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
-              private eventService : EventService, private events: Events, private utils : Utils, private translate: TranslateService) {
+              private eventService : EventService, private events: Events, private utils : Utils, 
+              private translate: TranslateService) {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');

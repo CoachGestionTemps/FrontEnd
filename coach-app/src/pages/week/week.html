@@ -1,5 +1,5 @@
-<ion-content>
-
+<ion-header>
+<ion-toolbar>
   <ion-item color="green2">
     <ion-row>
     <ion-col width-20 class="left-arrow">
@@ -13,9 +13,8 @@
     </ion-col>
     </ion-row>
   </ion-item>
-
     <ion-grid>
-        <ion-row class="week-days">
+      <ion-row class="week-days">
             <ion-col>
             </ion-col>
             <ion-col *ngFor="let date of week">
@@ -23,9 +22,16 @@
                 {{ date.day.format('ddd').toUpperCase().substring(0, 3) }}
             </ion-col>
         </ion-row>
+  </ion-grid>
+</ion-toolbar>
+  
+</ion-header>
+
+<ion-content id="week-content">
+    <ion-grid>
         <ion-row class="events">
             <ion-col>
-                <ion-row *ngFor="let hour of hours" class="hour">
+                <ion-row *ngFor="let hour of hours" class="hour" id="{{ hour + 'H' }}">
                     <ion-col>
                         {{ utils.displayHour(hour) }}
                     </ion-col>
@@ -44,7 +50,7 @@
                             <p>
                                 {{ 'start' | translate }}
                                 <br>
-                                {{ moment(event.start_datetime).format("HH:mm") }}
+                                {{ moment(event.start_time).format("HH:mm") }}
                             </p>
                         </div>
                     </ion-col>

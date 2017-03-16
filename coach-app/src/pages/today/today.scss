@@ -98,15 +98,24 @@ page-today {
     }
   }
 
-  ion-col.is-selected,  ion-col.is-selected.is-today{
-    background-color: white;
-    color: $green2;
-    border-radius: 5px;
-  }
 
-  ion-col.is-today{
-    background-color: $green3;
-    border-radius: 5px;
+  .days ion-col {
+    color: grey;
+    
+    &.is-current-month {
+      color: $white;
+
+      &.is-selected,  &.is-selected.is-today{
+        background-color: $white;
+        color: $green2;
+        border-radius: 5px;
+      }
+
+      &.is-today{
+        background-color: $green3;
+        border-radius: 5px;
+      }
+    }
   }
 
   ion-list ion-card.card ion-col:nth-child(1) {

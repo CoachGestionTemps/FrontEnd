@@ -1,12 +1,22 @@
 page-week {
 
+    ion-toolbar.toolbar{
+        padding: 0px;
+
+        div.toolbar-background {
+            background-color: #164b28;
+        }
+    }
 
     ion-col {
         padding: 5px 0px;
     }
-    .content ion-grid {
-        color: $white;
+    .content, .header {
+        ion-grid {
+            color: $white;
+        }
     }
+    
     ion-row.week-days {
 
         ion-col {

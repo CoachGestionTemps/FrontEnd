@@ -65,17 +65,17 @@ export class ReportPage {
     var chartLabels = [];
     var chartData = [];
 
-    this.events.filter(e => this.moment(e.start_datetime).isAfter(this.minDate) && this.moment(e.end_datetime).isBefore(this.maxDate)).forEach(e => {
+    this.events.filter(e => this.moment(e.start_time).isAfter(this.minDate) && this.moment(e.end_time).isBefore(this.maxDate)).forEach(e => {
       if (stats[e.category]){
         chartData[e.category] += e.passed_time || 0;
         stats[e.category].passed_time += chartData[e.category];
-        stats[e.category].plannedTime += this.moment(e.end_datetime).diff(this.moment(e.start_datetime), 'minutes');
+        stats[e.category].plannedTime += this.moment(e.end_time).diff(this.moment(e.start_time), 'minutes');
       } else {
         chartLabels[e.category] = e.category;
         chartData[e.category] = e.passed_time || 0;
         stats[e.category] = {
           passed_time: chartData[e.category],
-          plannedTime: this.moment(e.end_datetime).diff(this.moment(e.start_datetime), 'minutes'),
+          plannedTime: this.moment(e.end_time).diff(this.moment(e.start_time), 'minutes'),
           categoryKey: e.category
         }
       }

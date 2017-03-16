@@ -24,7 +24,7 @@
               <ion-row>
                 <ion-col width-20 >
                     <span class="{{ utils.getCategoryClass(event.category) }}">
-                      {{  moment(event.start_datetime).format('HH:MM') }}
+                      {{  moment(event.start_time).format('HH:MM') }}
                     </span>
                 </ion-col>
                 <ion-col width-80>
@@ -43,14 +43,14 @@
 
   <ion-item color="green2">
     <ion-row>
-    <ion-col width-20 class="left-arrow">
-        <ion-icon name="arrow-dropleft-circle" color="white" medium (click)="getPreviousMonth()"></ion-icon>
+    <ion-col width-20 class="left-arrow" (click)="getPreviousMonth()">
+        <ion-icon name="arrow-dropleft-circle" color="white" medium></ion-icon>
     </ion-col>
-    <ion-col width-60 class="month-name">
+    <ion-col width-60 class="month-name" (click)="navigateToAuth()">
       <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
     </ion-col>
-    <ion-col width-20 class="right-arrow">
-        <ion-icon name="arrow-dropright-circle" color="white" medium (click)="getNextMonth()"></ion-icon>
+    <ion-col width-20 class="right-arrow" (click)="getNextMonth()">
+        <ion-icon name="arrow-dropright-circle" color="white" medium></ion-icon>
     </ion-col>
     </ion-row>
   </ion-item>
@@ -67,9 +67,9 @@
         <ion-col>{{ 'saturdayLetter' | translate }}</ion-col>
       </ion-row>
 
-      <ion-row *ngFor="let week of month">
+      <ion-row *ngFor="let week of month" class="days">
         <ion-col *ngFor="let day of week"
-                  [ngClass]="{'is-selected': selectedDays[0].day.isSame(day, 'day'), 'is-today': today.isSame(day, 'day') }"
+                  [ngClass]="{'is-selected': selectedDays[0].day.isSame(day, 'day'), 'is-today': today.isSame(day, 'day'), 'is-current-month': day.month() == displayedMonth }"
                   (click)="setSelectedDay(day)">
           {{ day ? day.date() : "" }}
         </ion-col>

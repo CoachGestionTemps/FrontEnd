@@ -1,11 +1,11 @@
 <ion-header class="{{ utils.getCategoryClass(event.category) }}">
   <ion-navbar hide-tabs>
-    {{ moment(event.start_datetime).format("ll") }}
+    {{ moment(event.start_time).format("ll") }}
     <ion-buttons end>
-        <button ion-button icon-only (click)="navigateToEventCreation(event)">
+        <button *ngIf="event.category != eventCategories.Class" ion-button icon-only (click)="navigateToEventCreation(event)">
             <ion-icon name="create"></ion-icon>
         </button>
-        <button ion-button icon-only (click)="showDeletePrompt(event)">
+        <button *ngIf="event.category != eventCategories.Class" ion-button icon-only (click)="showDeletePrompt(event)">
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
@@ -27,11 +27,11 @@
     </ion-item>
     <ion-item>
         <ion-icon name="calendar" item-left></ion-icon>
-        {{ moment(event.start_datetime).format("dddd, MMM DD, YYYY") }}
+        {{ moment(event.start_time).format("dddd, MMM DD, YYYY") }}
     </ion-item>
     <ion-item>
         <ion-icon name="clock" item-left></ion-icon>
-        {{ ('from' | translate) + ' ' + moment(event.start_datetime).format("H:mm") + ' ' + ('to' | translate) + ' ' + moment(event.end_datetime).format("H:mm") }}
+        {{ ('from' | translate) + ' ' + moment(event.start_time).format("H:mm") + ' ' + ('to' | translate) + ' ' + moment(event.end_time).format("H:mm") }}
     </ion-item>
     <ion-item *ngIf="event.location">
         <ion-icon name="navigate" item-left></ion-icon>
