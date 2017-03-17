@@ -39,6 +39,7 @@
     "start": "Starts at",
     "timePassed": "Elapsed time",
     "dedicatedTime": "Dedicated time",
+    "noDedicatedTime": "No dedicated time has been entered yet",
     "noStatsForSelectedPeriod": "No available statistics for the selected period",
     "enterTimePassed": "Enter the elapsed time",
     "editTimePassed": "Edit the elapsed time",

@@ -3,6 +3,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
+import { SettingService } from "../../services/setting-service";
+import { EventCategories } from '../../services/enums';
 import { Chart } from 'chart.js';
 import moment from 'moment';
 
@@ -23,10 +25,11 @@ export class ReportPage {
   chartData: number[];
   chartLabels: string[];
   viewLoaded: boolean;
+  eventCategories = EventCategories;
 
   @ViewChild('pieCanvas') pieCanvas;
 
-  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, private eventService : EventService, private utils : Utils, private setting : SettingService) {
     this.moment = moment;
     this.rangetype = "week";
     this.actualDate = this.moment();
@@ -64,18 +67,23 @@ export class ReportPage {
     var stats = [];
     var chartLabels = [];
     var chartData = [];
+    var filterEvent = (e => this.moment(e.start_time).isAfter(this.minDate) 
+                        && this.moment(e.end_time).isBefore(this.maxDate));
 
-    this.events.filter(e => this.moment(e.start_time).isAfter(this.minDate) && this.moment(e.end_time).isBefore(this.maxDate)).forEach(e => {
+    this.events.filter(e => filterEvent(e)).forEach(e => {
+      var plannedTime = this.moment(e.end_time).diff(this.moment(e.start_time), 'seconds');
+      var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? plannedTime : e.passed_time || 0;
+
       if (stats[e.category]){
-        chartData[e.category] += e.passed_time || 0;
-        stats[e.category].passed_time += chartData[e.category];
-        stats[e.category].plannedTime += this.moment(e.end_time).diff(this.moment(e.start_time), 'minutes');
+        chartData[e.category] += passedTime;
+        stats[e.category].plannedTime += plannedTime;
+        stats[e.category].passed_time += passedTime;
       } else {
         chartLabels[e.category] = e.category;
-        chartData[e.category] = e.passed_time || 0;
+        chartData[e.category] = passedTime;
         stats[e.category] = {
-          passed_time: chartData[e.category],
-          plannedTime: this.moment(e.end_time).diff(this.moment(e.start_time), 'minutes'),
+          passed_time: passedTime,
+          plannedTime: plannedTime,
           categoryKey: e.category
         }
       }
@@ -85,29 +93,45 @@ export class ReportPage {
     this.updateChart(chartLabels.filter(e => e != null), chartData.filter(e => e != null));
   }
 
+  
+
   updateChart(chartLabels, chartData){
     if (this.viewLoaded){
       
       if (this.pieChart){
         this.pieChart.destroy();
       }
-
-      this.pieChart = new Chart(this.pieCanvas.nativeElement, {
+      if (this.anyStatNonNull()){
+          this.pieChart = new Chart(this.pieCanvas.nativeElement, {
             type: 'pie',
             data: {
-                labels: chartLabels.map(l => this.utils.getCategoryName(l)),
+                labels: chartLabels.map((l, i) => this.utils.getCategoryName(l) + ": " + moment.utc(chartData[i] * 1000).format("H:mm")),
                 datasets: [{
                     label: '# of Votes',
                     data: chartData,
                     backgroundColor: chartLabels.map(l => this.utils.getCategoryColors(l))
                 }]
+            },
+            options: {
+              tooltips: {
+                  enabled: false
+              }
             }
         });
+      }
     }
+  }
+
+  getStatHeader(){
+    return this.anyStatNonNull() ? 'dedicatedTime' : 'noDedicatedTime';
   }
 
   ionViewDidLoad(){
     this.viewLoaded = true;
+  }
+
+  anyStatNonNull(){
+    return this.stats.some(o => o.passed_time > 0);
   }
 
   getSessionRanges(){

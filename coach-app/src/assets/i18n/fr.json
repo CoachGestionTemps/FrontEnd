@@ -39,6 +39,7 @@
     "start": "Début",
     "timePassed": "Temps écoulé",
     "dedicatedTime": "Temps dédié",
+    "noDedicatedTime": "Aucun temps entré jusqu'à présent",
     "noStatsForSelectedPeriod": "Aucune statistique disponible pour la période sélectionnée",
     "enterTimePassed": "Entrer le temps écoulé",
     "editTimePassed": "Modifier l'entrée de temps écoulé",

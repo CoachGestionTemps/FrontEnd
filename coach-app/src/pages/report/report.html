@@ -34,7 +34,7 @@
     </ion-item>
     
     <ion-item class="pie-chart">
-        <h2>{{ (!stats || stats.length === 0 ? 'noStatsForSelectedPeriod' :'dedicatedTime') | translate }}</h2>
+        <h2>{{ (!stats || stats.length === 0 ? 'noStatsForSelectedPeriod' : getStatHeader()) | translate }}</h2>
         <canvas #pieCanvas></canvas>
     </ion-item>
 
@@ -45,9 +45,9 @@
                     {{ (utils.getCategoryTranslationKey(stat.categoryKey)) | translate }}
                 </span>
                 <span class="passed-time">
-                    {{ moment.utc(stat.passed_time * 1000).format("H:mm") }}
+                    {{ moment.utc(stat.passed_time * 1000).format("H:mm") + " / " + moment.utc(stat.plannedTime * 1000).format("H:mm") }}
                 </span>
-                <div [ngStyle]="{ width: (stat.passed_time / stat.plannedTime) + '%' }">
+                <div [ngStyle]="{ width: (100 - (100 * (stat.passed_time / stat.plannedTime))) + '%' }">
                 </div>
             </div>
         </div>

@@ -142,7 +142,6 @@ export class EventService {
          });
   }
 
-
 getEventsForDays(days): Promise<any[]> {
     return new Promise(
         (resolve, reject) => {
