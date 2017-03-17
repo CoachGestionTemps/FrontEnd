@@ -67,6 +67,10 @@ export class SettingService {
         this.validateAndSave(this.isSSPKey, isSSP.toString(), null);
     }
 
+    logout() : void{
+        localStorage.removeItem(this.cipKey);
+    }
+
     /* PRIVATE METHODS */
 
     private validateLanguage(lang: string) : boolean{

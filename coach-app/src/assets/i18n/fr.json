@@ -47,5 +47,8 @@
     "sureToDelete": "Êtes-vous sur de vouloir supprimer cet événement?",
     "cancel": "Annuler",
     "from": "De",
-    "to": "À"
+    "to": "À",
+    "winter": "Hiver",
+    "summer": "Été",
+    "fall": "Automne"
 }

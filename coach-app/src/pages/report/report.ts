@@ -116,15 +116,15 @@ export class ReportPage {
 
     if (this.actualDate.isBefore(endOfWinter)){
       // january first - last week of april
-      this.selectionTitle = "Winter";
+      this.selectionTitle = this.utils.translateWord("winter") + " " + this.actualDate.year();
       return [this.moment([this.actualDate.year()]), endOfWinter];
     } else if (this.actualDate.isBefore(endOfSummer)){
       // last week of april - last week of august
-      this.selectionTitle = "Summer";
+      this.selectionTitle = this.utils.translateWord("summer") + " " + this.actualDate.year();
       return [endOfWinter,  endOfSummer];
     } else {
       // last week of august - january first of next year
-      this.selectionTitle = "Fall";
+      this.selectionTitle = this.utils.translateWord("fall") + " " + this.actualDate.year();
       return [endOfSummer, this.moment([this.actualDate.year() + 1])];
     }
   }

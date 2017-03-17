@@ -47,5 +47,8 @@
     "sureToDelete": "Are you sure you want to delete this event?",
     "cancel": "cancel",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "winter": "Winter",
+    "summer": "Summer",
+    "fall": "Fall"
 }

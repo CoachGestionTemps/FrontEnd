@@ -23,8 +23,7 @@ export class TabsPage {
   tab2Root: any = WeekPage;
   tab3Root: any = ReportPage;
 
-  constructor() {
-      // TODO : Load from settings (either en-ca or fr-ca)
-      moment.locale('fr-ca');
+  constructor(private setting : SettingService) {
+      moment.locale(this.setting.getMomentLanguage());
   }
 }
