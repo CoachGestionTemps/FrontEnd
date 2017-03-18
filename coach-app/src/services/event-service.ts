@@ -53,8 +53,8 @@ export class EventService {
                 this.events = [
                 {
                     id: 0,
-                    start_datetime: moment().format(),
-                    end_datetime: moment().hour(moment().hour() + 2).format(),
+                    start_time: moment().format(),
+                    end_time: moment().hour(moment().hour() + 2).format(),
                     category: 0,
                     user_id: 1,
                     title: "Fête de môman",
@@ -65,7 +65,7 @@ export class EventService {
                },
                 {
                     id: 2,
-                    start_datetime: moment().date(moment().date() + 1).format(),
+                    start_time: moment().date(moment().date() + 1).format(),
                     end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 2).format(),
                     category: 2,
                     user_id: 1,
@@ -77,8 +77,8 @@ export class EventService {
                 },
                 {
                     id: 3,
-                    start_datetime: moment().hour(moment().hour() + 2).format(),
-                    end_datetime: moment().hour(moment().hour() + 4).format(),
+                    start_time: moment().hour(moment().hour() + 2).format(),
+                    end_time: moment().hour(moment().hour() + 4).format(),
                     category: 1,
                     user_id: 1,
                     title: "ADM111",
@@ -89,8 +89,8 @@ export class EventService {
                 },
                 {
                     id: 4,
-                    start_datetime: moment().hour(moment().hour() + 4).format(),
-                    end_datetime: moment().hour(moment().hour() + 6).format(),
+                    start_time: moment().hour(moment().hour() + 4).format(),
+                    end_time: moment().hour(moment().hour() + 6).format(),
                     category: 3,
                     user_id: 1,
                     title: "Volley!",
@@ -101,8 +101,8 @@ export class EventService {
                 },
                 {
                     id: 5,
-                    start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
-                    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
+                    start_time: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
+                    end_time: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
                     category: 5,
                     user_id: 1,
                     title: "Shift McDo",
@@ -113,8 +113,8 @@ export class EventService {
                 },
                 {
                     id: 6,
-                    start_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 2).format(),
-                    end_datetime: moment().date(moment().date() + 7).hour(moment().hour() + 4).format(),
+                    start_time: moment().date(moment().date() + 7).hour(moment().hour() + 2).format(),
+                    end_time: moment().date(moment().date() + 7).hour(moment().hour() + 4).format(),
                     category: 1,
                     user_id: 1,
                     title: "ADM111",
@@ -125,8 +125,8 @@ export class EventService {
                 },
                 {
                     id: 7,
-                    start_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
-                    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
+                    start_time: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
+                    end_time: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
                     category: 5,
                     user_id: 2,
                     title: "Shift Subway",
@@ -146,7 +146,7 @@ getEventsForDays(days): Promise<any[]> {
     return new Promise(
         (resolve, reject) => {
             this.getAll().then(events => {
-                var isSameDay = (d, e) => d.isSame(this.moment(e.start_time, "YYYY-MM-DD HH:mm:ss"), 'day');
+                var isSameDay = (d, e) => d.isSame(this.moment(e.start_time, "YYYY-MM-DD[T]HH:mm[:00.000Z]"), 'day');
                 resolve(days.map(d => { return { day: d, events : events.filter(e => isSameDay(d, e)) }; }))
             });
         }

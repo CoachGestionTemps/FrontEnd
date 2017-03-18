@@ -63,8 +63,8 @@ export class EventCreationPage {
       end_datetime.add(-end_datetime.utcOffset(), 'minute');
 
     var eventToSave = {
-      start_datetime: start_datetime.format(),
-      end_datetime: end_datetime.format(),
+      start_time: start_datetime.format(),
+      end_time: end_datetime.format(),
       category: this.activityType,
       user_id: 1,
       title: this.title,

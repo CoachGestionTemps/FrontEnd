@@ -24,7 +24,7 @@ export class EventPage {
   eventCategories = EventCategories;
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
-              private eventService : EventService, private events: Events, private utils : Utils, 
+              private eventService : EventService, private events: Events, private utils : Utils,
               private translate: TranslateService) {
     this.moment = moment;
     this.event = navParams.get("event");
