@@ -6,6 +6,7 @@ import { WeekPage } from '../pages/week/week';
 import { TodayPage } from '../pages/today/today';
 import { ReportPage } from '../pages/report/report';
 import { EventPage } from '../pages/event/event';
+import { SettingPage } from '../pages/setting/setting';
 import { EventCreationPage } from "../pages/event-creation/event-creation";
 import { EventStartPage } from "../pages/event-start/event-start";
 import { TabsPage } from '../pages/tabs/tabs';
@@ -23,9 +24,10 @@ export function createTranslateLoader(http: Http) {
     TodayPage,
     ReportPage,
     EventPage,
+    SettingPage,
     EventCreationPage,
     EventStartPage,
-    TabsPage
+    TabsPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -42,6 +44,7 @@ export function createTranslateLoader(http: Http) {
     TodayPage,
     ReportPage,
     EventPage,
+    SettingPage,
     EventCreationPage,
     EventStartPage,
     TabsPage

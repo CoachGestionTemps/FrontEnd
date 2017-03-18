@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 import { TodayPage } from '../today/today';
 import { WeekPage } from '../week/week';
 import { ReportPage } from '../report/report';
+import { SettingPage } from '../setting/setting';
 import { EventService } from "../../services/event-service";
 import { SettingService } from "../../services/setting-service";
+
 import { Utils } from "../../services/utils";
 
 import moment from 'moment';
@@ -22,6 +24,7 @@ export class TabsPage {
   tab1Root: any = TodayPage;
   tab2Root: any = WeekPage;
   tab3Root: any = ReportPage;
+  tab4Root: any = SettingPage;
 
   constructor(private setting : SettingService) {
       moment.locale(this.setting.getMomentLanguage());

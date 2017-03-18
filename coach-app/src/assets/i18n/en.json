@@ -51,5 +51,9 @@
     "to": "To",
     "winter": "Winter",
     "summer": "Summer",
-    "fall": "Fall"
+    "fall": "Fall",
+    "settings" : "Settings",
+    "french" : "French",
+    "english": "English",
+    "imInPsychologicalProgram": "I am part of the psychological program"
 }

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { NavParams, NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
-import { Utils } from '../../services/utils';
 import moment from 'moment';
 
 @Component({
@@ -25,7 +24,7 @@ export class EventCreationPage {
   event: any;
   eventDate: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private eventService : EventService) {
     this.moment = moment;
     if (this.event = navParams.get("event")) {
       this.title = this.event.title;

@@ -51,5 +51,9 @@
     "to": "À",
     "winter": "Hiver",
     "summer": "Été",
-    "fall": "Automne"
+    "fall": "Automne",
+    "settings" : "Paramètres",
+    "french" : "Français",
+    "english": "Anglais",
+    "imInPsychologicalProgram": "Je fais partie du service de psychologie."
 }

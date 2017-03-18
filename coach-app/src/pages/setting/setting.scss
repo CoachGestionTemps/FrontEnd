@@ -1,0 +1,97 @@
+page-setting {
+  ion-content.content {
+    background-color: $white;
+  }
+  ion-header .toolbar ion-icon {
+    color: $white;
+  }
+
+  .button {
+    float: right;
+    margin: 1em;
+  }
+
+  .category-undefined {
+    background-color: $white;
+    ion-icon {
+      color: $grey2;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $grey2;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon {
+      color: $white;
+    }
+  }
+
+  .category-class {
+    background-color: $white;
+    ion-icon {
+      color: $primary;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $primary;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon {
+      color: $white;
+    }
+  }
+
+  .category-study {
+    background-color: $white;
+    ion-icon {
+      color: $green3;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $green3;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon {
+      color: $white;
+    }
+  }
+
+  .category-sport {
+    background-color: $white;
+    ion-icon {
+      color: $orange;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $orange;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon{
+      color: $white;
+    }
+  }
+
+  .category-leisure {
+    background-color: $white;
+    ion-icon {
+      color: $danger;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $danger;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon {
+      color: $white;
+    }
+  }
+
+  .category-work {
+    background-color: $white;
+    ion-icon {
+      color: $purple;
+    }
+    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+      background-color: $purple;
+      color: $white;
+    }
+    .back-button.bar-button ion-icon {
+      color: $white;
+    }
+  }
+}
