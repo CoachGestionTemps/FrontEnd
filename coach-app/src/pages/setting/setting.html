@@ -26,4 +26,6 @@
     <ion-toggle [(ngModel)]="isInSSP" (ionChange)="updateSSPKey()"></ion-toggle>
   </ion-item>
 
+  <button ion-button class="disconnect-button" (click)="disconnect()">{{ 'disconnect' | translate }}</button>
+
 </ion-content>

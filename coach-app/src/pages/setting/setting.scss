@@ -9,6 +9,7 @@ page-setting {
   .button {
     float: right;
     margin: 1em;
+    background-color: $green3;
   }
 
   .toolbar-background {
@@ -50,10 +51,10 @@ page-setting {
   .category-study {
     background-color: $white;
     ion-icon {
-      color: $green3;
+      color: $green2;
     }
     .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-      background-color: $green3;
+      background-color: $green2;
       color: $white;
     }
     .back-button.bar-button ion-icon {
@@ -61,45 +62,4 @@ page-setting {
     }
   }
 
-  .category-sport {
-    background-color: $white;
-    ion-icon {
-      color: $orange;
-    }
-    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-      background-color: $orange;
-      color: $white;
-    }
-    .back-button.bar-button ion-icon{
-      color: $white;
-    }
-  }
-
-  .category-leisure {
-    background-color: $white;
-    ion-icon {
-      color: $danger;
-    }
-    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-      background-color: $danger;
-      color: $white;
-    }
-    .back-button.bar-button ion-icon {
-      color: $white;
-    }
-  }
-
-  .category-work {
-    background-color: $white;
-    ion-icon {
-      color: $purple;
-    }
-    .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-      background-color: $purple;
-      color: $white;
-    }
-    .back-button.bar-button ion-icon {
-      color: $white;
-    }
-  }
 }

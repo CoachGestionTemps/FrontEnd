@@ -68,5 +68,6 @@
     "walkdesc4": "Affiche vos performances quant à la complétion de vos évènements pour une semaine, un mois ou une session.",
     "walktitle5": "Visualisation d'évènements",
     "walkdesc5": "Permet de visualiser les détails d'un évènement sur mesure ou de les modifier.",
-    "walktitle6": "Commencer à utiliser l'application"
+    "walktitle6": "Commencer à utiliser l'application",
+    "disconnect": "Déconnexion"
 }
