@@ -55,5 +55,18 @@
     "settings" : "Settings",
     "french" : "French",
     "english": "English",
-    "imInPsychologicalProgram": "I am part of the psychological program"
+    "myAgenda": "MyAgenda",
+    "imInPsychologicalProgram": "I am part of the psychological program",
+    "language": "Language",
+    "walktitle1": "Welcome to MyAgenda!",
+    "walkdesc1": "The best app to help you plan your schedule at University of Sherbrooke!",
+    "walktitle2": "Home",
+    "walkdesc2": "Displays a 3-day selection and their events.",
+    "walktitle3": "Week",
+    "walkdesc3": " Displays your schedule and allows custom event creation.",
+    "walktitle4": "Reports",
+    "walkdesc4": " Displays your performances regarding the completion of your events per week, month or session.",
+    "walktitle5": "Viewing events",
+    "walkdesc5": "Displays an event's details and allows you to edit them.",
+    "walktitle6": "Start using the app!"
 }

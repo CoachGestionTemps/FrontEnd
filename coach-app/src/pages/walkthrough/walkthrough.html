@@ -1,0 +1,50 @@
+<ion-header color=$green2>
+  <ion-navbar hide-tabs>
+      {{ 'myAgenda' | translate }}
+    <ion-buttons end>
+        <button ion-button icon-only (click)="dismiss()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-slides pager>
+        <ion-slide>
+            <img src="assets/icon/logo.png" style="border-radius:10px;"/>
+            <h2>{{ 'walktitle1' | translate}}</h2>
+            <p> {{ 'walkdesc1' | translate}} </p>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/img/1.png"/>
+            <h2>{{ 'walktitle2' | translate}}</h2>
+            <p> {{ 'walkdesc2' | translate}} </p>
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/img/2.png"/>
+            <h2>{{ 'walktitle3' | translate}}</h2>
+            <p> {{ 'walkdesc3' | translate}} </p>
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/img/3.png"/>
+            <h2>{{ 'walktitle4' | translate}}</h2>
+            <p> {{ 'walkdesc4' | translate}} </p>
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/img/4.png"/>
+            <h2>{{ 'walktitle5' | translate}}</h2>
+            <p> {{ 'walkdesc5' | translate}} </p>
+        </ion-slide>
+
+        <ion-slide>
+            <img src="assets/icon/logo.png"/>
+            <h2>{{ 'walktitle6' | translate}}</h2>
+            <button ion-button icon-only large (click)="dismiss()" color="green2">
+                <ion-icon name="arrow-round-forward"></ion-icon>
+            </button>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

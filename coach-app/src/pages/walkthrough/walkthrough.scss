@@ -1,0 +1,24 @@
+page-walkthrough {
+    ion-content.content {
+        background-color: $white;
+
+        img {
+            max-width:80%;
+            max-height:400px;
+        }
+        p, h2 {
+            padding: 0px 40px;
+        }
+    }
+
+    .toolbar-background {
+        background-color: $green2;
+    }
+
+    .toolbar-content {
+        color : $white;
+    }
+    .bar-buttons .bar-button {
+        color : $white;
+    }
+}

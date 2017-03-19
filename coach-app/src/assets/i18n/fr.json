@@ -55,5 +55,18 @@
     "settings" : "Paramètres",
     "french" : "Français",
     "english": "Anglais",
-    "imInPsychologicalProgram": "Je fais partie du service de psychologie."
+    "imInPsychologicalProgram": "Je fais partie du service de psychologie.",
+    "language": "Langue",
+    "myAgenda": "MonAgenda",
+    "walktitle1": "Bienvenue sur MonAgenda!",
+    "walkdesc1": "L'application de choix pour mieux planifer votre horaire durant votre parcours universitaire!",
+    "walktitle2": "Accueil",
+    "walkdesc2": "Permet d'afficher une selection de trois jours et leurs évènements.",
+    "walktitle3": "Semaines",
+    "walkdesc3": "Affiche l'horaire à chaque semaine et permet la création d'évènements sur mesure.",
+    "walktitle4": "Rapports",
+    "walkdesc4": "Affiche vos performances quant à la complétion de vos évènements pour une semaine, un mois ou une session.",
+    "walktitle5": "Visualisation d'évènements",
+    "walkdesc5": "Permet de visualiser les détails d'un évènement sur mesure ou de les modifier.",
+    "walktitle6": "Commencer à utiliser l'application"
 }

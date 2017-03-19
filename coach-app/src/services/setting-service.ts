@@ -9,6 +9,7 @@ export class SettingService {
     cipKey: string;
     eventTokenKey: string;
     isSSPKey: string;
+    isFirstUseKey: string;
 
     constructor(private translate: TranslateService) {
         this.langKey = 'lang';
@@ -16,6 +17,7 @@ export class SettingService {
         this.cipKey = 'cip';
         this.eventTokenKey = 'eventToken';
         this.isSSPKey = 'isSSP';
+        this.isFirstUseKey = 'isFirstUse';
     }
 
     /* GETTERS */
@@ -42,11 +44,15 @@ export class SettingService {
     }
 
     isSSP() : boolean{
-        return localStorage.getItem(this.eventTokenKey) == 'true';
+        return localStorage.getItem(this.isSSPKey) == 'true';
     }
 
     isProd() : boolean{
         return (window.location.href.indexOf("localhost") === -1);
+    }
+
+    isFirstUse() : boolean {
+        return localStorage.getItem(this.isFirstUseKey) == null;
     }
 
     /* SETTERS */
@@ -69,6 +75,10 @@ export class SettingService {
 
     logout() : void{
         localStorage.removeItem(this.cipKey);
+    }
+
+    setNotFirstUse() : void {
+        localStorage.setItem(this.isFirstUseKey, 'false');
     }
 
     /* PRIVATE METHODS */

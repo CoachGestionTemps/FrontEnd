@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, ModalController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate';
 import { TabsPage } from '../pages/tabs/tabs';
 import { GuidService } from "../services/guid-service";
 import { SettingService } from "../services/setting-service";
+import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { SettingService } from "../services/setting-service";
 export class MyApp {
   rootPage = TabsPage;
 
-  constructor(platform: Platform, translate: TranslateService, private setting : SettingService) {
+  constructor(platform: Platform, translate: TranslateService, private setting : SettingService, public modalCtrl: ModalController) {
     platform.ready().then(() => {
 
       // Where we catch and store the CIP/Token
@@ -36,6 +37,11 @@ export class MyApp {
       // TODO : Uncomment when the Auth is done server side
       if (!setting.getCIP() || !setting.getEventToken()){
         //window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(setting.getEndPointURL() + '/auth/retourcas' + (setting.isProd() ? "" : "?isDev=true")));
+      }
+
+      if (setting.isFirstUse()){
+        this.modalCtrl.create(WalkthroughPage).present();
+        setting.setNotFirstUse();
       }
 
       StatusBar.styleDefault();

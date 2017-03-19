@@ -7,6 +7,7 @@ import { TodayPage } from '../pages/today/today';
 import { ReportPage } from '../pages/report/report';
 import { EventPage } from '../pages/event/event';
 import { SettingPage } from '../pages/setting/setting';
+import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 import { EventCreationPage } from "../pages/event-creation/event-creation";
 import { EventStartPage } from "../pages/event-start/event-start";
 import { TabsPage } from '../pages/tabs/tabs';
@@ -26,6 +27,7 @@ export function createTranslateLoader(http: Http) {
     EventPage,
     SettingPage,
     EventCreationPage,
+    WalkthroughPage,
     EventStartPage,
     TabsPage,
   ],
@@ -46,6 +48,7 @@ export function createTranslateLoader(http: Http) {
     EventPage,
     SettingPage,
     EventCreationPage,
+    WalkthroughPage,
     EventStartPage,
     TabsPage
   ],
