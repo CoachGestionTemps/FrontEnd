@@ -1,7 +1,5 @@
-import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import { Component} from '@angular/core';
 
-import { NavController, Events } from 'ionic-angular';
-import { EventService } from '../../services/event-service';
 import { SettingService } from '../../services/setting-service';
 
 @Component({
@@ -27,5 +25,9 @@ export class SettingPage {
 
   updateSSPKey(){
     this.settingService.setIsSSP(this.isInSSP);
+  }
+
+  disconnect() {
+
   }
 }

@@ -55,5 +55,6 @@
     "settings" : "Paramètres",
     "french" : "Français",
     "english": "Anglais",
-    "imInPsychologicalProgram": "Je fais partie du service de psychologie."
+    "imInPsychologicalProgram": "Je fais partie du service de psychologie.",
+    "disconnect": "Déconnection"
 }
