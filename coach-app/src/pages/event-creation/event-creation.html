@@ -7,16 +7,16 @@
 <ion-content>
   <ion-list class="{{ event ? utils.getCategoryClass(event.category) : 'category-study' }}">
     <ion-item>
-      <ion-label fixed>{{ 'title' | translate }}</ion-label>
+      <ion-label floating>{{ 'title' | translate }}</ion-label>
       <ion-input type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label fixed>{{ 'location' | translate }}</ion-label>
+      <ion-label floating>{{ 'location' | translate }}</ion-label>
       <ion-input type="text" [(ngModel)]="location"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label fixed>{{ 'description' | translate }}</ion-label>
-      <ion-input type="text" [(ngModel)]="description"></ion-input>
+      <ion-label floating>{{ 'description' | translate }}</ion-label>
+      <ion-textarea fz-elastic [(ngModel)]="description"></ion-textarea>
     </ion-item>
 
     <ion-item>

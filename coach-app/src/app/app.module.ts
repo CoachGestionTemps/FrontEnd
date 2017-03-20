@@ -12,6 +12,7 @@ import { EventCreationPage } from "../pages/event-creation/event-creation";
 import { EventStartPage } from "../pages/event-start/event-start";
 import { TabsPage } from '../pages/tabs/tabs';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+import { ElasticModule } from 'angular2-elastic';
 import * as Enums from "../services/enums";
 
 export function createTranslateLoader(http: Http) {
@@ -37,7 +38,8 @@ export function createTranslateLoader(http: Http) {
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
       deps: [Http]
-    })
+    }),
+    ElasticModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
