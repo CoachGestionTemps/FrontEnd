@@ -49,6 +49,27 @@ page-today {
       background-color: $green3;
   }
 
+  ion-list .day-container:nth-child(1) .selectedDays button {
+    font-size: 30px;
+    margin: -30px;
+    color: #ffffff;
+    background-color: $green2;
+  }
+
+  ion-list .day-container:nth-child(2) .selectedDays button {
+    font-size: 30px;
+    margin: -30px;
+    color: #ffffff;
+    background-color: $green1;
+  }
+
+  ion-list .day-container:nth-child(3) .selectedDays button {
+    font-size: 30px;
+    margin: -30px;
+    color: #ffffff;
+    background-color: $green3;
+  }
+
   ion-list ion-card.card ion-col:nth-child(2) {
     h1 {
       line-height: 44px;
@@ -101,7 +122,7 @@ page-today {
 
   .days ion-col {
     color: grey;
-    
+
     &.is-current-month {
       color: $white;
 
