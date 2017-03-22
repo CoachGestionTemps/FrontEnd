@@ -12,6 +12,9 @@
               <ion-col width-80>
                 <h1>{{ ((getDayName(date.day) | translate) || date.day.format('dddd')).toUpperCase() }}</h1>
               </ion-col>
+              <button (click)="navigateToEventCreation(date)">
+                <ion-icon name="ios-add-circle-outline"></ion-icon>
+              </button>
             </ion-row>
           </ion-grid>
         </ion-card-content>

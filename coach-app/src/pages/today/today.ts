@@ -4,6 +4,7 @@ import { NavController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
+import { EventCreationPage } from "../event-creation/event-creation";
 import moment from 'moment';
 
 @Component({
@@ -108,5 +109,10 @@ export class TodayPage {
 
   setClickedDate (day) {
     this.clickedDate = this.clickedDate === day ? null : day;
+  }
+
+  navigateToEventCreation(date) {
+    var datetime = this.moment(date).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
+    this.navCtrl.push(EventCreationPage, { date: datetime });
   }
 }
