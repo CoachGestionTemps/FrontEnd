@@ -53,12 +53,12 @@ export class EventCreationPage {
   saveEvent(){
     var start_datetime = this.moment(this.startTime);
     var end_datetime = this.moment(this.endTime);
-    /*start_datetime = moment(this.eventDate).set({'hour' : moment(this.startTime).get('hour'),
+    start_datetime = moment(this.eventDate).set({'hour' : moment(this.startTime).get('hour'),
                                                       'minute' : moment(this.startTime).get('minute')
                                                     });
     end_datetime = moment(this.eventDate).set({'hour' : moment(this.endTime).get('hour'),
                                         'minute' : moment(this.endTime).get('minute')
-                                      });*/
+                                      });
       start_datetime.add(-start_datetime.utcOffset(), 'minute');
       end_datetime.add(-end_datetime.utcOffset(), 'minute');
 
