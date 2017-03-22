@@ -14,7 +14,7 @@ export class Utils {
       constructor(private translate: TranslateService, private setting: SettingService) {
         this.moment = moment;
         this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
-        this.categoryColors = ['#3d4641', '#387ef5', '#2d9d5f', '#E6A82A', '#f53d3d', '#4849A4'];
+        this.categoryColors = ['#3d4641', '#237B9F', '#FF928B', '#FAA200', '#AECAD6', '#9D8DF0'];
         this.categoryicons = ['list-box', 'school','book', 'basketball', 'game-controller-b', 'briefcase'];
         this.translate.use(this.setting.getLanguage());
         this._getCategoryNames();
