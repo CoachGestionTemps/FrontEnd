@@ -1,8 +1,8 @@
 <ion-content>
   <ion-list>
     <div class="day-container" *ngFor="let date of selectedDays">
-      <ion-card class="selectedDays" (click)="setClickedDate(date.day)">
-        <ion-card-content>
+      <ion-item-sliding class="selectedDays" (click)="setClickedDate(date.day)">
+        <ion-item>
           <ion-grid>
             <ion-row>
               <ion-col width-20>
@@ -12,13 +12,15 @@
               <ion-col width-80>
                 <h1>{{ ((getDayName(date.day) | translate) || date.day.format('dddd')).toUpperCase() }}</h1>
               </ion-col>
-              <button (click)="navigateToEventCreation(date)">
-                <ion-icon name="ios-add-circle-outline"></ion-icon>
-              </button>
             </ion-row>
           </ion-grid>
-        </ion-card-content>
-      </ion-card>
+        </ion-item>
+        <ion-item-options side="right">
+          <button (click)="navigateToEventCreation(date)">
+            <ion-icon name="ios-add-circle-outline"></ion-icon>
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
 
       <ion-list class="events" [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}" >
         <ion-item-sliding *ngFor="let event of date.events"  #item (click)="navigateToEvent(event)">
@@ -36,7 +38,7 @@
               </ion-row>
             </ion-grid>
           </ion-item>
-          <ion-item-options side="left">
+          <ion-item-options side="right">
             <button ion-button class="{{ utils.getCategoryClass(event.category) }}">{{ event.location }}</button>
           </ion-item-options>
         </ion-item-sliding>
