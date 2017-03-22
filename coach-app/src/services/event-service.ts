@@ -24,7 +24,7 @@ export class EventService {
       });
   }
 
-  public getAllTODO(): Promise<any[]> {
+  public getAll(): Promise<any[]> {
     return new Promise(
         (resolve, reject) => {
             if (!this.events || this.events.length === 0){
@@ -43,7 +43,7 @@ export class EventService {
     );
 }
 
-   public getAll(): Promise<any[]> {
+   public getAllTODO(): Promise<any[]> {
       // TODO : Replace this with an http.get method
      return new Promise(
          (resolve, reject) => {
