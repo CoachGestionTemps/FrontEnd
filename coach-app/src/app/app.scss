@@ -49,33 +49,38 @@ ion-content.content {
 }
 
 .category-undefined {
-    background-color: $grey2;
+    background-color: $undefined;
     color: $white;
 }
 
 .category-class {
-    background-color: $primary;
+    background-color: $class;
     color: $white;
 }
 
 .category-study {
-    background-color: $green3;
+    background-color: $study;
     color: $white;
 }
 
 .category-sport {
-    background-color: $orange;
+    background-color: $sport;
     color: $white;
 }
 
 .category-leisure {
-    background-color: $danger;
+    background-color: $leisure;
     color: $white;
 }
 
 .category-work {
-    background-color: $purple;
+    background-color: $work;
     color: $white;
+}
+
+.category-createEvent {
+  background-color: $green1;
+  color: $white;
 }
 
 .right-arrow ion-icon {
