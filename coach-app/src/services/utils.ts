@@ -10,9 +10,15 @@ export class Utils {
     categoryicons: string[];
     categoryNames: string[];
     categoryColors: string[];
+    dateKeyFormat: string;
+    dateFormat: string;
+    utcDateFormat: string;
 
       constructor(private translate: TranslateService, private setting: SettingService) {
         this.moment = moment;
+        this.dateKeyFormat = "YYYY-MM-DD";
+        this.dateFormat = "YYYY-MM-DD HH:mm:ss";
+        this.utcDateFormat = "YYYY-MM-DD[T]HH:mm[:00.000Z]";
         this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
         this.categoryColors = ['#3d4641', '#387ef5', '#2d9d5f', '#E6A82A', '#f53d3d', '#4849A4'];
         this.categoryicons = ['list-box', 'school','book', 'basketball', 'game-controller-b', 'briefcase'];
@@ -71,4 +77,12 @@ export class Utils {
       return wordTranslated;
     }
 
+    showError(alertCrtl, title, content){
+      let alert = alertCrtl.create({
+        title: this.translateWord(title),
+        subTitle: this.translateWord(content),
+        buttons: ['OK']
+      });
+      alert.present();
+    }
 }

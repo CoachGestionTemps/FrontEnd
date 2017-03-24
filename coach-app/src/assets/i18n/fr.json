@@ -69,5 +69,7 @@
     "walktitle5": "Visualisation d'évènements",
     "walkdesc5": "Permet de visualiser les détails d'un évènement sur mesure ou de les modifier.",
     "walktitle6": "Commencer à utiliser l'application",
-    "disconnect": "Déconnexion"
+    "disconnect": "Déconnexion",
+    "error:": "Erreur",
+    "basicFetchError": "Les données ne peuvent pas être retrouvées pour le moment."
 }

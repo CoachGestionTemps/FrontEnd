@@ -1,6 +1,5 @@
-import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
-
-import { NavController, Events } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, AlertController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
@@ -21,37 +20,55 @@ export class TodayPage {
   displayedYear: any;
   displayedMonth: any;
 
-  constructor(public navCtrl: NavController, private events: Events, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController, 
+              private events: Events, private eventService : EventService, 
+              private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
-    this.setSelectedDay(this.today);
+    this.setSelectedDay(this.today, null);
 
     this.events.subscribe('event:update', () => {
-        this.setSelectedDay(this.selectedDays[0].day);
+        this.setSelectedDay(this.selectedDays[0].day, null);
     });
   }
 
   getDayName(day) {
-    var self = this;
     var response = "";
     ["yesterday", "today", "tomorrow"].forEach((dayName, i) => {
-      if (self.moment(day).isSame(self.moment().add(i - 1, "days"), 'day')){
+      if (this.moment(day).isSame(this.moment().add(i - 1, "days"), 'day')){
         response = dayName;
       }
     });
     return response;
   }
 
-  setSelectedDay(day) {
+  refresh(refresher){
+    this.eventService.reloadFromServer();
+    this.setSelectedDay(this.selectedDays[0].day, refresher);
+  }
+
+  setSelectedDay(day, refresher) {
     var generateDays = date => [ date, moment(date).add(1, 'day'), moment(date).add(2, 'day')];
 
     this.eventService.getEventsForDays(generateDays(moment(day))).then(eventDays => {
       this.selectedDays = eventDays;
       this.displayedMonth = this.selectedDays[0].day.get("month");
       this.displayedYear = this.selectedDays[0].day.get("year");
-      this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+      this.setMonthArray(this.displayedYear, this.displayedMonth);
+      if (refresher){
+        refresher.complete();
+      }
+    }, erreur => {
+      this.utils.showError(this.alertCtrl, "error", "basicFetchError");
+      this.selectedDays = generateDays(moment(day)).map(d => { return { day: d, events: []}; });
+      this.displayedMonth = this.selectedDays[0].day.get("month");
+      this.displayedYear = this.selectedDays[0].day.get("year");
+      this.setMonthArray(this.displayedYear, this.displayedMonth);
+      if (refresher){
+        refresher.complete();
+      }
     });
   }
 
@@ -61,15 +78,11 @@ export class TodayPage {
       this.displayedYear++;
     }
 
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+    this.setMonthArray(this.displayedYear, this.displayedMonth);
   }
 
   navigateToEvent(event){
     this.navCtrl.push(EventPage, { event: event });
-  }
-
-  navigateToAuth(){
-    window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent('https://www.usherbrooke.ca/~desp2714/app-start/auth/retourcas'));
   }
 
   getPreviousMonth(){
@@ -78,23 +91,27 @@ export class TodayPage {
       this.displayedYear--;
     }
 
-    this.month = this.getMonthArray(this.displayedYear, this.displayedMonth);
+    this.setMonthArray(this.displayedYear, this.displayedMonth);
   }
 
-  getMonthArray(year, month) {
+  setMonthArray(year, month) {
     var date = this.moment([year, month]).startOf('week');
-    var result = [];
+    var monthData = [];
 
     while (this.monthArrayCondition(month, date)){
       var tmp = [];
       for (var j = 0; j < 7; j++){
         tmp.push(this.moment(date).add(j, 'days'));
       }
-      result.push(tmp);
+      monthData.push(tmp);
       date.add(7, 'days');
     }
 
-    return result;
+    this.eventService.getDaysAndHasEvents(monthData).then(data => {
+        this.month = data;
+    }, data => {
+        this.month = monthData.map(week => { return week.map(d => { return { day: d, hasEvents: false }; }); });
+    });
   }
 
   private monthArrayCondition(month, date){

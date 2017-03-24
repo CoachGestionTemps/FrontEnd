@@ -5,17 +5,19 @@ import { TranslateService } from 'ng2-translate';
 import { TabsPage } from '../pages/tabs/tabs';
 import { GuidService } from "../services/guid-service";
 import { SettingService } from "../services/setting-service";
+import { EventService } from "../services/event-service";
+import { Utils } from "../services/utils";
 import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 
 
 @Component({
   templateUrl: 'app.html',
-  providers: [GuidService, SettingService]
+  providers: [GuidService, SettingService, EventService, Utils]
 })
 export class MyApp {
   rootPage = TabsPage;
 
-  constructor(platform: Platform, translate: TranslateService, private setting : SettingService, public modalCtrl: ModalController) {
+  constructor(platform: Platform, translate: TranslateService, private setting : SettingService, public modalCtrl: ModalController, private eventService : EventService) {
     platform.ready().then(() => {
 
       // Where we catch and store the CIP/Token

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 
 import { NavParams, NavController, Events, AlertController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
+import { SettingService } from '../../services/setting-service';
 import { Utils } from '../../services/utils';
 import { EventStartPage } from '../event-start/event-start';
 import { EventCreationPage } from "../event-creation/event-creation";
@@ -25,7 +26,7 @@ export class EventPage {
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
               private eventService : EventService, private events: Events, private utils : Utils,
-              private translate: TranslateService) {
+              private translate: TranslateService, private setting : SettingService) {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
@@ -41,9 +42,11 @@ export class EventPage {
   }
 
   promptDeleteEvent(event) {
-      this.eventService.delete(event);
-      this.navCtrl.pop();
-      this.events.publish('event:update');
+      this.eventService.delete(event).then(data => {
+          this.navCtrl.pop();
+      }, data => {
+          // TODO : Show Error
+      });
   }
 
   getPassedTimeDuration(passedTime){
@@ -53,7 +56,11 @@ export class EventPage {
 
   passedTimeUpdated(){
     this.event.passed_time = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
-    this.eventService.edit(this.event);
+    this.eventService.edit(this.event).then(data => {
+
+    }, data => {
+      // TODO : Show error
+    });
   }
 
   ionViewWillEnter(){

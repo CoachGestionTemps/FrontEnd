@@ -69,5 +69,7 @@
     "walktitle5": "Viewing events",
     "walkdesc5": "Displays an event's details and allows you to edit them.",
     "walktitle6": "Start using the app!",
-    "disconnect": "Log Out"
+    "disconnect": "Log Out",
+    "error:": "Error",
+    "basicFetchError": "Can't fetch data at the moment."
 }

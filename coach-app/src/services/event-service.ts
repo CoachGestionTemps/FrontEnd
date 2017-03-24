@@ -1,199 +1,270 @@
 import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+import {Http, RequestOptions, Headers, RequestOptionsArgs} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs";
 import { SettingService } from '../services/setting-service';
+import { Utils } from '../services/utils';
+import { Events } from 'ionic-angular';
 import moment from 'moment';
 
 @Injectable()
 export class EventService {
   url: string;
   storageKey: string;
-  events: any[];
   moment: any;
+  loadFromServer: boolean;
 
-  constructor(private http: Http, private setting: SettingService) {
+  constructor(private http: Http, private setting: SettingService, private events : Events, private utils : Utils) {
       this.url = setting.getEndPointURL();
-      this.storageKey = "events";
+      this.storageKey = "keys";
       this.moment = moment;
+      this.loadFromServer = true;
   }
 
-  refreshEvents() {
-      this.getAll().then(events => {
-          this.events = events;
-          this.updateCache();
-      });
+  public reloadFromServer(){
+      this.loadFromServer = true;
   }
 
-  public getAll(): Promise<any[]> {
-    return new Promise(
-        (resolve, reject) => {
-            if (!this.events || this.events.length === 0){
-                // TODO : Replace this with an http.get method
-                this.http.get(this.setting.getEndPointURL() + '/events/' + this.setting.getCIP()).map((response) => {
+    public refreshEvents() : Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                this.http.get(this.setting.getEndPointURL() + '/events/' + this.setting.getCIP(), this.getOptions()).map((response) => {
                     return response.json()
-                }).toPromise().then(events => {
-                    this.events = events;
-                    this.updateCache();
-                    resolve(this.events);
+                }).toPromise().then(data => {
+                    this.loadFromServer = false;
+                    if (data.statut == "succes"){
+                        this.overwriteCache(data.donnees);
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }).catch(data => {
+                    reject();
+                });
+            }
+        );
+    }
+
+    public getEventsForDays(days): Promise<any[]> { 
+        var getDays = () => {
+            return days.map(d => { 
+                return { 
+                    day: d,
+                    events: JSON.parse(localStorage.getItem(this.getDayKey(d))) || []
+                }
+            });
+        };
+
+        return this.getFromServerOrCache(getDays);
+    }
+
+    public getEventsForDateRange(minDate, maxDate): Promise<any[]> {
+        var getEvents = () => {
+            var iter = this.moment(minDate);
+            var days = [];
+            while(iter.isBefore(maxDate)){
+                days.push(iter.format(this.utils.dateKeyFormat));
+                iter.add(1, 'day');
+            }
+            return this.getCachedEvents(days);
+        };
+        
+        return this.getFromServerOrCache(getEvents);
+    }
+
+    public getDaysAndHasEvents(month): Promise<any> {
+        var getDays = () => {
+            var keys = this.getDayKeys();
+            return month.map(week => { 
+                return week.map(d => {
+                    return { 
+                        day: d,
+                        hasEvents: keys.indexOf(this.getDayKey(d)) != -1
+                    }; 
+                });
+            });
+        };
+
+        return this.getFromServerOrCache(getDays);
+    }
+
+    public add(event) : Promise<any> {
+        event.id = this.guid();
+        event.parent_id = event.id;
+        event.user_id = this.setting.getCIP();
+
+        return new Promise(
+            (resolve, reject) => {
+                this.http.put(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
+                    return response.json();
+                }).toPromise().then(data => {
+                    if (data.statut == "succes"){
+                        this.addInCache(event);
+                        this.events.publish('event:update');
+                        resolve(data);
+                    }
+                    reject({ statut: data.statut })
+                });
+            }
+        );
+    }
+
+    public edit(event) : Promise<any> {
+        var activity_start_time = event.activity_start_time;
+        var original_start_time = event.original_start_time;
+        delete event.activity_start_time;
+        delete event.original_start_time;
+
+        return new Promise(
+            (resolve, reject) => {
+                this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
+                    return response.json();
+                }).toPromise().then(data => {
+                    if (data.statut == "succes"){
+                        this.updateInCache(event, original_start_time);
+                        this.events.publish('event:update');
+                        resolve(data);
+                    } else {
+                        reject({ statut: data.statut })
+                    }
+                });
+            }
+        );
+    }
+
+    public delete(event) : Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                this.http.delete(this.setting.getEndPointURL() + '/events/' + event.id, this.getOptions()).map((response) => {
+                    return response.json()
+                }).toPromise().then(data => {
+                    if (data.statut == "succes"){
+                        this.removeFromCache(event);
+                        this.events.publish('event:update');
+                        resolve(data);
+                    }
+                    reject({ statut: data.statut })
+                });
+            }
+        );
+    }
+
+    private getFromServerOrCache(func): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (this.loadFromServer) {
+                this.refreshEvents().then(() => {
+                    resolve(func());
+                }).catch(data => {
+                    reject(data);
                 });
             } else {
-                resolve(this.events);
+                resolve(func());
+            }
+        });
+    }
+
+    private overwriteCache(events): void {
+        this.getDayKeys().forEach(key => {
+            localStorage.removeItem(key);
+        });
+
+        var keys = [];
+        var days = {};
+
+        events.forEach(e => {
+            var key = this.getEventKey(e);
+            if (keys.indexOf(key) != -1){
+                days[key].push(e);
+            } else {
+                days[key] = [e];
+                keys.push(key);
+            }
+        });
+
+        localStorage.setItem(this.storageKey, JSON.stringify(keys));
+
+        keys.forEach(key => {
+            localStorage.setItem(key, JSON.stringify(days[key]));
+        });
+    }
+
+    private removeFromCache(event): void {
+        var keys = this.getDayKeys();
+        var key = this.getEventKey(event);
+        var indexOfKey = keys.indexOf(key);
+
+        if (indexOfKey != -1){
+            var dayEvents = JSON.parse(localStorage.getItem(key));
+            if (dayEvents){
+                dayEvents = dayEvents.filter(e => { return e.id != event.id; });
+                if (dayEvents.length > 0){
+                    localStorage.setItem(key, JSON.stringify(dayEvents));
+                } else {
+                    keys.splice(indexOfKey, 1);
+                    localStorage.setItem(this.storageKey, JSON.stringify(keys));
+                    localStorage.removeItem(key);
+                }
             }
         }
-    );
-}
+    }
 
-   public getAllTODO(): Promise<any[]> {
-      // TODO : Replace this with an http.get method
-     return new Promise(
-         (resolve, reject) => {
-            this.events = JSON.parse(localStorage.getItem(this.storageKey)) || [];
-            if (this.events.length === 0){
-                 // TODO : Replace this with an http.get method
-                this.events = [
-                {
-                    id: 0,
-                    start_time: moment().format(),
-                    end_time: moment().hour(moment().hour() + 2).format(),
-                    category: 0,
-                    user_id: 1,
-                    title: "Fête de môman",
-                    passed_time: null,
-                    summary: "À chaque année, ma mère vieillit d'un année... Encore et encore!",
-                    location: "123 ave DesMères, Ville Père, Q1W 2E3, Qc, Ca",
-                    parent_id: 0
-               },
-                {
-                    id: 2,
-                    start_time: moment().date(moment().date() + 1).format(),
-                    end_datetime: moment().date(moment().date() + 1).hour(moment().hour() + 2).format(),
-                    category: 2,
-                    user_id: 1,
-                    title: "Étude pour ADM111",
-                    passed_time: null,
-                    summary: "Pu capable de ce cours-là...",
-                    location: "Chez nous...",
-                    parent_id: 2
-                },
-                {
-                    id: 3,
-                    start_time: moment().hour(moment().hour() + 2).format(),
-                    end_time: moment().hour(moment().hour() + 4).format(),
-                    category: 1,
-                    user_id: 1,
-                    title: "ADM111",
-                    passed_time: null,
-                    summary: "Principe d'administration",
-                    location: "K3-2021",
-                    parent_id: 3
-                },
-                {
-                    id: 4,
-                    start_time: moment().hour(moment().hour() + 4).format(),
-                    end_time: moment().hour(moment().hour() + 6).format(),
-                    category: 3,
-                    user_id: 1,
-                    title: "Volley!",
-                    passed_time: null,
-                    summary: null,
-                    location: "Centre Sportif",
-                    parent_id: 4
-                },
-                {
-                    id: 5,
-                    start_time: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
-                    end_time: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
-                    category: 5,
-                    user_id: 1,
-                    title: "Shift McDo",
-                    passed_time: null,
-                    summary: null,
-                    location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-                    parent_id: 5
-                },
-                {
-                    id: 6,
-                    start_time: moment().date(moment().date() + 7).hour(moment().hour() + 2).format(),
-                    end_time: moment().date(moment().date() + 7).hour(moment().hour() + 4).format(),
-                    category: 1,
-                    user_id: 1,
-                    title: "ADM111",
-                    passed_time: null,
-                    summary: "Principe d'administration",
-                    location: "K3-2021",
-                    parent_id: 3
-                },
-                {
-                    id: 7,
-                    start_time: moment().date(moment().date() + 1).hour(moment().hour() + 3).format(),
-                    end_time: moment().date(moment().date() + 1).hour(moment().hour() + 7).format(),
-                    category: 5,
-                    user_id: 2,
-                    title: "Shift Subway",
-                    passed_time: null,
-                    summary: null,
-                    location: "3065 Rue King O, Sherbrooke, QC J1L 1C8",
-                    parent_id: 7
-                },
-                ];
-                resolve(this.events);
-             }
-            resolve(this.events)
-         });
-  }
-
-getEventsForDays(days): Promise<any[]> {
-    return new Promise(
-        (resolve, reject) => {
-            this.getAll().then(events => {
-                var isSameDay = (d, e) => d.isSame(this.moment(e.start_time, "YYYY-MM-DD[T]HH:mm[:00.000Z]"), 'day');
-                resolve(days.map(d => { return { day: d, events : events.filter(e => isSameDay(d, e)) }; }))
-            });
+    private updateInCache(event, original_start_time): void {
+        var clonedEvent = JSON.parse(JSON.stringify(event));
+        if (original_start_time){
+            clonedEvent.start_time = original_start_time;
         }
-    );
-  }
-
-  add(event) {
-    event.id = this.guid();
-    event.parent_id = event.id;
-    // TODO : PUT request, if success :
-    this.events.push(event);
-    this.updateCache();
-    // else : error message
-  }
-
-  edit(event) {
-    for (var i in this.events) {
-      if (this.events[i].id == event.id) {
-        // TODO : POST request, if success:
-        this.events[i] = event;
-        this.updateCache();
-        // else : error message
-        break;
-      }
+        this.removeFromCache(clonedEvent);
+        this.addInCache(event);
     }
-  }
 
-  delete(event){
-    for (var i = 0; i < this.events.length; i++) {
-      if (this.events[i].id == event.id) {
-        // TODO : DELETE request, if success :
-        this.events.splice(i, 1);
-        this.updateCache();
-        // else : error message
-        break;
-      }
+    private addInCache(event): void {
+        var keys = this.getDayKeys();
+        var key = this.getEventKey(event);
+        var indexOfKey = keys.indexOf(key);
+        if (indexOfKey == -1) {
+            keys.push(key);
+            localStorage.setItem(this.storageKey, JSON.stringify(keys));
+            localStorage.setItem(key, JSON.stringify([event]));
+        } else {
+            var dayEvents = JSON.parse(localStorage.getItem(key));
+            dayEvents.push(event);
+            localStorage.setItem(key, JSON.stringify(dayEvents));
+        }
     }
-  }
 
-  private updateCache(){
-      localStorage.setItem(this.storageKey, JSON.stringify(this.events));
-  }
-
-  private guid() {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    private getAllCachedEvents(): any[] {
+        return this.getCachedEvents(this.getDayKeys());
     }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  }
+
+    private getCachedEvents(keys): any[] {
+        var events = [];
+        keys.forEach(key => {
+            events = events.concat(JSON.parse(localStorage.getItem(key)) || []);
+        });
+        return events;
+    }
+
+    private getOptions(): RequestOptions {
+        var headers = new Headers({'Content-Type': 'application/json'});
+        headers.append("token", this.setting.getEventToken());
+        return new RequestOptions({headers: headers});
+    }
+
+    private getDayKeys(): string[] {
+        return JSON.parse(localStorage.getItem(this.storageKey)) || [];
+    }
+
+    private getEventKey(event): string {
+        return event.start_time.split(' ')[0];
+    }
+
+    private getDayKey(day): string {
+        return day.format(this.utils.dateKeyFormat);
+    }
+
+    private guid(): string {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
 }

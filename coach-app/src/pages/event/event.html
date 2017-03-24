@@ -37,7 +37,7 @@
         <ion-icon name="navigate" item-left></ion-icon>
         {{ event.location }}
     </ion-item>
-    <ion-item *ngIf="event.passed_time != null">
+    <ion-item *ngIf="event.passed_time != null && (this.setting.isSSP() || event.category != eventCategories.Class)">
         <h2>
             {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passed_time * 1000).format("H[h]mm") }}
         </h2>
@@ -45,7 +45,7 @@
     <ion-item hidden="true">
         <ion-datetime #datePicker (ionChange)="passedTimeUpdated()" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="passedTime"></ion-datetime>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="this.setting.isSSP() || event.category != eventCategories.Class">
         <span class="{{ utils.getCategoryClass(event.category) }}">
             <button full large ion-button (click)="navigateToEventStart()">{{ (event.passed_time == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
             <button full large ion-button (click)="datePicker.open()">{{ (event.passed_time == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>

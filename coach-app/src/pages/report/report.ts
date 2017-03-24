@@ -40,16 +40,6 @@ export class ReportPage {
   }
 
   refresh(refresher){
-    this.eventService.getAll().then(events => {
-      this.events = events;
-      this.setActualSelection();
-      if (refresher) {
-          refresher.complete();
-      }
-    });
-  }
-
-  setActualSelection(){
     if (this.rangetype === "week"){
       this.minDate = this.moment(this.actualDate).startOf('week'); 
       this.maxDate = this.moment(this.actualDate).endOf('week');
@@ -64,13 +54,21 @@ export class ReportPage {
       this.maxDate = daterange[1];
     }
 
+    this.eventService.getEventsForDateRange(this.minDate, this.maxDate).then(events => {
+      this.events = events;
+      this.setActualSelection();
+
+      if (refresher) {
+          refresher.complete();
+      } 
+    });
+  }
+
+  setActualSelection(){
     var stats = [];
     var chartLabels = [];
     var chartData = [];
-    var filterEvent = (e => this.moment(e.start_time).isAfter(this.minDate) 
-                        && this.moment(e.end_time).isBefore(this.maxDate));
-
-    this.events.filter(e => filterEvent(e)).forEach(e => {
+    this.events.forEach(e => {
       var plannedTime = this.moment(e.end_time).diff(this.moment(e.start_time), 'seconds');
       var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? plannedTime : e.passed_time || 0;
 
@@ -92,8 +90,6 @@ export class ReportPage {
     this.stats = stats.filter(e => e);
     this.updateChart(chartLabels.filter(e => e != null), chartData.filter(e => e != null));
   }
-
-  
 
   updateChart(chartLabels, chartData){
     if (this.viewLoaded){

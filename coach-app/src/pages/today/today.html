@@ -1,4 +1,7 @@
 <ion-content>
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content>{{ 'refreshing' | translate }}</ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <div class="day-container" *ngFor="let date of selectedDays">
       <ion-card class="selectedDays" (click)="setClickedDate(date.day)">
@@ -27,7 +30,7 @@
               <ion-row>
                 <ion-col width-20 >
                     <span class="{{ utils.getCategoryClass(event.category) }}">
-                      {{  moment(event.start_time).format('HH:MM') }}
+                      {{  moment(event.start_time).format('HH:mm') }}
                     </span>
                 </ion-col>
                 <ion-col width-80>
@@ -49,7 +52,7 @@
     <ion-col width-20 class="left-arrow" (click)="getPreviousMonth()">
         <ion-icon name="arrow-dropleft-circle" color="white" medium></ion-icon>
     </ion-col>
-    <ion-col width-60 class="month-name" (click)="navigateToAuth()">
+    <ion-col width-60 class="month-name">
       <h2>{{ moment().month(displayedMonth).format("MMMM") + " " + displayedYear }}</h2>
     </ion-col>
     <ion-col width-20 class="right-arrow" (click)="getNextMonth()">
@@ -72,9 +75,10 @@
 
       <ion-row *ngFor="let week of month" class="days">
         <ion-col *ngFor="let day of week"
-                  [ngClass]="{'is-selected': selectedDays[0].day.isSame(day, 'day'), 'is-today': today.isSame(day, 'day'), 'is-current-month': day.month() == displayedMonth }"
-                  (click)="setSelectedDay(day)">
-          {{ day ? day.date() : "" }}
+                  [ngClass]="{'is-selected': selectedDays[0].day.isSame(day.day, 'day'), 'is-today': today.isSame(day.day, 'day'), 'is-current-month': day.day.month() == displayedMonth }"
+                  (click)="setSelectedDay(day.day)">
+          <span>{{ day.day.date() }}</span>
+          <div *ngIf="day.hasEvents" class="dot"></div>
         </ion-col>
       </ion-row>
     </ion-grid>

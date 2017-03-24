@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, Inject } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, AlertController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { EventPage } from "../event/event";
@@ -18,8 +18,10 @@ export class WeekPage {
   displayedYear: any;
   displayedMonth: any;
   hours: any;
+  days: any[];
 
-  constructor(public navCtrl: NavController, private events : Events, private eventService : EventService, private utils : Utils) {
+  constructor(public navCtrl: NavController, public alertCtrl : AlertController, private events : Events, 
+              private eventService : EventService, private utils : Utils) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
@@ -27,10 +29,14 @@ export class WeekPage {
     this.hours = this.utils.generateHours();
     this.setSelectedWeek(this.today);
 
-
     this.events.subscribe('event:update', () => {
-        this.setSelectedWeek(this.week[0].day);
+        this.getEvents(null);
     });
+  }
+
+  refresh(refresher){
+    this.eventService.reloadFromServer();
+    this.getEvents(refresher);
   }
 
   setSelectedWeek(day) {
@@ -47,29 +53,39 @@ export class WeekPage {
     for (i = dayOfWeek + 1; i < 7; i++){
       days.push(moment(day).add(i - dayOfWeek, 'day'));
     }
-
-    this.eventService.getEventsForDays(days).then(dayEvents => {
-      for (var dayEvent of dayEvents) {
-        dayEvent.indexedEvents = new Array(24);
-        for (var event of dayEvent.events){
-          var hour = moment(event.start_time).get('h');
-          if (dayEvent.indexedEvents[hour]){
-            dayEvent.indexedEvents[hour].push(event);
-          } else {
-            dayEvent.indexedEvents[hour] = [event];
-          }
-        }
-      }
-
-      this.week = dayEvents;
-      this.displayedMonth = this.week[6].day.get("month");
-      this.displayedYear = this.week[6].day.get("year");
-    });
+    this.days = days;
+    this.getEvents(null);
   }
 
-  refreshWeekEvents()
-  {
-    this.setSelectedWeek(moment(this.week[0].day));
+  getEvents(refresher){
+      this.eventService.getEventsForDays(this.days).then(dayEvents => {
+          for (var dayEvent of dayEvents) {
+            dayEvent.indexedEvents = new Array(24);
+            for (var event of dayEvent.events){
+              var hour = moment(event.start_time).get('h');
+              if (dayEvent.indexedEvents[hour]){
+                dayEvent.indexedEvents[hour].push(event);
+              } else {
+                dayEvent.indexedEvents[hour] = [event];
+              }
+            }
+          }
+
+          this.week = dayEvents;
+          this.displayedMonth = this.week[6].day.get("month");
+          this.displayedYear = this.week[6].day.get("year");
+          if (refresher){
+            refresher.complete();
+          }
+      }, data => {
+          this.utils.showError(this.alertCtrl, "error", "basicFetchError");
+          this.week = this.days.map(d => { return { day: d, events: [], indexedEvents: new Array(24)}; });
+          this.displayedMonth = this.week[6].day.get("month");
+          this.displayedYear = this.week[6].day.get("year");
+          if (refresher){
+            refresher.complete();
+          }
+      });
   }
 
   getNextWeek(){
@@ -82,10 +98,6 @@ export class WeekPage {
 
   getIndexedEvents(date, h){
     return date.indexedEvents[h] || [];
-  }
-
-  getEventWidth(date, h){
-    return ((100 / (this.getIndexedEvents(date, h).length)) - 1) + "%";
   }
 
   getEventMargin(event){
@@ -103,13 +115,13 @@ export class WeekPage {
   }
 
   navigateToEventCreation(date, hour) {
+    // REFACTOR : Est-ce nécessaire de recréer une date?
     var datetime = this.moment(date.format("MM-DD-YYYY"), "MM-DD-YYYY");
     datetime.set({ hour: hour});
     this.navCtrl.push(EventCreationPage, { date: datetime });
   }
 
   ionViewDidLoad(){
-
     document.getElementById(this.moment().format("H") + "H").scrollIntoView();
   }
 }

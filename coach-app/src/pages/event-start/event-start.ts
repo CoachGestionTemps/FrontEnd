@@ -31,6 +31,7 @@ export class EventStartPage {
     this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
     this.pausable.subscribe(() => this.event.passed_time++);
     this.play();
+    // TODO : Change logic and save current datetime to the event's activity_start_time
   }
 
   play(){
@@ -41,7 +42,11 @@ export class EventStartPage {
   pause(){
     this.pauser.next(true);
     this.playing = false;
-    this.eventService.edit(this.event);
+    this.eventService.edit(this.event).then(data => {
+
+    }, data => {
+        // TODO : Show error
+    })
   }
 
   playPauseToggle(){
