@@ -19,8 +19,8 @@ export class Utils {
         this.dateKeyFormat = "YYYY-MM-DD";
         this.dateFormat = "YYYY-MM-DD HH:mm:ss";
         this.utcDateFormat = "YYYY-MM-DD[T]HH:mm[:00.000Z]";
-        this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work'];
-        this.categoryColors = ['#3d4641', '#387ef5', '#2d9d5f', '#E6A82A', '#f53d3d', '#4849A4'];
+        this.categories = ['undefined', 'class', 'study', 'sport', 'leisure', 'work', 'createEvent'];
+        this.categoryColors = ['#3d4641', '#237B9F', '#FF928B', '#FAA200', '#AECAD6', '#9D8DF0', '#007c52'];
         this.categoryicons = ['list-box', 'school','book', 'basketball', 'game-controller-b', 'briefcase'];
         this.translate.use(this.setting.getLanguage());
         this._getCategoryNames();

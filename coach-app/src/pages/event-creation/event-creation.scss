@@ -14,10 +14,10 @@ page-event-creation {
     .category-undefined {
         background-color: $white;
         ion-icon {
-            color: $grey2;
+            color: $undefined;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $grey2;
+            background-color: $undefined;
             color: $white;
         }
         .back-button.bar-button ion-icon {
@@ -28,10 +28,10 @@ page-event-creation {
     .category-class {
         background-color: $white;
         ion-icon {
-            color: $primary;
+            color: $class;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $primary;
+            background-color: $class;
             color: $white;
         }
         .back-button.bar-button ion-icon {
@@ -42,10 +42,10 @@ page-event-creation {
     .category-study {
         background-color: $white;
         ion-icon {
-            color: $green3;
+            color: $study;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $green3;
+            background-color: $study;
             color: $white;
         }
         .back-button.bar-button ion-icon {
@@ -56,10 +56,10 @@ page-event-creation {
     .category-sport {
         background-color: $white;
         ion-icon {
-            color: $orange;
+            color: $sport;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $orange;
+            background-color: $sport;
             color: $white;
         }
         .back-button.bar-button ion-icon{
@@ -70,10 +70,10 @@ page-event-creation {
     .category-leisure {
         background-color: $white;
         ion-icon {
-            color: $danger;
+            color: $leisure;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $danger;
+            background-color: $leisure;
             color: $white;
         }
         .back-button.bar-button ion-icon {
@@ -84,14 +84,28 @@ page-event-creation {
     .category-work {
         background-color: $white;
         ion-icon {
-            color: $purple;
+            color: $work;
         }
         .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
-            background-color: $purple;
+            background-color: $work;
             color: $white;
         }
         .back-button.bar-button ion-icon {
             color: $white;
         }
+    }
+
+    .category-createEvent {
+      background-color: $white;
+      ion-icon {
+        color: $green3;
+      }
+      .toolbar-background, button:not(.item-cover), .button:hover:not(.disable-hover) {
+        background-color: $green3;
+        color: $white;
+      }
+      .back-button.bar-button ion-icon {
+        color: $white;
+      }
     }
 }

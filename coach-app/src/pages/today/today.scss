@@ -38,49 +38,52 @@ page-today {
   }
 
   ion-list .day-container:nth-child(1) .selectedDays {
+    >ion-item {
       background-color: $green2;
+    }
+      background-color: $green2;
+
+    button {
+      background-color: #ffffff;
+      color: $green2;
+      font-size: 30px;
+    }
   }
 
   ion-list .day-container:nth-child(2) .selectedDays {
+    >ion-item {
       background-color: $green1;
+    }
+      background-color: $green1;
+
+    button {
+      background-color: #ffffff;
+      color: $green1;
+      font-size: 30px;
+    }
   }
 
   ion-list .day-container:nth-child(3) .selectedDays {
+    >ion-item {
       background-color: $green3;
+    }
+      background-color: $green3;
+
+    button {
+      background-color: #ffffff;
+      color: $green3;
+      font-size: 30px;
+    }
   }
 
-  ion-list .day-container:nth-child(1) .selectedDays button {
-    font-size: 30px;
-    margin: -30px;
-    color: #ffffff;
-    background-color: $green2;
-  }
-
-  ion-list .day-container:nth-child(2) .selectedDays button {
-    font-size: 30px;
-    margin: -30px;
-    color: #ffffff;
-    background-color: $green1;
-  }
-
-  ion-list .day-container:nth-child(3) .selectedDays button {
-    font-size: 30px;
-    margin: -30px;
-    color: #ffffff;
-    background-color: $green3;
-  }
-
-  ion-list ion-card.card ion-col:nth-child(2) {
+  ion-list ion-item-sliding ion-col:nth-child(2) {
     h1 {
       line-height: 44px;
     }
   }
 
-  ion-list ion-card.card ion-col:nth-child(1) {
-    padding-top: 8px;
-  }
 
-  ion-list .selectedEvents ion-col {
+  ion-list .events ion-item-sliding .item ion-col {
     h1, h2, p {
       color: $black1;
     }
@@ -92,8 +95,7 @@ page-today {
   }
 
 
-  ion-list ion-card.card ion-col {
-
+  ion-list ion-item-sliding .item ion-col {
     h1, h2, p {
       color: #ffffff;
     }
@@ -160,7 +162,7 @@ page-today {
     }
   }
 
-  ion-list ion-card.card ion-col:nth-child(1) {
+  ion-list ion-item-sliding ion-col {
     padding-top: 8px;
   }
 }
