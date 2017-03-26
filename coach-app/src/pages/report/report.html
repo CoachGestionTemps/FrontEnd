@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-segment [(ngModel)]="rangetype" color="secondary">
-      <ion-segment-button value="week" (click)="setActualSelection()">
+      <ion-segment-button value="week" (click)="refresh(null)">
         Semaine
       </ion-segment-button>
-      <ion-segment-button value="month" (click)="setActualSelection()">
+      <ion-segment-button value="month" (click)="refresh(null)">
         Mois
       </ion-segment-button>
-      <ion-segment-button value="session" (click)="setActualSelection()">
+      <ion-segment-button value="session" (click)="refresh(null)">
         Session
       </ion-segment-button>
     </ion-segment>

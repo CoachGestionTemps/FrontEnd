@@ -54,6 +54,10 @@ export class ReportPage {
       this.maxDate = daterange[1];
     }
 
+    if (refresher) {
+      this.eventService.reloadFromServer();
+    }
+
     this.eventService.getEventsForDateRange(this.minDate, this.maxDate).then(events => {
       this.events = events;
       this.setActualSelection();
@@ -158,7 +162,7 @@ export class ReportPage {
       this.actualDate.add(4, 'month');
     }
 
-    this.setActualSelection();
+    this.refresh(null);
   }
 
   getPreviousSelection(){
@@ -170,6 +174,6 @@ export class ReportPage {
       this.actualDate.add(-4, 'month');
     }
 
-    this.setActualSelection();
+    this.refresh(null);
   }
 }
