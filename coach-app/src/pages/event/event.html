@@ -1,6 +1,6 @@
 <ion-header class="{{ utils.getCategoryClass(event.category) }}">
   <ion-navbar hide-tabs>
-    {{ moment(event.start_time).format("ll") }}
+    {{ moment(event.startTime).format("ll") }}
     <ion-buttons end>
         <button *ngIf="event.category != eventCategories.Class" ion-button icon-only (click)="navigateToEventCreation(event)">
             <ion-icon name="create"></ion-icon>
@@ -27,19 +27,19 @@
     </ion-item>
     <ion-item>
         <ion-icon name="calendar" item-left></ion-icon>
-        {{ moment(event.start_time).format("dddd, MMM DD, YYYY") }}
+        {{ moment(event.startTime).format("dddd, MMM DD, YYYY") }}
     </ion-item>
     <ion-item>
         <ion-icon name="clock" item-left></ion-icon>
-        {{ ('from' | translate) + ' ' + moment(event.start_time).format("H:mm") + ' ' + ('to' | translate) + ' ' + moment(event.end_time).format("H:mm") }}
+        {{ ('from' | translate) + ' ' + moment(event.startTime).format("H:mm") + ' ' + ('to' | translate) + ' ' + moment(event.endTime).format("H:mm") }}
     </ion-item>
     <ion-item *ngIf="event.location">
         <ion-icon name="navigate" item-left></ion-icon>
         {{ event.location }}
     </ion-item>
-    <ion-item *ngIf="event.passed_time != null && (this.setting.isSSP() || event.category != eventCategories.Class)">
+    <ion-item *ngIf="event.passedTime != null && (this.setting.isSSP() || event.category != eventCategories.Class)">
         <h2>
-            {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passed_time * 1000).format("H[h]mm") }}
+            {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passedTime * 1000).format("H[h]mm") }}
         </h2>
     </ion-item>
     <ion-item hidden="true">
@@ -47,8 +47,8 @@
     </ion-item>
     <ion-item *ngIf="this.setting.isSSP() || event.category != eventCategories.Class">
         <span class="{{ utils.getCategoryClass(event.category) }}">
-            <button full large ion-button (click)="navigateToEventStart()">{{ (event.passed_time == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
-            <button full large ion-button (click)="datePicker.open()">{{ (event.passed_time == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
+            <button full large ion-button (click)="navigateToEventStart()">{{ (event.passedTime == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
+            <button full large ion-button (click)="datePicker.open()">{{ (event.passedTime == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
         </span>
     </ion-item>
   </ion-list>

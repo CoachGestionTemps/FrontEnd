@@ -69,18 +69,18 @@ export class ReportPage {
     var chartLabels = [];
     var chartData = [];
     this.events.forEach(e => {
-      var plannedTime = this.moment(e.end_time).diff(this.moment(e.start_time), 'seconds');
-      var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? plannedTime : e.passed_time || 0;
+      var plannedTime = this.moment(e.endTime).diff(this.moment(e.startTime), 'seconds');
+      var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? plannedTime : e.passedTime || 0;
 
       if (stats[e.category]){
         chartData[e.category] += passedTime;
         stats[e.category].plannedTime += plannedTime;
-        stats[e.category].passed_time += passedTime;
+        stats[e.category].passedTime += passedTime;
       } else {
         chartLabels[e.category] = e.category;
         chartData[e.category] = passedTime;
         stats[e.category] = {
-          passed_time: passedTime,
+          passedTime: passedTime,
           plannedTime: plannedTime,
           categoryKey: e.category
         }
@@ -127,7 +127,7 @@ export class ReportPage {
   }
 
   anyStatNonNull(){
-    return this.stats.some(o => o.passed_time > 0);
+    return this.stats.some(o => o.passedTime > 0);
   }
 
   getSessionRanges(){

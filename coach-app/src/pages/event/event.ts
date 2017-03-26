@@ -30,7 +30,7 @@ export class EventPage {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.passedTime = this.moment.utc((this.event.passed_time || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
+    this.passedTime = this.moment.utc((this.event.passedTime || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
   }
 
   navigateToEventStart(){
@@ -55,7 +55,7 @@ export class EventPage {
   }
 
   passedTimeUpdated(){
-    this.event.passed_time = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
+    this.event.passedTime = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
     this.eventService.edit(this.event).then(data => {
 
     }, data => {

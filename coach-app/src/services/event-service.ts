@@ -89,8 +89,8 @@ export class EventService {
 
     public add(event) : Promise<any> {
         event.id = this.guid();
-        event.parent_id = event.id;
-        event.user_id = this.setting.getCIP();
+        event.parentId = event.id;
+        event.userId = this.setting.getCIP();
 
         return new Promise(
             (resolve, reject) => {
@@ -109,10 +109,10 @@ export class EventService {
     }
 
     public edit(event) : Promise<any> {
-        var activity_start_time = event.activity_start_time;
-        var original_start_time = event.original_start_time;
-        delete event.activity_start_time;
-        delete event.original_start_time;
+        var activityStartTime = event.activityStartTime;
+        var originalStartTime = event.originalStartTime;
+        delete event.activityStartTime;
+        delete event.originalStartTime;
 
         return new Promise(
             (resolve, reject) => {
@@ -120,7 +120,7 @@ export class EventService {
                     return response.json();
                 }).toPromise().then(data => {
                     if (data.statut == "succes"){
-                        this.updateInCache(event, original_start_time);
+                        this.updateInCache(event, originalStartTime);
                         this.events.publish('event:update');
                         resolve(data);
                     } else {
@@ -207,10 +207,10 @@ export class EventService {
         }
     }
 
-    private updateInCache(event, original_start_time): void {
+    private updateInCache(event, originalStartTime): void {
         var clonedEvent = JSON.parse(JSON.stringify(event));
-        if (original_start_time){
-            clonedEvent.start_time = original_start_time;
+        if (originalStartTime){
+            clonedEvent.startTime = originalStartTime;
         }
         this.removeFromCache(clonedEvent);
         this.addInCache(event);
@@ -254,7 +254,7 @@ export class EventService {
     }
 
     private getEventKey(event): string {
-        return event.start_time.split(' ')[0];
+        return event.startTime.split(' ')[0];
     }
 
     private getDayKey(day): string {

@@ -62,7 +62,7 @@ export class WeekPage {
           for (var dayEvent of dayEvents) {
             dayEvent.indexedEvents = new Array(24);
             for (var event of dayEvent.events){
-              var hour = moment(event.start_time).get('h');
+              var hour = moment(event.startTime).get('h');
               if (dayEvent.indexedEvents[hour]){
                 dayEvent.indexedEvents[hour].push(event);
               } else {
@@ -101,11 +101,11 @@ export class WeekPage {
   }
 
   getEventMargin(event){
-    return ((this.moment(event.start_time).minutes() / 60) * 50) + 'px';
+    return ((this.moment(event.startTime).minutes() / 60) * 50) + 'px';
   }
 
   getEventHeight(event){
-    var diff = this.moment.duration(this.moment(event.end_time).diff(this.moment(event.start_time))).asMinutes();
+    var diff = this.moment.duration(this.moment(event.endTime).diff(this.moment(event.startTime))).asMinutes();
     return ((diff / 60) * 100) + '%';
   }
 

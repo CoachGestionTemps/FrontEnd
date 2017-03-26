@@ -24,7 +24,7 @@ export class EventCreationPage {
   description: any;
   event: any;
   eventDate: any;
-  original_start_time: string;
+  originalStartTime: string;
 
   constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private utils : Utils, private eventService : EventService) {
     this.moment = moment;
@@ -34,10 +34,10 @@ export class EventCreationPage {
       this.location = this.event.location;
       this.description = this.event.summary;
       this.activityType = this.event.category;
-      this.original_start_time = this.event.start_time;
-      this.eventDate = this.moment(this.event.start_time, utils.dateFormat).format(utils.utcDateFormat);
-      this.startTime = this.moment(this.event.start_time, utils.dateFormat).format(utils.utcDateFormat);
-      var dateEndTime = this.moment(this.event.end_time, utils.dateFormat);
+      this.originalStartTime = this.event.startTime;
+      this.eventDate = this.moment(this.event.startTime, utils.dateFormat).format(utils.utcDateFormat);
+      this.startTime = this.moment(this.event.startTime, utils.dateFormat).format(utils.utcDateFormat);
+      var dateEndTime = this.moment(this.event.endTime, utils.dateFormat);
       this.endTime = dateEndTime.format(utils.utcDateFormat);
     } else { // if create a new event
       this.date = navParams.get("date");
@@ -63,19 +63,19 @@ export class EventCreationPage {
     var end_datetime = this.moment(this.endTime);
 
     var eventToSave = {
-      start_time: start_datetime.format(this.utils.dateFormat),
-      end_time: end_datetime.format(this.utils.dateFormat),
+      startTime: start_datetime.format(this.utils.dateFormat),
+      endTime: end_datetime.format(this.utils.dateFormat),
       category: this.activityType,
       title: this.title,
-      passed_time: null,
+      passedTime: null,
       summary: this.description,
       location: this.location
     };
 
     if (this.event){
       eventToSave['id'] = this.event.id;
-      eventToSave['user_id'] = this.event.user_id;
-      eventToSave['original_start_time'] = this.original_start_time;
+      eventToSave['userId'] = this.event.userId;
+      eventToSave['originalStartTime'] = this.originalStartTime;
       this.eventService.edit(eventToSave).then(data => {
         this.navCtrl.pop();
       }, data => {

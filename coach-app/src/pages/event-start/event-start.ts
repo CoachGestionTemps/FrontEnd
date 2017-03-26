@@ -25,13 +25,13 @@ export class EventStartPage {
     this.moment = moment;
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.event.passed_time = this.event.passed_time || 0;
+    this.event.passedTime = this.event.passedTime || 0;
     this.pauser = new Subject();
     this.timer = Observable.timer(0, 1000);
     this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
-    this.pausable.subscribe(() => this.event.passed_time++);
+    this.pausable.subscribe(() => this.event.passedTime++);
     this.play();
-    // TODO : Change logic and save current datetime to the event's activity_start_time
+    // TODO : Change logic and save current datetime to the event's activityStartTime
   }
 
   play(){
