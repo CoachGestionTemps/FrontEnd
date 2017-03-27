@@ -26,15 +26,15 @@ export class Utils {
         this._getCategoryNames();
     }
 
-    getCategoryName(category) {
+    getCategoryName(category): string {
       return this.categoryNames[category];
     }
 
-    getCategoryColors(category) {
+    getCategoryColors(category): string {
       return this.categoryColors[category];
     }
 
-    generateHours() {
+    generateHours(): number[] {
       var hours = [];
       for (var j = 1; j <= 24; j++){
         hours.push(j % 24);
@@ -42,22 +42,23 @@ export class Utils {
       return hours;
     }
 
-    displayHour(h){
+    displayHour(h): string{
       return ('0' + h).slice(-2) + ":00";
     }
 
-    getCategoryClass(category){
+    getCategoryClass(category: number): string{
       return 'category-' + this.categories[category];
     }
 
-    getCategoryTranslationKey(category){
+    getCategoryTranslationKey(category: number): string{
       return this.categories[category];
     }
 
-    getIconName(category){
+    getIconName(category: number): string{
       return this.categoryicons[category];
     }
 
+    // TODO replace by translateWord
     private _getCategoryNames(){
       this.categoryNames = [];
       this.categories.forEach((c) => {
@@ -67,7 +68,7 @@ export class Utils {
       });
     }
 
-    translateWord(word){
+    translateWord(word: string): string{
       var wordTranslated;
 
       this.translate.get(word).subscribe((res: string) => {
@@ -77,7 +78,53 @@ export class Utils {
       return wordTranslated;
     }
 
-    showError(alertCrtl, title, content){
+    // If an activity is going on, we're adding the live time 
+    getPassedTimeFromActivityStart(event: any): number {
+      if (event.activityStartTime){
+        var eventDuration = this.getDiff(event.startTime, event.endTime);
+        var activityDuration = parseInt(event.passedTime || 0) + this.getDiffFromNow(event.activityStartTime);
+        return Math.floor(eventDuration < activityDuration ? eventDuration : activityDuration);
+      }
+      return event.passedTime || 0;
+    }
+
+    adjustEventPassedTime(event: any): boolean {
+      if (event.activityStartTime){
+        var eventDuration = this.getDiff(event.startTime, event.endTime);
+        var activityDuration = parseInt(event.passedTime || 0) + this.getDiffFromNow(event.activityStartTime);
+        if (eventDuration < activityDuration){
+          event.passedTime = eventDuration;
+          event.activityStartTime = null;
+          return true;
+        }
+      }
+      return false;
+    }
+
+    adjustEventPassedTimeOnPause(event: any): void {
+      if (event.activityStartTime){
+        var eventDuration = this.getDiff(event.startTime, event.endTime);
+        var activityDuration = parseInt(event.passedTime || 0) + this.getDiffFromNow(event.activityStartTime);
+        event.passedTime = eventDuration < activityDuration ? eventDuration : activityDuration;
+        event.activityStartTime = null;
+      }
+    }
+
+    isEventConsideredDone(event: any): boolean {
+      var activityDuration = parseInt(event.passedTime || 0) + (event.activityStartTime ? this.getDiffFromNow(event.activityStartTime) : 0);
+      var eventDuration = this.getDiff(event.startTime, event.endTime);
+      return activityDuration >= eventDuration;
+    }
+
+    getDiff(startDate: string, endDate: string): number {
+      return Math.round(this.moment(endDate, this.dateFormat).diff(this.moment(startDate, this.dateFormat)) / 1000);
+    }
+
+    getDiffFromNow(startDate: string): number {
+      return Math.round(this.moment().diff(this.moment(startDate, this.dateFormat)) / 1000);
+    }
+
+    showError(alertCrtl, title, content): void{
       let alert = alertCrtl.create({
         title: this.translateWord(title),
         subTitle: this.translateWord(content),

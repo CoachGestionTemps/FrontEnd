@@ -56,6 +56,7 @@ export class EventPage {
 
   passedTimeUpdated(){
     this.event.passedTime = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
+    this.event.activityStartTime = null;
     this.eventService.edit(this.event).then(data => {
 
     }, data => {

@@ -39,7 +39,7 @@
     </ion-item>
     <ion-item *ngIf="event.passedTime != null && (this.setting.isSSP() || event.category != eventCategories.Class)">
         <h2>
-            {{ 'dedicatedTime' | translate }} : {{ moment.utc(event.passedTime * 1000).format("H[h]mm") }}
+            {{ 'dedicatedTime' | translate }} : {{ moment.utc(utils.getPassedTimeFromActivityStart(event) * 1000).format("H[h]mm") }}
         </h2>
     </ion-item>
     <ion-item hidden="true">

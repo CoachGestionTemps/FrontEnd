@@ -74,7 +74,8 @@ export class ReportPage {
     var chartData = [];
     this.events.forEach(e => {
       var plannedTime = this.moment(e.endTime).diff(this.moment(e.startTime), 'seconds');
-      var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? plannedTime : e.passedTime || 0;
+      var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ? 
+          plannedTime : this.utils.getPassedTimeFromActivityStart(e);
 
       if (stats[e.category]){
         chartData[e.category] += passedTime;

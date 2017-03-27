@@ -109,9 +109,7 @@ export class EventService {
     }
 
     public edit(event) : Promise<any> {
-        var activityStartTime = event.activityStartTime;
         var originalStartTime = event.originalStartTime;
-        delete event.activityStartTime;
         delete event.originalStartTime;
 
         return new Promise(
@@ -148,6 +146,22 @@ export class EventService {
         );
     }
 
+    private updateEventPassedTime(event) : Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
+                    return response.json();
+                }).toPromise().then(data => {
+                    if (data.statut == "succes"){
+                        resolve(data);
+                    } else {
+                        reject({ statut: data.statut })
+                    }
+                });
+            }
+        );
+    }
+
     private getFromServerOrCache(func): Promise<any> {
         return new Promise((resolve, reject) => {
             if (this.loadFromServer) {
@@ -171,6 +185,11 @@ export class EventService {
         var days = {};
 
         events.forEach(e => {
+            if (this.utils.adjustEventPassedTime(e)){
+                // TODO : we should validate this if an error occurs (rollback?)
+                this.updateEventPassedTime(e);
+            }
+
             var key = this.getEventKey(e);
             if (keys.indexOf(key) != -1){
                 days[key].push(e);
