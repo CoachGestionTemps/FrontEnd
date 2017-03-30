@@ -71,5 +71,15 @@
     "walktitle6": "Commencer à utiliser l'application",
     "disconnect": "Déconnexion",
     "error:": "Erreur",
-    "basicFetchError": "Les données ne peuvent pas être retrouvées pour le moment."
+    "basicFetchError": "Les données ne peuvent pas être retrouvées pour le moment.",
+    "errorNoTitle": "Aucun titre n'a été fourni.",
+    "errorDateSelectionInvalid": "La sélection de dates est invalide.",
+    "errorUnableToEditEvent": "Désolé, nous ne sommes pas en mesure de mettre à jour l'évènement.",
+    "errorUnableToCreateEvent": "Désolé, nous ne sommes pas en mesure de cérer l'évènement.",
+    "errorNotAuthentifiedOrInvalidCIP": "Il semblerait que vous ne soyez pas authentifié ou que votre CIP est invalide.",
+    "errorServerIsDown": "Impossible d'accéder au serveur. Assurez-vous d'être connecté à internet et essayez à nouveau plus tard.",
+    "errorWhileSaving": "Désolé, il y a eu une erreur en sauvegardant votre évènement.",
+    "errorCantCreateEvent": "Désolé, il semblerait que vous ne pouvez pas créer un évènement pour le moment.",
+    "errorEventDoesntExistOrNoFieldsChanged": "Attention, il se peut que vous n'ayez changé aucun champs ou que l'évènement que vous tentez de modifié ait été supprimé.",
+    "errorEventAlreadyDeleted": "Désolé, il semblerait que cet évènement ait déjà été supprimé."
 }

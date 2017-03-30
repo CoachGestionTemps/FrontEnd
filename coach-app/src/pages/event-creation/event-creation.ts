@@ -17,7 +17,6 @@ export class EventCreationPage {
   tabBarElement: any;
   startTime: any;
   endTime: any;
-  reminder: any;
   activityType: any;
   title: any;
   location: any;
@@ -26,7 +25,8 @@ export class EventCreationPage {
   eventDate: any;
   originalStartTime: string;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private utils : Utils, private eventService : EventService) {
+  constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private utils : Utils, 
+              private eventService : EventService, private alertCtrl : AlertController) {
     this.moment = moment;
     // if edit an event
     if (this.event = navParams.get("event")) {
@@ -50,21 +50,26 @@ export class EventCreationPage {
     }
     this.date = navParams.get("date");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.reminder = "none";
   }
 
   saveEvent(){
-    // TODO : Check if title, startTime and endTime are valid. Check if startTime < endTime
-    // If Not -> Show error message
 
-    this.startTime = this.eventDate.split("T")[0] + 'T' + this.startTime.split("T")[1];
-    this.endTime = this.eventDate.split("T")[0] + 'T' + this.endTime.split("T")[1];
-    var start_datetime = this.moment(this.startTime);
-    var end_datetime = this.moment(this.endTime);
+    if (!this.title){
+      this.utils.showError(this.alertCtrl, "error", "errorNoTitle");
+      return;
+    }
+
+    var eventStartTime = this.eventDate.split("T")[0] + ' ' + this.startTime.split("T")[1].split(".")[0].split("Z")[0];
+    var eventEndTime = this.eventDate.split("T")[0] + ' ' + this.endTime.split("T")[1].split(".")[0].split("Z")[0];
+
+    if (this.utils.getDiff(eventStartTime, eventEndTime) < 0){
+      this.utils.showError(this.alertCtrl, "error", "errorDateSelectionInvalid");
+      return;
+    }
 
     var eventToSave = {
-      startTime: start_datetime.format(this.utils.dateFormat),
-      endTime: end_datetime.format(this.utils.dateFormat),
+      startTime: eventStartTime,
+      endTime: eventEndTime,
       category: this.activityType,
       title: this.title,
       passedTime: null,
@@ -80,12 +85,15 @@ export class EventCreationPage {
         this.navCtrl.pop();
       }, data => {
         // TODO : Show Error
+        this.utils.showError(this.alertCtrl, "error", data.error);
+        this.navCtrl.pop();
       });
     } else {
       this.eventService.add(eventToSave).then(data => {
         this.navCtrl.pop();
       }, data => {
-        // TODO : Show error
+        this.utils.showError(this.alertCtrl, "error", data.error);
+        this.navCtrl.pop();
       });
     }
   }

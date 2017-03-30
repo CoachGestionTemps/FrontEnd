@@ -45,17 +45,6 @@
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
 
-    <ion-item>
-      <ion-label>{{ 'reminder' | translate }}</ion-label>
-      <ion-select interface="action-sheet" [(ngModel)]="reminder">
-        <ion-option value="none">{{ 'none' | translate }}</ion-option>
-        <ion-option value="15m">{{ '15minutes' | translate }}</ion-option>
-        <ion-option value="30m">{{ '30minutes' | translate }}</ion-option>
-        <ion-option value="1h">{{ '1hour' | translate }}</ion-option>
-        <ion-option value="2h">{{ '2hour' | translate }}</ion-option>
-        <ion-option value="1d">{{ '1day' | translate }}</ion-option>
-      </ion-select>
-    </ion-item>
   <button ion-button class="save-button" (click)="saveEvent()">{{ 'save' | translate }}</button>
   </ion-list>
 </ion-content>

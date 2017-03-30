@@ -78,7 +78,7 @@ export class WeekPage {
             refresher.complete();
           }
       }, data => {
-          this.utils.showError(this.alertCtrl, "error", "basicFetchError");
+          this.utils.showError(this.alertCtrl, "error", data.error);
           this.week = this.days.map(d => { return { day: d, events: [], indexedEvents: new Array(24)}; });
           this.displayedMonth = this.week[6].day.get("month");
           this.displayedYear = this.week[6].day.get("year");
@@ -113,7 +113,7 @@ export class WeekPage {
     htmlEvent.stopPropagation();
     this.navCtrl.push(EventPage, { event: event });
   }
-  
+
   onWeekSlide(event) {
     if (event.angle > 80 || event.angle < -80){
       this.getNextWeek();

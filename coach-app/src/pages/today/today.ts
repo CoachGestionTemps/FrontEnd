@@ -81,8 +81,8 @@ export class TodayPage {
       if (refresher){
         refresher.complete();
       }
-    }, erreur => {
-      this.utils.showError(this.alertCtrl, "error", "basicFetchError");
+    }, data => {
+      this.utils.showError(this.alertCtrl, "error", data.error);
       this.selectedDays = generateDays(moment(day)).map(d => { return { day: d, events: []}; });
       this.displayedMonth = this.selectedDays[0].day.get("month");
       this.displayedYear = this.selectedDays[0].day.get("year");
@@ -144,7 +144,7 @@ export class TodayPage {
       return date.month() <= month;
     }
   }
-  
+
   onSwipeCalendar(event) {
     if (event.angle > 80 || event.angle < -80){
       this.getNextMonth();

@@ -35,10 +35,10 @@ export class EventService {
                         this.overwriteCache(data.donnees);
                         resolve();
                     } else {
-                        reject();
+                        reject({ error: "errorNotAuthentifiedOrInvalidCIP" });
                     }
                 }).catch(data => {
-                    reject();
+                    reject({ error: "errorServerIsDown"});
                 });
             }
         );
@@ -87,6 +87,11 @@ export class EventService {
         return this.getFromServerOrCache(getDays);
     }
 
+    public refreshEvent(event): any {
+        var events = JSON.parse(localStorage.getItem(this.getEventKey(event))).filter(e => { return e.id == event.id; });
+        return events && events.length > 0 ? events[0] : null;
+    }
+
     public add(event) : Promise<any> {
         event.id = this.guid();
         event.parentId = event.id;
@@ -98,11 +103,16 @@ export class EventService {
                     return response.json();
                 }).toPromise().then(data => {
                     if (data.statut == "succes"){
-                        this.addInCache(event);
-                        this.events.publish('event:update');
+                        if (data.donnees && data.donnees.updatedRows > 0){
+                            this.addInCache(event);
+                            this.events.publish('event:update');
+                        } else {
+                            reject({ error: "errorWhileSaving"});
+                        }
                         resolve(data);
+                    } else {
+                        reject({ statut: data.statut, error: "errorCantCreateEvent" })
                     }
-                    reject({ statut: data.statut })
                 });
             }
         );
@@ -118,8 +128,12 @@ export class EventService {
                     return response.json();
                 }).toPromise().then(data => {
                     if (data.statut == "succes"){
-                        this.updateInCache(event, originalStartTime);
-                        this.events.publish('event:update');
+                        if (data.donnees && data.donnees.updatedRows > 0){
+                            this.updateInCache(event, originalStartTime);
+                            this.events.publish('event:update');
+                        } else {
+                            reject({ error: "errorEventDoesntExistOrNoFieldsChanged"});
+                        }
                         resolve(data);
                     } else {
                         reject({ statut: data.statut })
@@ -136,8 +150,12 @@ export class EventService {
                     return response.json()
                 }).toPromise().then(data => {
                     if (data.statut == "succes"){
-                        this.removeFromCache(event);
-                        this.events.publish('event:update');
+                        if (data.donnees && data.donnees.updatedRows > 0){
+                            this.removeFromCache(event);
+                            this.events.publish('event:update');
+                        } else {
+                            reject({ error: "errorEventAlreadyDeleted"});
+                        }
                         resolve(data);
                     }
                     reject({ statut: data.statut })

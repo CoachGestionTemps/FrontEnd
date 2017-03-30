@@ -31,6 +31,12 @@ export class EventPage {
     this.event = navParams.get("event");
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.passedTime = this.moment.utc((this.event.passedTime || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
+    this.events.subscribe('event:update', () => {
+        var event = this.eventService.refreshEvent(this.event);
+        if (event){
+          this.event = event;
+        }
+    });
   }
 
   navigateToEventStart(){

@@ -71,5 +71,15 @@
     "walktitle6": "Start using the app!",
     "disconnect": "Log Out",
     "error:": "Error",
-    "basicFetchError": "Can't fetch data at the moment."
+    "basicFetchError": "Can't fetch data at the moment.",
+    "errorNoTitle": "No title was provided.",
+    "errorDateSelectionInvalid": "The date selection is invalid.",
+    "errorUnableToEditEvent": "Sorry, we are unable to edit the event.",
+    "errorUnableToCreateEvent": "Sorry, we are unable to create the event.",
+    "errorNotAuthentifiedOrInvalidCIP": "It seems you are either not authentified or your CIP is invalid.",
+    "errorServerIsDown": "Unable to reach the server. Make sure you are connected to the internet and try again later.",
+    "errorWhileSaving": "Sorry, there was an error while creating the event.",
+    "errorCantCreateEvent": "Sorry, it seems you cannot create an event at the moment.",
+    "errorEventDoesntExistOrNoFieldsChanged": "Warning, either no field has been changed or the event you tried to edit doesn't exist anymore.",
+    "errorEventAlreadyDeleted": "Sorry, it seems that this event has already been deleted before."
 }
