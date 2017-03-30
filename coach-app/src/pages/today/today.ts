@@ -54,6 +54,27 @@ export class TodayPage {
 
     this.eventService.getEventsForDays(generateDays(moment(day))).then(eventDays => {
       this.selectedDays = eventDays;
+
+      this.selectedDays.forEach(d => {
+          d.eventBar = [];
+          var total = 0;
+
+          this.utils.getCategories().forEach((c, i) => {
+              var sum = d.events.filter(e => { return e.category == i; })
+                          .map(e => { return this.utils.getDiff(e.startTime, e.endTime); })
+                          .reduce((pv, cv) => pv+cv, 0) / 288;
+
+              total += sum;
+              d.eventBar.push({ color: this.utils.getCategoryColors(i), value: sum });
+          });
+
+          if (total > 100){
+            this.utils.getCategories().forEach((c, i) => {
+                d.eventBar[i].value = 100 * d.eventBar[i].value / total;
+            });
+          }
+      });
+      
       this.displayedMonth = this.selectedDays[0].day.get("month");
       this.displayedYear = this.selectedDays[0].day.get("year");
       this.setMonthArray(this.displayedYear, this.displayedMonth);
@@ -121,6 +142,14 @@ export class TodayPage {
       return date.month() !== 0;
     } else {
       return date.month() <= month;
+    }
+  }
+  
+  onSwipeCalendar(event) {
+    if (event.angle > 80 || event.angle < -80){
+      this.getNextMonth();
+    } else {
+      this.getPreviousMonth();
     }
   }
 

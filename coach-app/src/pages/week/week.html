@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header (swipe)="onWeekSlide($event)">
     <ion-toolbar>
         <ion-item color="green2">
             <ion-row>
@@ -28,7 +28,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content id="week-content">
+<ion-content id="week-content" (swipe)="onWeekSlide($event)">
     <ion-refresher (ionRefresh)="refresh($event)">
         <ion-refresher-content>{{ 'refreshing' | translate }}</ion-refresher-content>
     </ion-refresher>

@@ -31,11 +31,11 @@ export class SettingService {
     }
 
     getCIP() : string{
-        return localStorage.getItem(this.cipKey);
+        return localStorage.getItem(this.cipKey) || 'desp2714';
     }
 
     getEventToken() : string{
-        return localStorage.getItem(this.eventTokenKey);
+        return localStorage.getItem(this.eventTokenKey) || '58cb0b67753b8';
     }
 
     getEndPointURL() : string{

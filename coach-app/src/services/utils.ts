@@ -34,6 +34,10 @@ export class Utils {
       return this.categoryColors[category];
     }
 
+    getCategories(): string[] {
+      return this.categories;
+    }
+
     generateHours(): number[] {
       var hours = [];
       for (var j = 1; j <= 24; j++){

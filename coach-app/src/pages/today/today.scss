@@ -37,42 +37,45 @@ page-today {
     border: none;
   }
 
+  ion-list .day-container .selectedDays button{
+      font-size: 30px;
+      width: 100px;
+      color: $white;
+  }
+
   ion-list .day-container:nth-child(1) .selectedDays {
+    background-color: $green2;
+
     >ion-item {
       background-color: $green2;
     }
-      background-color: $green2;
 
     button {
-      background-color: #ffffff;
-      color: $green2;
-      font-size: 30px;
+      background-color: $green2;
     }
   }
 
   ion-list .day-container:nth-child(2) .selectedDays {
+    background-color: $green1;
+
     >ion-item {
       background-color: $green1;
     }
-      background-color: $green1;
 
     button {
-      background-color: #ffffff;
-      color: $green1;
-      font-size: 30px;
+      background-color: $green1;
     }
   }
 
   ion-list .day-container:nth-child(3) .selectedDays {
+    background-color: $green3;
+
     >ion-item {
       background-color: $green3;
     }
-      background-color: $green3;
 
     button {
-      background-color: #ffffff;
-      color: $green3;
-      font-size: 30px;
+      background-color: $green3;
     }
   }
 
@@ -95,19 +98,29 @@ page-today {
   }
 
 
-  ion-list ion-item-sliding .item ion-col {
-    h1, h2, p {
-      color: #ffffff;
-    }
+  ion-list ion-item-sliding  {
+    .item ion-col {
+      h1, h2, p {
+        color: #ffffff;
+      }
 
-    p {
-      line-height: 1;
-      margin: 0;
+      p {
+        line-height: 1;
+        margin: 0;
+      }
+    }
+    ion-col {
+      padding-top: 8px;
     }
   }
 
   .calendar {
     text-align: center;
+
+    ion-label {
+      margin: 0px;
+      margin-right: 8px;
+    }
   }
 
   .calendar {
@@ -121,10 +134,19 @@ page-today {
     }
   }
 
+  .event-bar {
+    background-color: $white;
+    line-height: 10px;
+    div{
+      height: 10px;
+      display: inline-block;
+    }
+  }
 
   .days ion-col {
     color: $grey1;
-    min-height: 40px;
+    min-height: 30px;
+
     span {
       display:block;
     }
@@ -141,6 +163,7 @@ page-today {
 
     &.is-current-month {
       color: $white;
+
       div.dot {
         background-color: $white;
       }
@@ -160,9 +183,5 @@ page-today {
         border-radius: 5px;
       }
     }
-  }
-
-  ion-list ion-item-sliding ion-col {
-    padding-top: 8px;
   }
 }

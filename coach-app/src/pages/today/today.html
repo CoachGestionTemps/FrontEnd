@@ -25,6 +25,11 @@
         </ion-item-options>
       </ion-item-sliding>
 
+      <div *ngIf="date.eventBar" class="event-bar">
+        <div *ngFor="let bar of date.eventBar" [ngStyle]="{ 'width': bar.value + '%', 'background-color': bar.color }">
+          </div>
+      </div>
+
       <ion-list class="events" [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}" >
         <ion-item-sliding *ngFor="let event of date.events"  #item (click)="navigateToEvent(event)">
           <ion-item>
@@ -63,7 +68,7 @@
     </ion-row>
   </ion-item>
 
-  <ion-item color="green2" class="calendar">
+  <ion-item color="green2" class="calendar" (swipe)="onSwipeCalendar($event)">
     <ion-grid>
       <ion-row>
         <ion-col>{{ 'sundayLetter' | translate }}</ion-col>

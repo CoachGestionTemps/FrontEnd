@@ -113,6 +113,14 @@ export class WeekPage {
     htmlEvent.stopPropagation();
     this.navCtrl.push(EventPage, { event: event });
   }
+  
+  onWeekSlide(event) {
+    if (event.angle > 80 || event.angle < -80){
+      this.getNextWeek();
+    } else {
+      this.getPreviousWeek();
+    }
+  }
 
   navigateToEventCreation(date, hour) {
     // REFACTOR : Est-ce nécessaire de recréer une date?
