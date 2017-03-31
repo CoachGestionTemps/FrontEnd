@@ -49,7 +49,7 @@ export class EventService {
             return days.map(d => { 
                 return { 
                     day: d,
-                    events: JSON.parse(localStorage.getItem(this.getDayKey(d))) || []
+                    events: (JSON.parse(localStorage.getItem(this.getDayKey(d))) || []).sort((a, b) => { return this.utils.getDiff(a.startTime, b.startTime) < 0; })
                 }
             });
         };

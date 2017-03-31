@@ -157,8 +157,23 @@ export class TodayPage {
     this.clickedDate = this.clickedDate === day ? null : day;
   }
 
-  navigateToEventCreation(date) {
-    var datetime = this.moment(date).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
-    this.navCtrl.push(EventCreationPage, { date: datetime });
+  navigateToEventCreation(day) {
+    var datetime = this.moment(day.day);
+    datetime.set({ hour: 8, minute: 0, second: 0 });
+    var date = datetime.format(this.utils.dateFormat);
+    var today = day.day.format(this.utils.dateFormat).split(' ')[0];
+
+    if (day.events && day.events.length > 0) {
+      for (var i = 0; i < day.events.length + 1; i++){
+          var start = i == 0 ? today + " 08:00:00" : day.events[i - 1].endTime;
+          var end = i >= day.events.length ? today + " 23:00:00" : day.events[i].startTime;
+          if (this.utils.getDiff(start, end) > 3600){
+            date = start;
+            break;
+          }
+      }
+    }
+
+    this.navCtrl.push(EventCreationPage, { date: date });
   }
 }

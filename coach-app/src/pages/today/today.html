@@ -4,8 +4,8 @@
   </ion-refresher>
   <ion-list>
     <div class="day-container" *ngFor="let date of selectedDays">
-      <ion-item-sliding class="selectedDays" (click)="setClickedDate(date.day)">
-        <ion-item>
+      <ion-item-sliding class="selectedDays">
+        <ion-item (click)="setClickedDate(date.day)">
           <ion-grid>
             <ion-row>
               <ion-col width-20>
