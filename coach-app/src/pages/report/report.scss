@@ -23,6 +23,12 @@ page-report {
         border: none;
     }
 
+    canvas {
+        max-width: 400px;
+        max-height: 400px;
+        margin: 0 auto;
+    }
+
     ion-item.pie-chart{
         margin:1em 0;
         text-align: center;

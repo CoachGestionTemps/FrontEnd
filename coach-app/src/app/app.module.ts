@@ -11,6 +11,7 @@ import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 import { EventCreationPage } from "../pages/event-creation/event-creation";
 import { EventStartPage } from "../pages/event-start/event-start";
 import { TabsPage } from '../pages/tabs/tabs';
+import { NotFullScreen } from '../pages/not-full-screen/not-full-screen';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 import { ElasticModule } from 'angular2-elastic';
 import * as Enums from "../services/enums";
@@ -31,6 +32,7 @@ export function createTranslateLoader(http: Http) {
     WalkthroughPage,
     EventStartPage,
     TabsPage,
+    NotFullScreen
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -52,7 +54,8 @@ export function createTranslateLoader(http: Http) {
     EventCreationPage,
     WalkthroughPage,
     EventStartPage,
-    TabsPage
+    TabsPage,
+    NotFullScreen
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

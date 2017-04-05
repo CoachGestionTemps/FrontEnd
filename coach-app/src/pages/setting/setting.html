@@ -1,31 +1,40 @@
 <ion-header>
-  <ion-navbar hide-tabs>
-    {{ 'settings' | translate }}
-  </ion-navbar>
+    <ion-navbar hide-tabs>
+        {{ 'settings' | translate }}
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list radio-group [(ngModel)]="selectedLanguage">
-    <ion-list-header>
-      {{ 'language' | translate }}
-    </ion-list-header>
+      <ion-list radio-group [(ngModel)]="selectedLanguage">
+          <ion-list-header>
+              {{ 'language' | translate }}
+          </ion-list-header>
 
-    <ion-item>
-      <ion-label>{{ 'french' | translate }}</ion-label>
-      <ion-radio (click)="setLanguage('fr')" value="fr"></ion-radio>
-    </ion-item>
+          <ion-item>
+              <ion-label>{{ 'french' | translate }}</ion-label>
+              <ion-radio (click)="setLanguage()" value="fr"></ion-radio>
+          </ion-item>
 
-    <ion-item>
-      <ion-label>{{ 'english' | translate }}</ion-label>
-      <ion-radio (click)="setLanguage('en')" value="en"></ion-radio>
-    </ion-item>
-  </ion-list>
+          <ion-item>
+              <ion-label>{{ 'english' | translate }}</ion-label>
+              <ion-radio (click)="setLanguage()" value="en"></ion-radio>
+          </ion-item>
+      </ion-list>
 
-  <ion-item>
-    <ion-label>{{ 'imInPsychologicalProgram' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="isInSSP" (ionChange)="updateSSPKey()"></ion-toggle>
-  </ion-item>
+      <ion-item>
+          <ion-label>{{ 'imInPsychologicalProgram' | translate }}</ion-label>
+          <ion-toggle [(ngModel)]="isInSSP" (ionChange)="updateSSPKey()"></ion-toggle>
+      </ion-item>
 
-  <button ion-button class="disconnect-button" (click)="disconnect()">{{ 'disconnect' | translate }}</button>
+      <ion-item>
+          <button ion-button full class="disconnect-button" (click)="disconnect()">{{ 'disconnect' | translate }}</button>
+      </ion-item>
 
+      <ion-item>
+          <button ion-button full class="disconnect-button" (click)="syncCourses()">{{ 'syncCourses' | translate }}</button>
+      </ion-item>
+
+      <ion-item>
+          <button ion-button full class="disconnect-button" (click)="showTutorial()">{{ 'showTutorial' | translate }}</button>
+      </ion-item>
 </ion-content>

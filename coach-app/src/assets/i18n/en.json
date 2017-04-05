@@ -70,7 +70,8 @@
     "walkdesc5": "Displays an event's details and allows you to edit them.",
     "walktitle6": "Start using the app!",
     "disconnect": "Log Out",
-    "error:": "Error",
+    "errorTitle:": "Error",
+    "warningTitle": "Warning",
     "basicFetchError": "Can't fetch data at the moment.",
     "errorNoTitle": "No title was provided.",
     "errorDateSelectionInvalid": "The date selection is invalid.",
@@ -81,5 +82,16 @@
     "errorWhileSaving": "Sorry, there was an error while creating the event.",
     "errorCantCreateEvent": "Sorry, it seems you cannot create an event at the moment.",
     "errorEventDoesntExistOrNoFieldsChanged": "Warning, either no field has been changed or the event you tried to edit doesn't exist anymore.",
-    "errorEventAlreadyDeleted": "Sorry, it seems that this event has already been deleted before."
+    "errorEventAlreadyDeleted": "Sorry, it seems that this event has already been deleted before.",
+    "errorCantPauseEvent": "Sorry, we couldn't pause your event. There seems to be some connection error with the server.",
+    "errorCantPlayEvent": "Sorry, we couldn't start your event. There seems to be some connection error with the server.",
+    "syncCourses": "Synchronize courses",
+    "preferedLanguage": "Please select your prefered language",
+    "showTutorial": "View the tutorial",
+    "welcomeMyAgenda": "Welcome to MyAgenda!",
+    "addToHomeScreen": "Please add the application to your home screen to install it",
+    "notHomeScreenStep1": "1. Clic on the option/share button",
+    "notHomeScreenStep2": "2. Clic on \"Add to Home Screen\"",
+    "notHomeScreenStep3": "3. Clic on \"Add\"",
+    "thatsIt": "That's it!"
 }

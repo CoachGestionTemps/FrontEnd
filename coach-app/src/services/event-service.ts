@@ -3,6 +3,7 @@ import {Http, RequestOptions, Headers, RequestOptionsArgs} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs";
 import { SettingService } from '../services/setting-service';
 import { Utils } from '../services/utils';
+import { Const } from '../services/const';
 import { Events } from 'ionic-angular';
 import moment from 'moment';
 
@@ -13,13 +14,20 @@ export class EventService {
   moment: any;
   loadFromServer: boolean;
 
-  constructor(private http: Http, private setting: SettingService, private events : Events, private utils : Utils) {
+  constructor(private http: Http, private setting: SettingService, private events : Events, private utils : Utils, private cnst : Const) {
       this.url = setting.getEndPointURL();
-      this.storageKey = "keys";
+      this.storageKey = this.cnst.dayKeysStorageKey;
       this.moment = moment;
-      this.loadFromServer = true;
+      var lastUpdate = setting.getLastUpdate();
+
+      // if we never updated or if it's been more than 15 minutes since the last update
+      this.loadFromServer = !lastUpdate || this.utils.getDiffFromNow(lastUpdate) > 900;
   }
 
+  public syncCourses() : void {
+      window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(this.setting.getEndPointURL() + '/synccourses?redirect=' + window.location.href));
+  }
+  
   public reloadFromServer(){
       this.loadFromServer = true;
   }
@@ -31,7 +39,8 @@ export class EventService {
                     return response.json()
                 }).toPromise().then(data => {
                     this.loadFromServer = false;
-                    if (data.statut == "succes"){
+                    this.setting.setLastUpdate();
+                    if (data.statut == this.cnst.successStatus){
                         this.overwriteCache(data.donnees);
                         resolve();
                     } else {
@@ -49,7 +58,8 @@ export class EventService {
             return days.map(d => { 
                 return { 
                     day: d,
-                    events: (JSON.parse(localStorage.getItem(this.getDayKey(d))) || []).sort((a, b) => { return this.utils.getDiff(a.startTime, b.startTime) < 0; })
+                    events: (JSON.parse(localStorage.getItem(this.getDayKey(d))) || [])
+                            .sort((a, b) => { return this.utils.getDiff(a.startTime, b.startTime) < 0; })
                 }
             });
         };
@@ -62,7 +72,7 @@ export class EventService {
             var iter = this.moment(minDate);
             var days = [];
             while(iter.isBefore(maxDate)){
-                days.push(iter.format(this.utils.dateKeyFormat));
+                days.push(iter.format(this.cnst.dateKeyFormat));
                 iter.add(1, 'day');
             }
             return this.getCachedEvents(days);
@@ -105,7 +115,7 @@ export class EventService {
                     if (data.statut == "succes"){
                         if (data.donnees && data.donnees.updatedRows > 0){
                             this.addInCache(event);
-                            this.events.publish('event:update');
+                            this.events.publish(this.cnst.eventUpdate);
                         } else {
                             reject({ error: "errorWhileSaving"});
                         }
@@ -127,10 +137,10 @@ export class EventService {
                 this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
                     return response.json();
                 }).toPromise().then(data => {
-                    if (data.statut == "succes"){
+                    if (data.statut == this.cnst.successStatus){
                         if (data.donnees && data.donnees.updatedRows > 0){
                             this.updateInCache(event, originalStartTime);
-                            this.events.publish('event:update');
+                            this.events.publish(this.cnst.eventUpdate);
                         } else {
                             reject({ error: "errorEventDoesntExistOrNoFieldsChanged"});
                         }
@@ -149,10 +159,10 @@ export class EventService {
                 this.http.delete(this.setting.getEndPointURL() + '/events/' + event.id, this.getOptions()).map((response) => {
                     return response.json()
                 }).toPromise().then(data => {
-                    if (data.statut == "succes"){
+                    if (data.statut == this.cnst.successStatus){
                         if (data.donnees && data.donnees.updatedRows > 0){
                             this.removeFromCache(event);
-                            this.events.publish('event:update');
+                            this.events.publish(this.cnst.eventUpdate);
                         } else {
                             reject({ error: "errorEventAlreadyDeleted"});
                         }
@@ -170,7 +180,7 @@ export class EventService {
                 this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
                     return response.json();
                 }).toPromise().then(data => {
-                    if (data.statut == "succes"){
+                    if (data.statut == this.cnst.successStatus){
                         resolve(data);
                     } else {
                         reject({ statut: data.statut })
@@ -295,7 +305,7 @@ export class EventService {
     }
 
     private getDayKey(day): string {
-        return day.format(this.utils.dateKeyFormat);
+        return day.format(this.cnst.dateKeyFormat);
     }
 
     private guid(): string {

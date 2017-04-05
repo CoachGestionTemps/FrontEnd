@@ -6,6 +6,7 @@ import { ReportPage } from '../report/report';
 import { SettingPage } from '../setting/setting';
 import { EventService } from "../../services/event-service";
 import { SettingService } from "../../services/setting-service";
+import { Const } from "../../services/const";
 
 import { Utils } from "../../services/utils";
 
@@ -16,7 +17,7 @@ import 'moment/src/locale/en-ca';
 
 @Component({
   templateUrl: 'tabs.html',
-  providers: [EventService, SettingService, Utils],
+  providers: [EventService, SettingService, Utils, Const],
 })
 export class TabsPage {
   // this tells the tabs component which Pages

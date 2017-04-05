@@ -1,6 +1,6 @@
 On dit que l'université c'est les plus belles années de ta vie!
 Toujours sur le party!
-La liberté!
+Libre comme l’air
 Tu vis ta vie!
 Oh yeah!
 
@@ -20,22 +20,20 @@ de produire des rapports de performance pour t'aider à mieux gérer ton temps!
 
 La page d'accueil présente une sélection de 3 jours basée sur le calendrier interactif.
 Ensuite, on peut accéder aux informations sur les évènements de ces journées et
-une de barre de complétion affiche à quel point la journée est déjà remplie à 
+une barre de complétion affiche à quel point ta journée est déjà remplie à 
 l'aide de couleurs qui représentent les différentes catégories d'évènements.
 
 L'app offre aussi une vue qui présente l'ensemble des évènements pour une semaine.
 On peut avoir plus de détails sur les évènements et en créer de nouveaux en cliquant dans la grille horaire.
 
-Pour ce qui est des évènements sur mesure, ils sont classifiées sous les catégorie, travail, études, sport et loisir.
-Pour tout ces évènements, on peut ajouter un temps de complétion réel, ou démarrer un compteur en temps réel qui nous suivra tout au long de l'activité!
+Pour ce qui est des évènements sur mesure, ils sont classifiées sous les catégorie travail, études, sport et loisir.
+Pour tout ces évènements, on peut ajouter un temps de complétion, ou démarrer un compteur en temps réel qui nous suivra tout au long de l'activité!
 
-Enfin, l'app offre des rapports pour une semaine, un mois ou une session données.
-Ces rapports présentent le temps de complétion réel comparé entre les différentes catégories d'évènements 
-et par rapport au temps réel planifié initialement.
+Enfin, l'application présente des rapports pour une semaine, un mois ou une session données.
+Ces rapports affichent le temps de complétion réel comparé entre les différentes catégories d'évènements 
+et par rapport au temps qui avait été planifié initialement.
 
 Et tout ça fonctionne autant sur ton téléphone, sur ta tablette que sur ton ordinateur!
-T'as juste à te connecter avec ton CIP et mot de passe habituel!
 
-Et pour le mot de la fin, ce beau projet là vient de trois étudiants au baccalauréat en informatique, soit
-Vincent Ribou, Pierre-Antoine Deshaies et moi-même, Simon Lacoursière!
+En tout cas, lâche pas l’party, mais au moins tu sais maintenant que MonAgenda est là, juste pour toi!
 

@@ -1,46 +1,55 @@
 <ion-header color=$green2>
   <ion-navbar hide-tabs>
       {{ 'myAgenda' | translate }}
-    <ion-buttons end>
-        <button ion-button icon-only (click)="dismiss()">
-            <ion-icon name="close"></ion-icon>
-        </button>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>
     <ion-slides pager>
         <ion-slide>
-            <img src="assets/icon/logo.png" style="border-radius:10px;"/>
+            <img src="assets/icon/logo.png" class="logo"/>
             <h2>{{ 'walktitle1' | translate}}</h2>
             <p> {{ 'walkdesc1' | translate}} </p>
         </ion-slide>
         <ion-slide>
-            <img src="assets/img/1.png"/>
+            <h2>{{ 'preferedLanguage' | translate }}</h2>
+            <ion-list radio-group [(ngModel)]="selectedLanguage">
+                <ion-item>
+                    <ion-label>{{ 'french' | translate }}</ion-label>
+                    <ion-radio (click)="setLanguage()" value="fr"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>{{ 'english' | translate }}</ion-label>
+                    <ion-radio (click)="setLanguage()" value="en"></ion-radio>
+                </ion-item>
+            </ion-list>
+        </ion-slide>
+        <ion-slide>
+            <img src="assets/img/walkthrough/1.png"/>
             <h2>{{ 'walktitle2' | translate}}</h2>
             <p> {{ 'walkdesc2' | translate}} </p>
         </ion-slide>
 
         <ion-slide>
-            <img src="assets/img/2.png"/>
+            <img src="assets/img/walkthrough/2.png"/>
             <h2>{{ 'walktitle3' | translate}}</h2>
             <p> {{ 'walkdesc3' | translate}} </p>
         </ion-slide>
 
         <ion-slide>
-            <img src="assets/img/3.png"/>
+            <img src="assets/img/walkthrough/3.png"/>
             <h2>{{ 'walktitle4' | translate}}</h2>
             <p> {{ 'walkdesc4' | translate}} </p>
         </ion-slide>
 
         <ion-slide>
-            <img src="assets/img/4.png"/>
+            <img src="assets/img/walkthrough/4.png"/>
             <h2>{{ 'walktitle5' | translate}}</h2>
             <p> {{ 'walkdesc5' | translate}} </p>
         </ion-slide>
 
         <ion-slide>
-            <img src="assets/icon/logo.png"/>
+            <img src="assets/icon/logo.png" class="logo"/>
             <h2>{{ 'walktitle6' | translate}}</h2>
             <button ion-button icon-only large (click)="dismiss()" color="green2">
                 <ion-icon name="arrow-round-forward"></ion-icon>

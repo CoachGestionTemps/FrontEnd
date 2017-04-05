@@ -1,0 +1,43 @@
+<ion-content>
+    <ion-list>
+        <ion-card>
+            <ion-card-header>
+                {{ 'welcomeMyAgenda' | translate }}
+            </ion-card-header>
+        </ion-card>
+        <ion-card>
+            <ion-card-content>
+                {{ 'addToHomeScreen' | translate }}
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'notHomeScreenStep1' | translate }}
+            </ion-card-header>
+            <ion-card-content>
+                <img src="{{ 'assets/img/not-full-screen/' + (isIOS ? 'ios' : 'and') + '1.png' }}" />
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'notHomeScreenStep2' | translate }}
+            </ion-card-header>
+            <ion-card-content>
+                <img src="{{ 'assets/img/not-full-screen/' + (isIOS ? 'ios' : 'and') + '2.png' }}" />
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'notHomeScreenStep3' | translate }}
+            </ion-card-header>
+            <ion-card-content>
+                <img src="{{ 'assets/img/not-full-screen/' + (isIOS ? 'ios' : 'and') + '3.png' }}" />
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'thatsIt' | translate }}
+            </ion-card-header>
+        </ion-card>
+    </ion-list>
+</ion-content>

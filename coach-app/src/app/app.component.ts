@@ -3,23 +3,25 @@ import { Platform, ModalController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { TranslateService } from 'ng2-translate';
 import { TabsPage } from '../pages/tabs/tabs';
-import { GuidService } from "../services/guid-service";
+import { NotFullScreen } from '../pages/not-full-screen/not-full-screen';
 import { SettingService } from "../services/setting-service";
 import { EventService } from "../services/event-service";
+import { Const } from "../services/const";
 import { Utils } from "../services/utils";
 import { WalkthroughPage } from '../pages/walkthrough/walkthrough';
 
 
 @Component({
   templateUrl: 'app.html',
-  providers: [GuidService, SettingService, EventService, Utils]
+  providers: [Const, SettingService, EventService, Utils]
 })
 export class MyApp {
-  rootPage = TabsPage;
+  rootPage: any;
 
   constructor(platform: Platform, translate: TranslateService, private setting : SettingService, public modalCtrl: ModalController, private eventService : EventService) {
-    platform.ready().then(() => {
+    this.rootPage = (!platform.is('ios') && !platform.is('android') && !platform.is('ipad')) || window.matchMedia('(display-mode: standalone)').matches || window.navigator['standalone'] ? TabsPage : NotFullScreen;
 
+    platform.ready().then(() => {
       // Where we catch and store the CIP/Token
       if (window.location.search){
           var self = this;
@@ -38,12 +40,11 @@ export class MyApp {
 
       // TODO : Uncomment when the Auth is done server side
       if (!setting.getCIP() || !setting.getEventToken()){
-        //window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(setting.getEndPointURL() + '/auth/retourcas' + (setting.isProd() ? "" : "?isDev=true")));
+        //this.eventService.syncCourses();
       }
 
       if (setting.isFirstUse()){
-        this.modalCtrl.create(WalkthroughPage).present();
-        setting.setNotFirstUse();
+        this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
       }
 
       StatusBar.styleDefault();

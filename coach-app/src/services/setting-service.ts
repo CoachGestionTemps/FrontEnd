@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {TranslateService} from 'ng2-translate';
+import { Injectable } from '@angular/core';
+import { TranslateService } from 'ng2-translate';
+import { Const } from '../services/const';
 import moment from 'moment';
 
 @Injectable()
@@ -10,14 +11,18 @@ export class SettingService {
     eventTokenKey: string;
     isSSPKey: string;
     isFirstUseKey: string;
+    lastUpdateKey: string;
+    moment: any;
 
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService, public cnst : Const) {
         this.langKey = 'lang';
         this.isSSPSupportKey = 'isSSPSupportKey';
         this.cipKey = 'cip';
         this.eventTokenKey = 'eventToken';
         this.isSSPKey = 'isSSP';
         this.isFirstUseKey = 'isFirstUse';
+        this.lastUpdateKey = 'lastUpdate';
+        this.moment = moment;
     }
 
     /* GETTERS */
@@ -55,6 +60,10 @@ export class SettingService {
         return localStorage.getItem(this.isFirstUseKey) == null;
     }
 
+    getLastUpdate() : string {
+        return localStorage.getItem(this.lastUpdateKey);
+    }
+
     /* SETTERS */
 
     setLanguage(lang: string) : void{
@@ -79,6 +88,10 @@ export class SettingService {
 
     setNotFirstUse() : void {
         localStorage.setItem(this.isFirstUseKey, 'false');
+    }
+
+    setLastUpdate() : void {
+        this.validateAndSave(this.lastUpdateKey, this.moment().format(this.cnst.dateFormat), null);
     }
 
     /* PRIVATE METHODS */

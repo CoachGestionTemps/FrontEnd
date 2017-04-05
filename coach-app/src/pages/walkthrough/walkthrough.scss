@@ -3,8 +3,15 @@ page-walkthrough {
         background-color: $white;
 
         img {
-            max-width:80%;
+            max-width:100%;
             max-height:400px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+            &.logo {
+                 border-radius: 10px;
+                 max-height: 200px;
+                 border-bottom: none;
+            }
         }
         p, h2 {
             padding: 0px 40px;

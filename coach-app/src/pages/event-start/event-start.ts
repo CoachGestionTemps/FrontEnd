@@ -1,76 +1,78 @@
 import { Component } from '@angular/core';
-
-import { NavParams, NavController, Events } from 'ionic-angular';
+import { NavParams, NavController, Events, AlertController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
+import { Const } from '../../services/const';
 import { Observable, Subject } from 'rxjs/Rx';
 import moment from 'moment';
 
 @Component({
-  selector: 'page-event-start',
-  templateUrl: 'event-start.html'
+    selector: 'page-event-start',
+    templateUrl: 'event-start.html'
 })
 
 export class EventStartPage {
-  event: any;
-  moment: any;
-  tabBarElement: any;
-  playing: boolean;
-  elapsedSeconds: any;
-  timer: any;
-  pauser: any;
-  pausable; any;
-  passedTime: number;
+    pauser: Subject<{}>;
+    passedTime: number;
+    playing: boolean;
+    pausable: any;
+    timer: any;
+    event: any;
+    moment: any;
+    tabBarElement: any;
 
-  constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private eventService : EventService, private utils : Utils) {
-    this.moment = moment;
-    this.event = navParams.get("event");
-    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-
-    // if the activity was started, not paused and we came back without refreshing the data from server
-    this.passedTime = this.utils.getPassedTimeFromActivityStart(this.event);
-
-    this.pauser = new Subject();
-    this.timer = Observable.timer(0, 1000);
-    this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
-    this.pausable.subscribe(() => this.passedTime++ );
-    this.play();
-  }
-
-  play(){
-    if (this.event.activityStartTime){
-      this.pauser.next(false);
-      this.playing = true;
-    } else {
-      this.event.activityStartTime = this.moment().format(this.utils.dateFormat);
-      this.eventService.edit(this.event).then(data => {
-        this.pauser.next(false);
+    constructor(public navCtrl: NavController, navParams: NavParams, private events: Events,
+                private eventService: EventService, private utils: Utils, private cnst: Const,
+                private alertCtrl : AlertController) {
+        this.moment = moment;
+        this.event = navParams.get("event");
+        this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
         this.playing = true;
-      }, data => {
-        // TODO : Show error message
-      });
+
+        // if the activity was started, not paused and we came back without refreshing the data from server
+        this.passedTime = this.utils.getPassedTimeFromActivityStart(this.event);
+
+        this.pauser = new Subject();
+        this.timer = Observable.timer(0, 1000);
+        this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
+        this.pausable.subscribe(() => this.passedTime++);
+        this.play();
     }
-  }
 
-  pause(){
-    this.utils.adjustEventPassedTimeOnPause(this.event)
-    this.eventService.edit(this.event).then(data => {
-      this.pauser.next(true);
-      this.playing = false;
-    }, data => {
-        // TODO : Show error
-    });
-  }
+    play() {
+        if (this.event.activityStartTime) {
+            this.pauser.next(false);
+            this.playing = true;
+        } else {
+            this.event.activityStartTime = this.moment().format(this.cnst.dateFormat);
+            this.eventService.edit(this.event).then(data => {
+                this.pauser.next(false);
+                this.playing = true;
+            }, data => {
+            this.utils.showError(this.alertCtrl, "errorTitle", "errorCantPlayEvent");
+            });
+        }
+    }
 
-  playPauseToggle(){
-      this.playing ? this.pause() : this.play();
-  }
+    pause() {
+        this.utils.adjustEventPassedTimeOnPause(this.event)
+        this.eventService.edit(this.event).then(data => {
+            this.pauser.next(true);
+            this.playing = false;
+        }, data => {
+            this.utils.showError(this.alertCtrl, "errorTitle", "errorCantPauseEvent");
+        });
+    }
 
-  ionViewWillEnter(){
-      this.tabBarElement.style.display = 'none';
-  }
+    playPauseToggle() {
+        this.playing ? this.pause() : this.play();
+    }
 
-  ionViewWillLeave(){
-      this.tabBarElement.style.display = 'flex';
-  }
+    ionViewWillEnter() {
+        this.tabBarElement.style.display = 'none';
+    }
+
+    ionViewWillLeave() {
+        this.tabBarElement.style.display = 'flex';
+    }
 }

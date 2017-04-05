@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
+import { Const } from '../../services/const';
 import { EventPage } from "../event/event";
 import { EventCreationPage } from "../event-creation/event-creation";
 import moment from 'moment';
@@ -12,24 +13,24 @@ import moment from 'moment';
 })
 
 export class TodayPage {
-  month: any;
-  today: any;
+  month: any[];
+  today: moment.Moment;
   moment: any;
   clickedDate: any;
-  selectedDays: any;
-  displayedYear: any;
-  displayedMonth: any;
+  selectedDays: any[];
+  displayedYear: number;
+  displayedMonth: number;
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, 
               private events: Events, private eventService : EventService, 
-              private utils : Utils) {
+              private utils : Utils, private cnst : Const) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
     this.displayedMonth = this.today.get("month");
     this.setSelectedDay(this.today, null);
 
-    this.events.subscribe('event:update', () => {
+    this.events.subscribe(this.cnst.eventUpdate, () => {
         this.setSelectedDay(this.selectedDays[0].day, null);
     });
   }
@@ -82,7 +83,7 @@ export class TodayPage {
         refresher.complete();
       }
     }, data => {
-      this.utils.showError(this.alertCtrl, "error", data.error);
+      this.utils.showError(this.alertCtrl, "errorTitle", data.error);
       this.selectedDays = generateDays(moment(day)).map(d => { return { day: d, events: []}; });
       this.displayedMonth = this.selectedDays[0].day.get("month");
       this.displayedYear = this.selectedDays[0].day.get("year");
@@ -160,8 +161,8 @@ export class TodayPage {
   navigateToEventCreation(day) {
     var datetime = this.moment(day.day);
     datetime.set({ hour: 8, minute: 0, second: 0 });
-    var date = datetime.format(this.utils.dateFormat);
-    var today = day.day.format(this.utils.dateFormat).split(' ')[0];
+    var date = datetime.format(this.cnst.dateFormat);
+    var today = day.day.format(this.cnst.dateFormat).split(' ')[0];
 
     if (day.events && day.events.length > 0) {
       for (var i = 0; i < day.events.length + 1; i++){

@@ -2,6 +2,7 @@ page-week {
     .has-refresher > .scroll-content {
         border-top: none;
     }
+
     ion-toolbar.toolbar{
         padding: 0px;
 
@@ -17,6 +18,7 @@ page-week {
     ion-col {
         padding: 5px 0px;
     }
+
     .content, .header {
         ion-grid {
             color: $white;
@@ -24,7 +26,6 @@ page-week {
     }
     
     ion-row.week-days {
-
         ion-col {
             max-width: 12.5%;
             text-align: center;
@@ -63,6 +64,7 @@ page-week {
 
                     ion-col {
                         padding: 0px;
+                        height: 50px; // for iPhones, do not remove
 
                         div {
                             width: 100%;
