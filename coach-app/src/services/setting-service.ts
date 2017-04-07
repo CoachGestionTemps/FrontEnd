@@ -36,11 +36,11 @@ export class SettingService {
     }
 
     getCIP() : string{
-        return localStorage.getItem(this.cipKey) || 'desp2714';
+        return localStorage.getItem(this.cipKey);
     }
 
     getEventToken() : string{
-        return localStorage.getItem(this.eventTokenKey) || '58cb0b67753b8';
+        return localStorage.getItem(this.eventTokenKey);
     }
 
     getEndPointURL() : string{
