@@ -6,9 +6,13 @@ page-setting {
     color: $white;
   }
 
-  .button {
+  .item .item-button {
     float: right;
-    margin: 1em;
+    height: 45px;
+    background-color: $green3;
+  }
+
+  .button:hover:not(.disable-hover){
     background-color: $green3;
   }
 
