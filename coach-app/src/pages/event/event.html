@@ -21,7 +21,7 @@
             {{ event.title }}
         </h1>
     </ion-item>
-    <ion-item *ngIf="event.summary">
+    <ion-item text-wrap *ngIf="event.summary">
         <ion-icon name="list" item-left></ion-icon>
         {{ event.summary }}
     </ion-item>
