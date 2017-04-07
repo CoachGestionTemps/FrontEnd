@@ -19,30 +19,29 @@ export class MyApp {
   rootPage: any;
 
   constructor(platform: Platform, translate: TranslateService, private setting : SettingService, public modalCtrl: ModalController, private eventService : EventService) {
-    this.rootPage = (!platform.is('ios') && !platform.is('android') && !platform.is('ipad')) || window.matchMedia('(display-mode: standalone)').matches || window.navigator['standalone'] ? TabsPage : NotFullScreen;
+    var loadApp = (!platform.is('ios') && !platform.is('android') && !platform.is('ipad')) || window.matchMedia('(display-mode: standalone)').matches || window.navigator['standalone'];
+    this.rootPage = loadApp ? TabsPage : NotFullScreen;
 
-    platform.ready().then(() => {
-      // Where we catch and store the CIP/Token
+    if (loadApp){
       if (window.location.search){
-          var self = this;
           window.location.search.replace('?', '').split('&').forEach(param => {
               var keyValue = param.split("=");
-              if (keyValue.length === 2){
-                  if (keyValue[0].toLowerCase() === "cip"){
-                      self.setting.setCIP(keyValue[1]);
-                  } else if (keyValue[0].toLowerCase() === "token"){
-                      self.setting.setEventToken(keyValue[1]);
+              if (keyValue.length === 2) {
+                  if (keyValue[0].toLowerCase() === "cip") {
+                      this.setting.setCIP(keyValue[1]);
+                  } else if (keyValue[0].toLowerCase() === "token") {
+                      this.setting.setEventToken(keyValue[1]);
                   }
               }
           });
           window.location.search = "";
+      } else if (loadApp && (!setting.getCIP() || !setting.getEventToken())){
+        this.eventService.syncCourses();
       }
+    }
+    
 
-      // TODO : Uncomment when the Auth is done server side
-      if (!setting.getCIP() || !setting.getEventToken()){
-        //this.eventService.syncCourses();
-      }
-
+    platform.ready().then(() => {
       if (setting.isFirstUse()){
         this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
       }
