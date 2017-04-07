@@ -66,23 +66,23 @@ export class SettingService {
 
     /* SETTERS */
 
-    setLanguage(lang: string) : void{
+    setLanguage(lang: string) : void {
         this.validateAndSave(this.langKey, lang, this.validateLanguage);
     }
 
-    setCIP(cip: string) : void{
+    setCIP(cip: string) : void {
         this.validateAndSave(this.cipKey, cip, this.validateCIP);
     }
 
-    setEventToken(token: string) : void{
+    setEventToken(token: string) : void {
         this.validateAndSave(this.eventTokenKey, token, null);
     }
 
-    setIsSSP(isSSP: boolean) : void{
+    setIsSSP(isSSP: boolean) : void {
         this.validateAndSave(this.isSSPKey, isSSP.toString(), null);
     }
 
-    logout() : void{
+    logout() : void {
         localStorage.removeItem(this.cipKey);
     }
 

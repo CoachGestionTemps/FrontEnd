@@ -31,6 +31,7 @@ export class SettingPage {
 
     disconnect() : void {
         this.settingService.logout();
+        location.reload();
     }
 
     syncCourses() : void {
