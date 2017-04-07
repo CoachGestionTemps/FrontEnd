@@ -35,12 +35,11 @@ export class MyApp {
               }
           });
           window.location.search = "";
-      } else if (loadApp && (!setting.getCIP() || !setting.getEventToken())){
+      } else if (!setting.getCIP() || !setting.getEventToken()){
         this.eventService.syncCourses();
       }
     }
     
-
     platform.ready().then(() => {
       if (setting.isFirstUse()){
         this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
