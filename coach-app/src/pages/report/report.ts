@@ -96,6 +96,14 @@ export class ReportPage {
         this.updateChart(chartLabels.filter(e => e != null), chartData.filter(e => e != null));
     }
 
+    onSwipeReport(event) {
+      if (event.angle > 80 || event.angle < -80){
+        this.getNextSelection();
+      } else {
+        this.getPreviousSelection()
+      }
+    }
+
     updateChart(chartLabels, chartData) {
         if (this.viewLoaded) {
             if (this.pieChart) {
