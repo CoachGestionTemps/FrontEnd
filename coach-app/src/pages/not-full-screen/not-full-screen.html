@@ -3,12 +3,18 @@
         <ion-card>
             <ion-card-header>
                 {{ 'welcomeMyAgenda' | translate }}
+                <img src="/assets/icon/logo.png" class="logo" />
             </ion-card-header>
         </ion-card>
         <ion-card>
             <ion-card-content>
-                {{ 'addToHomeScreen' | translate }}
+                {{ ('beforeInstalling' | translate) + (isIOS ? ' (Safari)' : ' (Chrome)') }}
             </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'installation' | translate }}
+            </ion-card-header>
         </ion-card>
         <ion-card>
             <ion-card-header>
@@ -32,6 +38,15 @@
             </ion-card-header>
             <ion-card-content>
                 <img src="{{ 'assets/img/not-full-screen/' + (isIOS ? 'ios' : 'and') + '3.png' }}" />
+            </ion-card-content>
+        </ion-card>
+        <ion-card>
+            <ion-card-header>
+                {{ 'notHomeScreenStep4' | translate }}
+            </ion-card-header>
+            <ion-card-content>
+                <i>{{ 'youWillHaveToLogin' | translate }}</i>
+                <img src="{{ 'assets/img/not-full-screen/4.png' }}" />
             </ion-card-content>
         </ion-card>
         <ion-card>

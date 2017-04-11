@@ -56,7 +56,7 @@
     "french" : "French",
     "english": "English",
     "myAgenda": "MyAgenda",
-    "imInPsychologicalProgram": "I am part of the psychological program",
+    "imInPsychologicalProgram": "I am part of the SSP program",
     "language": "Language",
     "walktitle1": "Welcome to MyAgenda!",
     "walkdesc1": "The best app to help you plan your schedule at University of Sherbrooke!",
@@ -93,5 +93,10 @@
     "notHomeScreenStep1": "1. Clic on the option/share button",
     "notHomeScreenStep2": "2. Clic on \"Add to Home Screen\"",
     "notHomeScreenStep3": "3. Clic on \"Add\"",
-    "thatsIt": "That's it!"
+    "thatsIt": "That's it!",
+    "installation": "Installation",
+    "beforeInstalling": "Before anything else, make sure you are currently using your phone's default browser.",
+    "notHomeScreenStep4": "4. The app will appear on your phone's home screen",
+    "youWillHaveToLogin": "On the first launch, you will have to authenticate yourself using your usual CIP/password.",
+    "startOfDay": "Start of day"
 }

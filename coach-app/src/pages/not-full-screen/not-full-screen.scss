@@ -22,9 +22,17 @@ page-not-full-screen {
     ion-card-header {
         background-color: $light;
         text-align: center;
+        line-height: 2.0em;
 
         img {
             width: 30px;
+            
+            &.logo {
+                display: inline-block;
+                border-radius: 5px;
+                margin-left: 5px;
+                vertical-align: top;
+            }
         }
     }
 }

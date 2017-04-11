@@ -146,6 +146,8 @@ page-today {
   .days ion-col {
     color: $grey1;
     min-height: 30px;
+    padding-top: 2%;
+    padding-bottom: 2%;
 
     span {
       display:block;

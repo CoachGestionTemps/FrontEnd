@@ -3,6 +3,8 @@ import { ModalController } from 'ionic-angular';
 import { SettingService } from '../../services/setting-service';
 import { EventService } from '../../services/event-service';
 import { WalkthroughPage } from '../../pages/walkthrough/walkthrough';
+import { Const } from '../../services/const';
+import moment from 'moment';
 
 @Component({
     selector: 'page-setting',
@@ -12,9 +14,14 @@ import { WalkthroughPage } from '../../pages/walkthrough/walkthrough';
 export class SettingPage {
     selectedLanguage: string;
     isInSSP: boolean;
+    startOfDay: string;
+    moment: any;
 
-    constructor(private settingService: SettingService, private eventService : EventService, private modalCtrl : ModalController) {
+    constructor(private settingService: SettingService, private eventService : EventService, private modalCtrl : ModalController,
+                private cnst : Const) {
         this.selectedLanguage = settingService.getLanguage();
+        this.moment = moment;
+        this.startOfDay = "2017-01-01T" + this.settingService.getStartOfDay() + ":00.000Z";
         this.isInSSP = settingService.isSSP();
     }
 
@@ -23,6 +30,11 @@ export class SettingPage {
             this.settingService.setLanguage(this.selectedLanguage);
             location.reload();
         }
+    }
+
+    startOfDayChanged() : void {
+        var times = this.startOfDay.split('T')[1].split(':');
+        this.settingService.setStartOfDay(times[0] + ":" + times[1]);
     }
 
     updateSSPKey() : void {

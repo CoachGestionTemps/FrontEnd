@@ -22,6 +22,11 @@
       </ion-list>
 
       <ion-item>
+          <ion-label>{{ 'startOfDay' | translate }}</ion-label>
+          <ion-datetime (ionChange)="startOfDayChanged()" displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="startOfDay"></ion-datetime>
+      </ion-item>
+
+      <ion-item>
           <ion-label>{{ 'imInPsychologicalProgram' | translate }}</ion-label>
           <ion-toggle [(ngModel)]="isInSSP" (ionChange)="updateSSPKey()"></ion-toggle>
       </ion-item>
