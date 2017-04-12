@@ -27,7 +27,7 @@ export class EventService {
   public syncCourses() : void {
       window.location.replace('https://cas.usherbrooke.ca/login?service=' + encodeURIComponent(this.setting.getEndPointURL() + '/synccourses?redirect=' + window.location.href));
   }
-  
+
   public reloadFromServer(){
       this.loadFromServer = true;
   }
@@ -53,10 +53,10 @@ export class EventService {
         );
     }
 
-    public getEventsForDays(days): Promise<any[]> { 
+    public getEventsForDays(days): Promise<any[]> {
         var getDays = () => {
-            return days.map(d => { 
-                return { 
+            return days.map(d => {
+                return {
                     day: d,
                     events: (JSON.parse(localStorage.getItem(this.getDayKey(d))) || [])
                             .sort((a, b) => { return this.utils.getDiff(a.startTime, b.startTime) < 0; })
@@ -77,19 +77,19 @@ export class EventService {
             }
             return this.getCachedEvents(days);
         };
-        
+
         return this.getFromServerOrCache(getEvents);
     }
 
     public getDaysAndHasEvents(month): Promise<any> {
         var getDays = () => {
             var keys = this.getDayKeys();
-            return month.map(week => { 
+            return month.map(week => {
                 return week.map(d => {
-                    return { 
+                    return {
                         day: d,
                         hasEvents: keys.indexOf(this.getDayKey(d)) != -1
-                    }; 
+                    };
                 });
             });
         };
@@ -98,8 +98,10 @@ export class EventService {
     }
 
     public refreshEvent(event): any {
+      if(localStorage.getItem(this.getEventKey(event))) {
         var events = JSON.parse(localStorage.getItem(this.getEventKey(event))).filter(e => { return e.id == event.id; });
         return events && events.length > 0 ? events[0] : null;
+      }
     }
 
     public add(event) : Promise<any> {
