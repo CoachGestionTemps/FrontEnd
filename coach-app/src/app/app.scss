@@ -48,6 +48,10 @@ ion-content.content {
     background-color: $green2;
 }
 
+ion-header .toolbar-content-md {
+    margin-left: 1em;
+}
+
 .category-undefined {
     background-color: $undefined;
     color: $white;

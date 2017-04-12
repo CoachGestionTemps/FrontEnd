@@ -55,7 +55,7 @@
     "settings" : "Paramètres",
     "french" : "Français",
     "english": "Anglais",
-    "imInPsychologicalProgram": "Je fais partie du service de psychologie.",
+    "imInPsychologicalProgram": "Je fais partie du programme SPP",
     "language": "Langue",
     "myAgenda": "MonAgenda",
     "walktitle1": "Bienvenue sur MonAgenda!",
@@ -93,5 +93,10 @@
     "notHomeScreenStep1": "1. Cliquer sur le bouton de partage",
     "notHomeScreenStep2": "2. Cliquer sur « Ajouter à l'écran d'accueil »",
     "notHomeScreenStep3": "3. Cliquer sur « Ajouter »",
-    "thatsIt": "C'est tout!"
+    "thatsIt": "C'est tout!",
+    "installation": "Installation",
+    "beforeInstalling": "Avant tout, assurez-vous d'utiliser le navigateur par défaut de votre téléphone.",
+    "notHomeScreenStep4": "4. L'application apparaîtra sur la page d'accueil de votre téléphone",
+    "youWillHaveToLogin": "Au premier lancement, vous devrez vous authentifier avec votre CIP et mot de passe",
+    "startOfDay": "Début de la journée"
 }

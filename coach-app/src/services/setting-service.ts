@@ -12,6 +12,7 @@ export class SettingService {
     isSSPKey: string;
     isFirstUseKey: string;
     lastUpdateKey: string;
+    startOfDayKey: string;
     moment: any;
 
     constructor(private translate: TranslateService, public cnst : Const) {
@@ -22,13 +23,14 @@ export class SettingService {
         this.isSSPKey = 'isSSP';
         this.isFirstUseKey = 'isFirstUse';
         this.lastUpdateKey = 'lastUpdate';
+        this.startOfDayKey = 'startOfDay';
         this.moment = moment;
     }
 
     /* GETTERS */
 
     getLanguage() : string{
-        return localStorage.getItem(this.langKey) || 'fr';
+        return localStorage.getItem(this.langKey) || ((navigator.language || navigator['userLanguage']).indexOf('fr') == -1 ? 'en' : 'fr');
     }
 
     getMomentLanguage() : string{
@@ -64,6 +66,10 @@ export class SettingService {
         return localStorage.getItem(this.lastUpdateKey);
     }
 
+    getStartOfDay() : string {
+        return localStorage.getItem(this.startOfDayKey) || "08:00";
+    }
+
     /* SETTERS */
 
     setLanguage(lang: string) : void {
@@ -94,6 +100,10 @@ export class SettingService {
         this.validateAndSave(this.lastUpdateKey, this.moment().format(this.cnst.dateFormat), null);
     }
 
+    setStartOfDay(startOfDay : string) : void {
+        this.validateAndSave(this.startOfDayKey, startOfDay, this.validateHour);
+    }
+
     /* PRIVATE METHODS */
 
     private validateLanguage(lang: string) : boolean{
@@ -102,6 +112,10 @@ export class SettingService {
 
     private validateCIP(cip: string) : boolean{
         return /^[a-z]{4}\d{4}$/.test(cip);
+    }
+
+    private validateHour(hour: string) : boolean {
+        return /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(hour);
     }
 
     private validateAndSave(key, data, validate) : void{

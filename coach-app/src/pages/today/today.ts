@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
+import { SettingService } from '../../services/setting-service';
 import { Utils } from '../../services/utils';
 import { Const } from '../../services/const';
 import { EventPage } from "../event/event";
@@ -23,7 +24,7 @@ export class TodayPage {
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, 
               private events: Events, private eventService : EventService, 
-              private utils : Utils, private cnst : Const) {
+              private utils : Utils, private cnst : Const, private settingService : SettingService) {
     this.moment = moment;
     this.today = moment();
     this.displayedYear = this.today.get("year");
@@ -160,13 +161,15 @@ export class TodayPage {
 
   navigateToEventCreation(day) {
     var datetime = this.moment(day.day);
-    datetime.set({ hour: 8, minute: 0, second: 0 });
+    var startOfDay = this.settingService.getStartOfDay();
+    var times = startOfDay.split(':');
+    datetime.set({ hour: parseInt(times[0]), minute: parseInt(times[1]), second: 0 });
     var date = datetime.format(this.cnst.dateFormat);
     var today = day.day.format(this.cnst.dateFormat).split(' ')[0];
 
     if (day.events && day.events.length > 0) {
       for (var i = 0; i < day.events.length + 1; i++){
-          var start = i == 0 ? today + " 08:00:00" : day.events[i - 1].endTime;
+          var start = i == 0 ? today + " " + startOfDay + ":00" : day.events[i - 1].endTime;
           var end = i >= day.events.length ? today + " 23:00:00" : day.events[i].startTime;
           if (this.utils.getDiff(start, end) > 3600){
             date = start;

@@ -34,7 +34,7 @@ export class MyApp {
                   }
               }
           });
-          window.location.search = "";
+          window.location.replace(window.location.href.split('?')[0]);
       } else if (!setting.getCIP() || !setting.getEventToken()){
         this.eventService.syncCourses();
       }
