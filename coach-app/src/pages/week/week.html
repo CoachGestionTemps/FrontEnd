@@ -28,11 +28,11 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content id="week-content" (swipe)="onWeekSlide($event)">
+<ion-content id="week-content">
     <ion-refresher (ionRefresh)="refresh($event)">
         <ion-refresher-content>{{ 'refreshing' | translate }}</ion-refresher-content>
     </ion-refresher>
-    <ion-grid>
+    <ion-grid (swipe)="onWeekSlide($event)">
         <ion-row class="events">
             <ion-col>
                 <ion-row *ngFor="let hour of hours" class="hour" id="{{ hour + 'H' }}">
