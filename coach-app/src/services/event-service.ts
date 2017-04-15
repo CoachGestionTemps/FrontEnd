@@ -98,8 +98,9 @@ export class EventService {
     }
 
     public refreshEvent(event): any {
-      if(localStorage.getItem(this.getEventKey(event))) {
-        var events = JSON.parse(localStorage.getItem(this.getEventKey(event))).filter(e => { return e.id == event.id; });
+      var refreshedEvent = localStorage.getItem(this.getEventKey(event))
+      if(refreshedEvent) {
+        var events = JSON.parse(refreshedEvent).filter(e => { return e.id == event.id; });
         return events && events.length > 0 ? events[0] : null;
       }
     }
