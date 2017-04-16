@@ -13,7 +13,7 @@ import moment from 'moment';
 
 export class SettingPage {
     selectedLanguage: string;
-    isInSSP: boolean;
+    isInSPO: boolean;
     startOfDay: string;
     moment: any;
 
@@ -22,7 +22,7 @@ export class SettingPage {
         this.selectedLanguage = settingService.getLanguage();
         this.moment = moment;
         this.startOfDay = "2017-01-01T" + this.settingService.getStartOfDay() + ":00.000Z";
-        this.isInSSP = settingService.isSSP();
+        this.isInSPO = settingService.isSPO();
     }
 
     setLanguage() : void {
@@ -37,11 +37,12 @@ export class SettingPage {
         this.settingService.setStartOfDay(times[0] + ":" + times[1]);
     }
 
-    updateSSPKey() : void {
-        this.settingService.setIsSSP(this.isInSSP);
+    updateSPOKey() : void {
+        this.settingService.setIsSPO(this.isInSPO);
     }
 
     disconnect() : void {
+        // TODO : logout CAS
         this.settingService.logout();
         location.reload();
     }

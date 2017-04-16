@@ -43,7 +43,7 @@ export class EventPage {
     this.navCtrl.push(EventStartPage, { event: this.event });
   }
 
-  navigateToEventCreation(event) {
+  navigateToEventEdit(event) {
       this.navCtrl.push(EventCreationPage, { event: event });
   }
 

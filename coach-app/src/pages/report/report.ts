@@ -74,7 +74,7 @@ export class ReportPage {
 
         this.events.forEach(e => {
             var plannedTime = this.moment(e.endTime).diff(this.moment(e.startTime), 'seconds');
-            var passedTime = !this.setting.isSSP() && e.category == this.eventCategories.Class ?
+            var passedTime = !this.setting.isSPO() && e.category == this.eventCategories.Class ?
                 plannedTime : this.utils.getPassedTimeFromActivityStart(e);
 
             if (stats[e.category]) {
@@ -134,6 +134,7 @@ export class ReportPage {
     }
 
     anyStatNonNull() {
+        // TODO : change for passedTime method in utils
         return this.stats.some(o => o.passedTime > 0);
     }
 

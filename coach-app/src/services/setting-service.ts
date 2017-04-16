@@ -6,10 +6,10 @@ import moment from 'moment';
 @Injectable()
 export class SettingService {
     langKey: string;
-    isSSPSupportKey: string;
+    isSPOSupportKey: string;
     cipKey: string;
     eventTokenKey: string;
-    isSSPKey: string;
+    isSPOKey: string;
     isFirstUseKey: string;
     lastUpdateKey: string;
     startOfDayKey: string;
@@ -17,10 +17,10 @@ export class SettingService {
 
     constructor(private translate: TranslateService, public cnst : Const) {
         this.langKey = 'lang';
-        this.isSSPSupportKey = 'isSSPSupportKey';
+        this.isSPOSupportKey = 'isSPOSupportKey';
         this.cipKey = 'cip';
         this.eventTokenKey = 'eventToken';
-        this.isSSPKey = 'isSSP';
+        this.isSPOKey = 'isSPO';
         this.isFirstUseKey = 'isFirstUse';
         this.lastUpdateKey = 'lastUpdate';
         this.startOfDayKey = 'startOfDay';
@@ -50,8 +50,8 @@ export class SettingService {
         return this.isProd() ? "https://www.usherbrooke.ca/~desp2714/app-start" : "https://www.usherbrooke.ca/~desp2714/app-start";
     }
 
-    isSSP() : boolean{
-        return localStorage.getItem(this.isSSPKey) == 'true';
+    isSPO() : boolean{
+        return localStorage.getItem(this.isSPOKey) == 'true';
     }
 
     isProd() : boolean{
@@ -84,8 +84,8 @@ export class SettingService {
         this.validateAndSave(this.eventTokenKey, token, null);
     }
 
-    setIsSSP(isSSP: boolean) : void {
-        this.validateAndSave(this.isSSPKey, isSSP.toString(), null);
+    setIsSPO(isSPO: boolean) : void {
+        this.validateAndSave(this.isSPOKey, isSPO.toString(), null);
     }
 
     logout() : void {

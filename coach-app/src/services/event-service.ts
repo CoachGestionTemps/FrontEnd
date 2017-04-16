@@ -32,27 +32,6 @@ export class EventService {
       this.loadFromServer = true;
   }
 
-    public refreshEvents() : Promise<any> {
-        return new Promise(
-            (resolve, reject) => {
-                this.http.get(this.setting.getEndPointURL() + '/events/' + this.setting.getCIP(), this.getOptions()).map((response) => {
-                    return response.json()
-                }).toPromise().then(data => {
-                    this.loadFromServer = false;
-                    this.setting.setLastUpdate();
-                    if (data.statut == this.cnst.successStatus){
-                        this.overwriteCache(data.donnees);
-                        resolve();
-                    } else {
-                        reject({ error: "errorNotAuthentifiedOrInvalidCIP" });
-                    }
-                }).catch(data => {
-                    reject({ error: "errorServerIsDown"});
-                });
-            }
-        );
-    }
-
     public getEventsForDays(days): Promise<any[]> {
         var getDays = () => {
             return days.map(d => {
@@ -204,6 +183,27 @@ export class EventService {
                 resolve(func());
             }
         });
+    }
+
+    private refreshEvents() : Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                this.http.get(this.setting.getEndPointURL() + '/events/' + this.setting.getCIP(), this.getOptions()).map((response) => {
+                    return response.json()
+                }).toPromise().then(data => {
+                    this.loadFromServer = false;
+                    this.setting.setLastUpdate();
+                    if (data.statut == this.cnst.successStatus){
+                        this.overwriteCache(data.donnees);
+                        resolve();
+                    } else {
+                        reject({ error: "errorNotAuthentifiedOrInvalidCIP" });
+                    }
+                }).catch(data => {
+                    reject({ error: "errorServerIsDown"});
+                });
+            }
+        );
     }
 
     private overwriteCache(events): void {

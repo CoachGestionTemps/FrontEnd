@@ -124,7 +124,8 @@ export class Utils {
 
     getFormattedTime(ms: number): string {
         var duration = this.moment.duration(ms * 1000);
-        return ("0" + parseInt(duration.asHours())).slice(-2) + ":" + ("0" + duration.minutes()).slice(-2)
+        var hours =  duration.asHours().length > 1 ? parseInt(duration.asHours()) : parseInt("0" + duration.asHours());
+        return hours + ":" + ("0" + duration.minutes()).slice(-2)
     }
 
     private getCategoryNames() : void {
