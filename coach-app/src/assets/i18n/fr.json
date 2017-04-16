@@ -55,7 +55,7 @@
     "settings" : "Paramètres",
     "french" : "Français",
     "english": "Anglais",
-    "imInPsychologicalProgram": "Je fais partie du programme SPP",
+    "imInPsychologicalProgram": "Je fais partie du programme SPO",
     "language": "Langue",
     "myAgenda": "MonAgenda",
     "walktitle1": "Bienvenue sur MonAgenda!",
@@ -96,7 +96,12 @@
     "thatsIt": "C'est tout!",
     "installation": "Installation",
     "beforeInstalling": "Avant tout, assurez-vous d'utiliser le navigateur par défaut de votre téléphone.",
-    "notHomeScreenStep4": "4. L'application apparaîtra sur la page d'accueil de votre téléphone",
+    "notHomeScreenStep4": "4. Quitter le navigateur web",
     "youWillHaveToLogin": "Au premier lancement, vous devrez vous authentifier avec votre CIP et mot de passe",
-    "startOfDay": "Début de la journée"
+    "startOfDay": "Début de la journée",
+    "seeCounter": "Afficher le chronomètre",
+    "errorActivityInProgress" : "L'activité est en cours et ne peut donc pas être modifiée en même temps",
+    "connectedAs": "Connecté en tant que",
+    "eventInProgress": "Évènement en cours",
+    "eventDone": "Évènement complété"
 }

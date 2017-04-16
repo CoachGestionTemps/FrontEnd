@@ -23,18 +23,21 @@ export class EventPage {
   tabBarElement: any;
   passedTime: any;
   eventCategories = EventCategories;
+  summary: string;
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
               private eventService : EventService, private events: Events, private utils : Utils,
               private translate: TranslateService, private setting : SettingService) {
     this.moment = moment;
     this.event = navParams.get("event");
+    this.summary = this.event.summary ? this.event.summary.replace("%skip%", "\n") : null;
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.passedTime = this.moment.utc((this.event.passedTime || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
     this.events.subscribe('event:update', () => {
         var event = this.eventService.refreshEvent(this.event);
         if (event){
           this.event = event;
+          this.passedTime = this.moment.utc((this.event.passedTime || 0) * 1000).format("YYYY-MM-DD[T]HH:mm[:00.000Z]");
         }
     });
   }
@@ -51,7 +54,7 @@ export class EventPage {
       this.eventService.delete(event).then(data => {
           this.navCtrl.pop();
       }, data => {
-          // TODO : Show Error
+          this.utils.showError(this.alertCtrl, "errorTitle", data.error);
       });
   }
 
@@ -66,7 +69,7 @@ export class EventPage {
     this.eventService.edit(this.event).then(data => {
 
     }, data => {
-      // TODO : Show error
+          this.utils.showError(this.alertCtrl, "errorTitle", data.error);
     });
   }
 
@@ -76,6 +79,10 @@ export class EventPage {
 
   ionViewWillLeave(){
     this.tabBarElement.style.display = 'flex';
+  }
+
+  getStartActivityButton(event) : string {
+    return event.activityStartTime ? "seeCounter" : (event.passedTime == null ? 'startThisActivity' : 'resumeThisActivity')
   }
 
   showDeletePrompt(event) {
@@ -100,5 +107,4 @@ export class EventPage {
     });
     prompt.present();
   }
-
 }

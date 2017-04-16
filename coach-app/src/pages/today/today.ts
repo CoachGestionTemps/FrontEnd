@@ -70,6 +70,8 @@ export class TodayPage {
               d.eventBar.push({ color: this.utils.getCategoryColors(i), value: sum });
           });
 
+          d.eventBar = d.eventBar.sort((a, b) => { return a.color - b.color; });
+
           if (total > 100){
             this.utils.getCategories().forEach((c, i) => {
                 d.eventBar[i].value = 100 * d.eventBar[i].value / total;

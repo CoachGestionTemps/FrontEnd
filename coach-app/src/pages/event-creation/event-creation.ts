@@ -67,6 +67,11 @@ export class EventCreationPage {
             return;
         }
 
+        if (this.event && this.event.activityStartTime){
+            this.utils.showError(this.alertCtrl, "errorTitle", "errorActivityInProgress");
+            return;
+        }
+
         var eventToSave = {
             startTime: eventStartTime,
             endTime: eventEndTime,
@@ -81,6 +86,7 @@ export class EventCreationPage {
             eventToSave['id'] = this.event.id;
             eventToSave['userId'] = this.event.userId;
             eventToSave['originalStartTime'] = this.originalStartTime;
+            eventToSave.passedTime = this.event.passedTime;
             this.eventService.edit(eventToSave).then(data => {
                 this.navCtrl.pop();
             }, data => {

@@ -96,7 +96,12 @@
     "thatsIt": "That's it!",
     "installation": "Installation",
     "beforeInstalling": "Before anything else, make sure you are currently using your phone's default browser.",
-    "notHomeScreenStep4": "4. The app will appear on your phone's home screen",
+    "notHomeScreenStep4": "4. Quit the web browser",
     "youWillHaveToLogin": "On the first launch, you will have to authenticate yourself using your usual CIP/password.",
-    "startOfDay": "Start of day"
+    "startOfDay": "Start of day",
+    "seeCounter": "View the live timer",
+    "errorActivityInProgress" : "The activity is in progress and therefore cannot be edited while doing so",
+    "connectedAs": "Connected as",
+    "eventInProgress": "Event in progress",
+    "eventDone": "Event done"
 }

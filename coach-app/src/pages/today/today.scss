@@ -4,18 +4,26 @@ page-today {
     height: 90px;
     width: 100%;
     border-radius: 0px;
+    z-index: 3000;
   }
 
-  .events {
-    transition: 300ms ease-out;
-    max-height: 0px;
-    transform: translatex(100%);
-    box-shadow: 0px 1px 10px black;
+  .day-container {
+    transition: max-height 500ms ease-in-out;
+    max-height: 94px;
 
     &.selected {
-      transform: translatex(0);
-      max-height: 100%;
+      max-height: 1000px;
+
+      .events {
+        visibility: visible;
+      }
     }
+    }
+
+  .events {
+    visibility: hidden;
+    transition: 500ms linear;
+
     ion-col span {
       padding: 5px;
       border-radius: 5px;
@@ -137,6 +145,7 @@ page-today {
   .event-bar {
     background-color: $white;
     line-height: 1px;
+    z-index: 3000;
     div{
       height: 5px;
       display: inline-block;

@@ -34,7 +34,9 @@ export class MyApp {
                   }
               }
           });
-          window.location.replace(window.location.href.split('?')[0]);
+          if(window.history != undefined && window.history.pushState != undefined) {
+              window.history.pushState({}, document.title, window.location.pathname);
+          }
       } else if (!setting.getCIP() || !setting.getEventToken()){
         this.eventService.syncCourses();
       }

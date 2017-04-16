@@ -106,7 +106,7 @@ export class WeekPage {
 
   getEventHeight(event){
     var diff = this.moment.duration(this.moment(event.endTime).diff(this.moment(event.startTime))).asMinutes();
-    return ((diff / 60) * 100) + '%';
+    return ((diff / 60) * 50) + 'px';
   }
 
   navigateToEvent(event, htmlEvent) {

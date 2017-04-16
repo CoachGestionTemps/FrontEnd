@@ -42,9 +42,9 @@ export class SettingPage {
     }
 
     disconnect() : void {
-        // TODO : logout CAS
-        this.settingService.logout();
-        location.reload();
+        this.settingService.logout().then(data => {
+            this.eventService.syncCourses();
+        });
     }
 
     syncCourses() : void {

@@ -94,3 +94,61 @@ ion-header .toolbar-content-md {
 .month-name {
     text-align: center;
 }
+
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0.6);
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 15px rgba(255,255,255, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+    }
+}
+@keyframes pulse {
+    0% {
+        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0.6);
+        box-shadow: 0 0 0 0 rgba(255,255,255, 0.6);
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 15px rgba(255,255,255, 0);
+        box-shadow: 0 0 0 15px rgba(255,255,255, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+        box-shadow: 0 0 0 0 rgba(255,255,255, 0);
+    }
+}
+
+@-webkit-keyframes bg-pulse {
+    0% {
+        -webkit-opacity: 1.0;
+    }
+    70% {
+        -webkit-opacity: 0.8;
+    }
+    100% {
+        -webkit-opacity: 1.0;
+    }
+}
+
+@keyframes bg-pulse {
+    0% {
+        -moz-opacity: 1.0;
+        opacity: 1.0;
+    }
+    70% {
+        -moz-opacity: 0.8;
+        opacity: 0.8;
+    }
+    100% {
+        -moz-opacity: 1.0;
+        opacity: 1.0;
+    }
+}
+
+ion-content .list-ios > .item-block:last-child {
+    border-bottom: 0px;
+}

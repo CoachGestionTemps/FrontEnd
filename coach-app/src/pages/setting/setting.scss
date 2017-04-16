@@ -12,6 +12,10 @@ page-setting {
     background-color: $green3;
   }
 
+  .item-datetime ion-label.label {
+    color: #000;
+  }
+
   .button:hover:not(.disable-hover){
     background-color: $green3;
   }

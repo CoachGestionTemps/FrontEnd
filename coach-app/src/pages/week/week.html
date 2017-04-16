@@ -34,7 +34,7 @@
     </ion-refresher>
     <ion-grid (swipe)="onWeekSlide($event)">
         <ion-row class="events">
-            <ion-col>
+            <ion-col class="hour-col">
                 <ion-row *ngFor="let hour of hours" class="hour" id="{{ hour + 'H' }}">
                     <ion-col>
                         {{ utils.displayHour(hour) }}
@@ -47,14 +47,14 @@
                         <div class="{{ utils.getCategoryClass(event.category) }}"
                             *ngFor="let event of getIndexedEvents(date, hour)"
                             [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event)}"
-                            (click)="navigateToEvent(event, $event)">
+                            (click)="navigateToEvent(event, $event)"
+                            [ngClass]="{ 'active' : !!event.activityStartTime }" >
                             <span>
                                 {{ event.title }}
                             </span>
                             <p>
-                                {{ 'start' | translate }}
-                                <br>
                                 {{ moment(event.startTime).format("HH:mm") }}
+                                {{ moment(event.endTime).format("HH:mm") }}
                             </p>
                         </div>
                     </ion-col>

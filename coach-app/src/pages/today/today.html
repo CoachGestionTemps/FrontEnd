@@ -3,7 +3,7 @@
     <ion-refresher-content>{{ 'refreshing' | translate }}</ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <div class="day-container" *ngFor="let date of selectedDays">
+    <div class="day-container" *ngFor="let date of selectedDays"  [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}">
       <ion-item-sliding class="selectedDays">
         <ion-item (click)="setClickedDate(date.day)">
           <ion-grid>
@@ -30,7 +30,7 @@
           </div>
       </div>
 
-      <ion-list class="events" [ngClass]="{ 'selected' : date.day.isSame(clickedDate)}" >
+      <ion-list class="events">
         <ion-item-sliding *ngFor="let event of date.events"  #item (click)="navigateToEvent(event)">
           <ion-item>
             <ion-grid>

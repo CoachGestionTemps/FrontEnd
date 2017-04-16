@@ -2,17 +2,22 @@
   <ion-navbar hide-tabs>
     {{ moment(event.startTime).format("ll") }}
     <ion-buttons end>
-        <button *ngIf="event.category != eventCategories.Class" ion-button icon-only (click)="navigateToEventEdit(event)">
+        <button *ngIf="event.category != eventCategories.Class && !event.activityStartTime" ion-button icon-only (click)="navigateToEventEdit(event)">
             <ion-icon name="create"></ion-icon>
         </button>
-        <button *ngIf="event.category != eventCategories.Class" ion-button icon-only (click)="showDeletePrompt(event)">
+        <button *ngIf="event.category != eventCategories.Class && !event.activityStartTime" ion-button icon-only (click)="showDeletePrompt(event)">
             <ion-icon name="trash"></ion-icon>
         </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content>
-  <ion-list class="{{ utils.getCategoryClass(event. category) }}">
+<ion-content class="{{ utils.getCategoryClass(event. category) }}">
+    <ion-item *ngIf="event.activityStartTime" class="in-progress">
+        {{ 'eventInProgress' | translate }}
+    </ion-item>
+    <ion-item *ngIf="utils.isEventConsideredDone(event)" class="done">
+        {{ 'eventDone' | translate }}
+    </ion-item>
     <ion-item>
         <ion-thumbnail item-left>
             <ion-icon name="{{ utils.getIconName(event.category) }}"></ion-icon>
@@ -23,7 +28,7 @@
     </ion-item>
     <ion-item text-wrap *ngIf="event.summary">
         <ion-icon name="list" item-left></ion-icon>
-        {{ event.summary }}
+        <ion-textarea readonly fz-elastic [(ngModel)]="summary"></ion-textarea>
     </ion-item>
     <ion-item>
         <ion-icon name="calendar" item-left></ion-icon>
@@ -37,7 +42,7 @@
         <ion-icon name="navigate" item-left></ion-icon>
         {{ event.location }}
     </ion-item>
-    <ion-item *ngIf="event.passedTime != null && (this.setting.isSPO() || event.category != eventCategories.Class)">
+    <ion-item *ngIf="(event.passedTime != null || event.activityStartTime) && (this.setting.isSPO() || event.category != eventCategories.Class)">
         <h2>
             {{ 'dedicatedTime' | translate }} : {{ moment.utc(utils.getPassedTimeFromActivityStart(event) * 1000).format("H[h]mm") }}
         </h2>
@@ -47,9 +52,8 @@
     </ion-item>
     <ion-item *ngIf="this.setting.isSPO() || event.category != eventCategories.Class">
         <span class="{{ utils.getCategoryClass(event.category) }}">
-            <button full large ion-button (click)="navigateToEventStart()">{{ (event.passedTime == null ? 'startThisActivity' : 'resumeThisActivity') | translate }}</button>
-            <button full large ion-button (click)="datePicker.open()">{{ (event.passedTime == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
+            <button *ngIf="!utils.isEventConsideredDone(event)" full large ion-button (click)="navigateToEventStart()">{{ this.getStartActivityButton(event) | translate }}</button>
+            <button *ngIf="!event.activityStartTime" full large ion-button (click)="datePicker.open()">{{ (event.passedTime == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
         </span>
     </ion-item>
-  </ion-list>
 </ion-content>

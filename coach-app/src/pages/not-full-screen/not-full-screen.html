@@ -7,14 +7,12 @@
             </ion-card-header>
         </ion-card>
         <ion-card>
-            <ion-card-content>
-                {{ ('beforeInstalling' | translate) + (isIOS ? ' (Safari)' : ' (Chrome)') }}
-            </ion-card-content>
-        </ion-card>
-        <ion-card>
             <ion-card-header>
                 {{ 'installation' | translate }}
             </ion-card-header>
+            <ion-card-content>
+                <i> {{ ('beforeInstalling' | translate) + (isIOS ? ' (Safari)' : ' (Chrome)') }} </i>
+            </ion-card-content>
         </ion-card>
         <ion-card>
             <ion-card-header>
@@ -48,11 +46,6 @@
                 <i>{{ 'youWillHaveToLogin' | translate }}</i>
                 <img src="{{ 'assets/img/not-full-screen/4.png' }}" />
             </ion-card-content>
-        </ion-card>
-        <ion-card>
-            <ion-card-header>
-                {{ 'thatsIt' | translate }}
-            </ion-card-header>
         </ion-card>
     </ion-list>
 </ion-content>

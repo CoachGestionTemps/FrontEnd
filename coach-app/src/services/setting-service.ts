@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
+import {Http, RequestOptions, Headers, RequestOptionsArgs} from "@angular/http";
 import { Const } from '../services/const';
 import moment from 'moment';
 
@@ -15,7 +16,7 @@ export class SettingService {
     startOfDayKey: string;
     moment: any;
 
-    constructor(private translate: TranslateService, public cnst : Const) {
+    constructor(private translate: TranslateService, private http: Http, public cnst : Const) {
         this.langKey = 'lang';
         this.isSPOSupportKey = 'isSPOSupportKey';
         this.cipKey = 'cip';
@@ -88,8 +89,14 @@ export class SettingService {
         this.validateAndSave(this.isSPOKey, isSPO.toString(), null);
     }
 
-    logout() : void {
+    logout() : Promise<any> {
+        localStorage.removeItem(this.lastUpdateKey);
         localStorage.removeItem(this.cipKey);
+        return new Promise((resolve, reject) => {
+            this.http.get('https://cas.usherbrooke.ca/logout').toPromise().then(data => {
+                resolve();
+            });
+        });
     }
 
     setNotFirstUse() : void {
