@@ -11,6 +11,7 @@ export class Utils {
     categoryicons: string[];
     categoryNames: string[];
     categoryColors: string[];
+    errorTitle: string;
 
     constructor(private translate: TranslateService, private setting: SettingService, private cnst: Const) {
         this.moment = moment;
@@ -18,6 +19,7 @@ export class Utils {
         this.categoryColors = ['#3d4641', '#237B9F', '#FF928B', '#FAA200', '#AECAD6', '#9D8DF0', '#007c52'];
         this.categoryicons = ['list-box', 'school', 'book', 'basketball', 'game-controller-b', 'briefcase'];
         this.translate.use(this.setting.getLanguage());
+        this.errorTitle = this.translateWord('errorTitle');
         this.getCategoryNames();
     }
 
@@ -107,7 +109,7 @@ export class Utils {
 
     showError(alertCrtl, title, content): void {
         let alert = alertCrtl.create({
-            title: this.translateWord(title),
+            title: this.translateWord(title) ,
             subTitle: this.translateWord(content),
             buttons: ['OK']
         });

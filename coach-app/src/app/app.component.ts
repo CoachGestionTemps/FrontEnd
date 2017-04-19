@@ -40,18 +40,17 @@ export class MyApp {
       } else if (!setting.getCIP() || !setting.getEventToken()){
         this.eventService.syncCourses();
       }
+        platform.ready().then(() => {
+        if (setting.isFirstUse()){
+          this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
+        }
+
+        StatusBar.styleDefault();
+        Splashscreen.hide();
+
+        translate.setDefaultLang(setting.getLanguage());
+        translate.use(setting.getLanguage());
+      });
     }
-    
-    platform.ready().then(() => {
-      if (setting.isFirstUse()){
-        this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
-      }
-
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-
-      translate.setDefaultLang(setting.getLanguage());
-      translate.use(setting.getLanguage());
-    });
   }
 }

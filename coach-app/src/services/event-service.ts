@@ -37,13 +37,16 @@ export class EventService {
             return days.map(d => {
                 return {
                     day: d,
-                    events: (JSON.parse(localStorage.getItem(this.getDayKey(d))) || [])
-                            .sort((a, b) => { return this.utils.getDiff(a.startTime, b.startTime) < 0; })
+                    events: this.sortEvents(JSON.parse(localStorage.getItem(this.getDayKey(d))) || [])
                 }
             });
         };
 
         return this.getFromServerOrCache(getDays);
+    }
+
+    private sortEvents(events: any[]) : any[] {
+        return events.sort((b, a) => { return this.utils.getDiff(a.startTime, b.startTime); });
     }
 
     public getEventsForDateRange(minDate, maxDate): Promise<any[]> {

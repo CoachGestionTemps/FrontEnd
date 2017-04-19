@@ -30,33 +30,33 @@ export class SettingService {
 
     /* GETTERS */
 
-    getLanguage() : string{
+    getLanguage() : string {
         return localStorage.getItem(this.langKey) || ((navigator.language || navigator['userLanguage']).indexOf('fr') == -1 ? 'en' : 'fr');
     }
 
-    getMomentLanguage() : string{
+    getMomentLanguage() : string {
         return this.getLanguage() + '-ca';
     }
 
-    getCIP() : string{
+    getCIP() : string {
         return localStorage.getItem(this.cipKey);
     }
 
-    getEventToken() : string{
+    getEventToken() : string {
         return localStorage.getItem(this.eventTokenKey);
     }
 
-    getEndPointURL() : string{
+    getEndPointURL() : string {
         // TODO : Add production back end URL
         return this.isProd() ? "https://www.usherbrooke.ca/~desp2714/app-start" : "https://www.usherbrooke.ca/~desp2714/app-start";
     }
 
-    isSPO() : boolean{
+    isSPO() : boolean {
         return localStorage.getItem(this.isSPOKey) == 'true';
     }
 
-    isProd() : boolean{
-        return (window.location.href.indexOf("localhost") === -1);
+    isProd() : boolean {
+        return (window.location.href.indexOf("usherbrooke.ca") !== -1 && window.location.href.indexOf("desp2714") === -1);
     }
 
     isFirstUse() : boolean {
