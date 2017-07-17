@@ -47,8 +47,7 @@ export class SettingService {
     }
 
     getEndPointURL() : string {
-        // TODO : Add production back end URL
-        return this.isProd() ? "https://www.usherbrooke.ca/~desp2714/app-start" : "https://www.usherbrooke.ca/~desp2714/app-start";
+        return this.isProd() ? "https://www.usherbrooke.ca/orchestrateur-agenda" : "https://www.usherbrooke.ca/~desp2714/app-start";
     }
 
     isSPO() : boolean {
@@ -56,7 +55,7 @@ export class SettingService {
     }
 
     isProd() : boolean {
-        return (window.location.href.indexOf("usherbrooke.ca") !== -1 && window.location.href.indexOf("desp2714") === -1);
+        return window.location.href.indexOf("usherbrooke.ca") !== -1;
     }
 
     isFirstUse() : boolean {

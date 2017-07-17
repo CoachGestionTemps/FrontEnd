@@ -39,7 +39,7 @@ export class EventStartPage {
         this.pauser = new Subject();
         this.timer = Observable.timer(0, 1000);
         this.pausable = this.pauser.switchMap(paused => paused ? Observable.never() : this.timer);
-        this.pausable.subscribe(() => this.passedTime++);
+        this.pausable.subscribe(() => this.passedTime = this.utils.getPassedTimeFromActivityStart(this.event));
         this.play();
     }
 

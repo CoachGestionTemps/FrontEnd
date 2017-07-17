@@ -54,12 +54,13 @@ page-report {
 
                 span {
                     position: absolute;
-                    line-height: 2em;
-                    font-size: 2em;
-                    margin: 0 0.1em;
+                    line-height: 1.5em;
+                    font-size: 1.5em;
+                    padding-top: 0.25em;
+                    margin: 0 0.5em;
 
                     &.passed-time{
-                        right: 0.6em;
+                        right: 0.7em;
                     }
                 }
             }
