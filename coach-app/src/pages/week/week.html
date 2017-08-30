@@ -46,7 +46,7 @@
                     <ion-col (click)="navigateToEventCreation(date.day, hour)">
                         <div class="{{ utils.getCategoryClass(event.category) }}"
                             *ngFor="let event of getIndexedEvents(date, hour)"
-                            [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event)}"
+                            [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event), width: getEventWidth(event, date.events)}"
                             (click)="navigateToEvent(event, $event)"
                             [ngClass]="{ 'active' : !!event.activityStartTime }" >
                             <span>

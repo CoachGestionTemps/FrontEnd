@@ -30,7 +30,7 @@ export class ReportPage {
 
     constructor(public navCtrl: NavController, private eventService: EventService, private utils: Utils, private setting: SettingService) {
         this.moment = moment;
-        this.rangetype = "week";
+        this.rangetype = "day";
         this.actualDate = this.moment();
         this.chartData = [];
         this.chartLabels = [];
@@ -39,14 +39,14 @@ export class ReportPage {
     }
 
     refresh(refresher) {
-        if (this.rangetype === "week") {
+        if (this.rangetype === "day") {
+            this.minDate = this.moment(this.actualDate).startOf('day');
+            this.maxDate = this.moment(this.actualDate).endOf('day');
+            this.selectionTitle = this.maxDate.format("LL");
+        } else if (this.rangetype === "week") {
             this.minDate = this.moment(this.actualDate).startOf('week');
             this.maxDate = this.moment(this.actualDate).endOf('week');
             this.selectionTitle = this.minDate.format("D") + " - " + this.maxDate.format("D MMMM YYYY");
-        } else if (this.rangetype === "month") {
-            this.minDate = this.moment(this.actualDate).startOf('month');
-            this.maxDate = this.moment(this.actualDate).endOf('month');
-            this.selectionTitle = this.maxDate.format("MMMM YYYY");
         } else if (this.rangetype === "session") {
             var daterange = this.getSessionRanges();
             this.minDate = daterange[0];
@@ -158,10 +158,10 @@ export class ReportPage {
     }
 
     getNextSelection() {
-        if (this.rangetype === "week") {
+        if (this.rangetype === "day") {
+            this.actualDate.add(1, 'day');
+        } else if (this.rangetype === "week") {
             this.actualDate.add(7, 'day');
-        } else if (this.rangetype === "month") {
-            this.actualDate.add(1, 'month').startOf('month');
         } else if (this.rangetype === "session") {
             this.actualDate.add(4, 'month');
         }
@@ -170,10 +170,10 @@ export class ReportPage {
     }
 
     getPreviousSelection() {
-        if (this.rangetype === "week") {
+        if (this.rangetype === "day") {
+            this.actualDate.add(-1, 'day');
+        } else if (this.rangetype === "week") {
             this.actualDate.add(-7, 'day');
-        } else if (this.rangetype === "month") {
-            this.actualDate.add(-1, 'month');
         } else if (this.rangetype === "session") {
             this.actualDate.add(-4, 'month');
         }

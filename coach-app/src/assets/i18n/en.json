@@ -2,7 +2,6 @@
     "today": "Today",
     "yesterday": "Yesterday",
     "tomorrow": "Tomorrow",
-    "week": "Week",
     "reports": "Reports",
     "sundayLetter": "S",
     "mondayLetter": "M",
@@ -103,5 +102,8 @@
     "errorActivityInProgress" : "The activity is in progress and therefore cannot be edited while doing so",
     "connectedAs": "Connected as",
     "eventInProgress": "Event in progress",
-    "eventDone": "Event done"
+    "eventDone": "Event done",
+    "day": "Day",
+    "week": "Week",
+    "semester": "Semester"
 }

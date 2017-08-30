@@ -70,7 +70,7 @@ page-week {
                         height: 50px; // for iPhones, do not remove
 
                         div {
-                            width: calc(12.5% - 3px);
+                            
                             opacity: 0.9;
                             font-size: 0.5em;
                             padding: 0.2em;
@@ -78,7 +78,7 @@ page-week {
                             border: 1px solid rgba(0, 0, 0, 0.4);
                             overflow-y: hidden;
                             animation: none;
-                            position: absolute;
+                            position: flex;
 
                             span {
                                 font-size: 1.7em;

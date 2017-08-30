@@ -21,7 +21,8 @@ export class EventService {
       var lastUpdate = setting.getLastUpdate();
 
       // if we never updated or if it's been more than 15 minutes since the last update
-      this.loadFromServer = !lastUpdate || this.utils.getDiffFromNow(lastUpdate) > 900;
+      // if no events are present for today, we force load in case the initial load didn't work
+      this.loadFromServer = !lastUpdate || this.utils.getDiffFromNow(lastUpdate) > 900 || !this.getDayKeys().some(x => x === moment().format(this.cnst.dateKeyFormat));
   }
 
   public syncCourses() : void {

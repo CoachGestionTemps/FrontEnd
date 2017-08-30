@@ -2,7 +2,6 @@
     "today": "Aujourd'hui",
     "yesterday": "Hier",
     "tomorrow": "Demain",
-    "week": "Semaine",
     "reports": "Rapports",
     "sundayLetter": "D",
     "mondayLetter": "L",
@@ -11,8 +10,8 @@
     "thursdayLetter": "J",
     "fridayLetter": "V",
     "saturdayLetter": "S",
-    "startThisActivity": "Démarrer cette activité",
-    "resumeThisActivity": "Résumer cette activité",
+    "startThisActivity": "Démarrer l'activité",
+    "resumeThisActivity": "Poursuivre l'activité",
     "startTime": "Date de début",
     "endTime": "Date de fin",
     "createAnEvent": "Créer un évènement",
@@ -103,5 +102,8 @@
     "errorActivityInProgress" : "L'activité est en cours et ne peut donc pas être modifiée en même temps",
     "connectedAs": "Connecté en tant que",
     "eventInProgress": "Évènement en cours",
-    "eventDone": "Évènement complété"
+    "eventDone": "Évènement complété",
+    "day": "Jour",
+    "week": "Semaine",
+    "semester": "Session"
 }
