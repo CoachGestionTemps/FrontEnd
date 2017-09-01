@@ -11,7 +11,7 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content class="{{ utils.getCategoryClass(event. category) }}">
+<ion-content class="{{ utils.getCategoryClass(event.category) }}">
     <ion-item *ngIf="event.activityStartTime" class="in-progress">
         {{ 'eventInProgress' | translate }}
     </ion-item>
@@ -54,6 +54,7 @@
         <span class="{{ utils.getCategoryClass(event.category) }}">
             <button *ngIf="!utils.isEventConsideredDone(event)" full large ion-button (click)="navigateToEventStart()">{{ this.getStartActivityButton(event) | translate }}</button>
             <button *ngIf="!event.activityStartTime" full large ion-button (click)="datePicker.open()">{{ (event.passedTime == null ? 'enterTimePassed' : 'editTimePassed') | translate }}</button>
+            <button full large ion-button (click)="utils.isEventConsideredDone(event) ? resetActivityTime() : completeActivity()">{{ (utils.isEventConsideredDone(event) ? 'resetActivityTime' : 'completeActivity') | translate }}</button>
         </span>
     </ion-item>
 </ion-content>

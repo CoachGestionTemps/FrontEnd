@@ -73,6 +73,27 @@ export class EventPage {
     });
   }
 
+  completeActivity(){
+    var eventTime = moment.duration(moment(this.event.endTime).diff(moment(this.event.startTime)));
+    this.event.passedTime = eventTime.asSeconds();
+    this.event.activityStartTime = null;
+    this.eventService.edit(this.event).then(data => {
+      
+    }, data => {
+          this.utils.showError(this.alertCtrl, "errorTitle", data.error);
+    });
+  }
+
+  resetActivityTime(){
+    this.event.passedTime = 0;
+    this.event.activityStartTime = null;
+    this.eventService.edit(this.event).then(data => {
+
+    }, data => {
+          this.utils.showError(this.alertCtrl, "errorTitle", data.error);
+    });
+  }
+
   ionViewWillEnter(){
     this.tabBarElement.style.display = 'none';
   }

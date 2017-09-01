@@ -105,5 +105,7 @@
     "eventDone": "Évènement complété",
     "day": "Jour",
     "week": "Semaine",
-    "semester": "Session"
+    "semester": "Session",
+    "completeActivity": "Compléter l'activité",
+    "resetActivityTime": "Réinitialiser le temps de l'activité"
 }

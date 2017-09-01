@@ -105,5 +105,7 @@
     "eventDone": "Event done",
     "day": "Day",
     "week": "Week",
-    "semester": "Semester"
+    "semester": "Semester",
+    "completeActivity": "Complete activity",
+    "resetActivityTime": "Reset activity time"
 }
