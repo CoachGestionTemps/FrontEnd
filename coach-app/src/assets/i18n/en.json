@@ -44,8 +44,10 @@
     "editTimePassed": "Edit the elapsed time",
     "save": "Save",
     "delete": "Delete",
+    "deleteAllRepeatedEvents": "Delete all repeated events",
     "errorTitle": "Error",
     "sureToDelete": "Are you sure you want to delete this event?",
+    "sureToDeleteMulti": "Are you sure you want to delete this event? As it is part of a repeated set of event, you can also delete all its matching events.",
     "cancel": "cancel",
     "from": "From",
     "to": "To",
@@ -107,5 +109,13 @@
     "week": "Week",
     "semester": "Semester",
     "completeActivity": "Complete activity",
-    "resetActivityTime": "Reset activity time"
+    "resetActivityTime": "Reset activity time",
+    "time": "time",
+    "times": "times",
+    "repetitions": "Repeat this event",
+    "never": "Never",
+    "saving": "Saving",
+    "multiSaveMessage": "Do you want to apply your changes to all the repeated events or only this one? Applying the changes to this event only will unlink it from its other matching events.",
+    "editAllButton": "Edit All Events",
+    "editOneButton": "Edit This Event Only"
 }

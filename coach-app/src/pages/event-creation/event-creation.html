@@ -45,6 +45,15 @@
       <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="endTime"></ion-datetime>
     </ion-item>
 
-  <button ion-button class="save-button" (click)="saveEvent()">{{ 'save' | translate }}</button>
+    <ion-item *ngIf="!event">
+      <ion-label>{{ 'repetition' | translate }}</ion-label>
+      <ion-select interface="popover" [(ngModel)]="repetition">
+        <ion-option *ngFor="let repetition of repetitionValues" value="{{repetition.value}}">
+          {{repetition.value === 0 ? "" : repetition.value + " " }} {{ repetition.label | translate }}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+  <button ion-button class="save-button" (click)="saveAllEventsOrThisOnly()">{{ 'save' | translate }}</button>
   </ion-list>
 </ion-content>

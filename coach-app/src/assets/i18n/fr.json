@@ -44,8 +44,10 @@
     "editTimePassed": "Modifier le temps écoulé",
     "save": "Sauvegarder",
     "delete": "Supprimer",
+    "deleteAllRepeatedEvents": "Supprimer tous les évènements répétés",
     "errorTitle": "Erreur",
-    "sureToDelete": "Êtes-vous sur de vouloir supprimer cet événement?",
+    "sureToDelete": "Êtes-vous certain de vouloir supprimer cet événement ?",
+    "sureToDeleteMulti": "Êtes-vous certain de vouloir supprimer cet événement ? Comme il fait partie d'une série d'évènements répétés, vous pouvez aussi supprimer l'ensemble des évènements dont il fait partie.",
     "cancel": "Annuler",
     "from": "De",
     "to": "À",
@@ -107,5 +109,13 @@
     "week": "Semaine",
     "semester": "Session",
     "completeActivity": "Compléter l'activité",
-    "resetActivityTime": "Réinitialiser le temps de l'activité"
+    "resetActivityTime": "Réinitialiser le temps",
+    "time": "fois",
+    "times": "fois",
+    "repetition": "Répéter cet évènement",
+    "never": "Jamais",
+    "saving": "Sauvegarde",
+    "multiSaveMessage": "Voulez-vous appliquer ces changements à tous les évènements répétés ou seulement à celui-ci ? Appliquer ces changements seulement à cet évènement le séparera des autres auquel il était lié.",
+    "editAllButton": "Modifier tous les évènements",
+    "editOneButton": "Modifier seulement cet évènement"
 }

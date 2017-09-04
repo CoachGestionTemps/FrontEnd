@@ -88,10 +88,11 @@ export class EventService {
       }
     }
 
-    public add(event) : Promise<any> {
+    public add(event, repetition = 0) : Promise<any> {
         event.id = this.guid();
-        event.parentId = event.id;
         event.userId = this.setting.getCIP();
+
+        // TODO : Handle repetition either server side or here
 
         return new Promise(
             (resolve, reject) => {
@@ -118,6 +119,8 @@ export class EventService {
         var originalStartTime = event.originalStartTime;
         delete event.originalStartTime;
 
+        // TODO : if event.parentId is not null, you must edit all the repeated events
+
         return new Promise(
             (resolve, reject) => {
                 this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
@@ -139,7 +142,10 @@ export class EventService {
         );
     }
 
-    public delete(event) : Promise<any> {
+    public delete(event, deleteAllRepeatedEvents = false) : Promise<any> {
+
+        // TODO : handle deleteAllRepeatedEvents when event.parentId is not null.
+
         return new Promise(
             (resolve, reject) => {
                 this.http.delete(this.setting.getEndPointURL() + '/events/' + event.id, this.getOptions()).map((response) => {

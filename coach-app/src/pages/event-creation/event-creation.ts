@@ -14,6 +14,8 @@ export class EventCreationPage {
     date: any;
     hour: any;
     moment: any;
+    repetition: string;
+    repetitionValues: any;
     tabBarElement: any;
     startTime: any;
     endTime: any;
@@ -48,9 +50,46 @@ export class EventCreationPage {
             dateEndTime.add(1, 'hour');
             this.endTime = dateEndTime.format(cnst.utcDateFormat);
             this.activityType = 0;
+            this.repetition = "0";
+            this.repetitionValues = Array(16).fill(0).map((_, idx) => {
+                return {
+                    value: idx,
+                    label: idx === 0 ? "never" : (idx > 1 ? "times" : "time")
+                }
+            });
         }
         this.date = navParams.get("date");
         this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    }
+
+    saveAllEventsOrThisOnly() {
+        if (this.event && this.event.parentId) {
+            this.alertCtrl.create({
+                title: this.utils.translateWord('saving'),
+                message: this.utils.translateWord('multiSaveMessage'),
+                buttons: [
+                  {
+                    text: this.utils.translateWord('editAllButton'),
+                    handler: data => {
+                      this.saveEvent();
+                    }
+                  },
+                  {
+                    text: this.utils.translateWord('editOneButton'),
+                    handler: data => {
+                      this.event.parentId = null;
+                      this.saveEvent();
+                    }
+                  },
+                  {
+                    text: this.utils.translateWord('cancel'),
+                    role: 'cancel'
+                  },
+                ]
+              }).present();
+        } else {
+            this.saveEvent();
+        }
     }
 
     saveEvent() {
@@ -82,10 +121,13 @@ export class EventCreationPage {
             location: this.location
         };
 
+        const repetition = parseInt(this.repetition);
+
         if (this.event) {
             eventToSave['id'] = this.event.id;
             eventToSave['userId'] = this.event.userId;
             eventToSave['originalStartTime'] = this.originalStartTime;
+            eventToSave['parentId'] = this.event.parentId;
             eventToSave.passedTime = this.event.passedTime;
             this.eventService.edit(eventToSave).then(data => {
                 this.navCtrl.pop();
@@ -94,7 +136,7 @@ export class EventCreationPage {
                 this.navCtrl.pop();
             });
         } else {
-            this.eventService.add(eventToSave).then(data => {
+            this.eventService.add(eventToSave, repetition).then(data => {
                 this.navCtrl.pop();
             }, data => {
                 this.utils.showError(this.alertCtrl, "errorTitle", data.error);

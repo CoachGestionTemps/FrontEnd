@@ -50,8 +50,8 @@ export class EventPage {
       this.navCtrl.push(EventCreationPage, { event: event });
   }
 
-  promptDeleteEvent(event) {
-      this.eventService.delete(event).then(data => {
+  promptDeleteEvent(event, deleteAllRepeatedEvents) {
+      this.eventService.delete(event, deleteAllRepeatedEvents).then(data => {
           this.navCtrl.pop();
       }, data => {
           this.utils.showError(this.alertCtrl, "errorTitle", data.error);
@@ -64,13 +64,16 @@ export class EventPage {
   }
 
   passedTimeUpdated(){
-    this.event.passedTime = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
-    this.event.activityStartTime = null;
-    this.eventService.edit(this.event).then(data => {
-
-    }, data => {
-          this.utils.showError(this.alertCtrl, "errorTitle", data.error);
-    });
+    const newPassedTime = this.moment.utc(this.passedTime).diff(this.moment.utc(0)) / 1000;
+    if (parseInt(this.event.passedTime) !== newPassedTime) {
+      this.event.passedTime = newPassedTime;
+      this.event.activityStartTime = null;
+      this.eventService.edit(this.event).then(data => {
+  
+      }, data => {
+            this.utils.showError(this.alertCtrl, "errorTitle", data.error);
+      });
+    }
   }
 
   completeActivity(){
@@ -107,24 +110,31 @@ export class EventPage {
   }
 
   showDeletePrompt(event) {
+    let buttons = [
+      {
+        text: String(this.utils.translateWord('cancel'))
+      },
+      {
+        text: String(this.utils.translateWord('delete')),
+        handler: data => {
+          this.promptDeleteEvent(event, false);
+        }
+      }
+    ];
+
+    if (event.parentId) {
+      buttons.push({
+          text: this.utils.translateWord('deleteAllRepeatedEvents'),
+          handler: data => {
+            this.promptDeleteEvent(event, true);
+          }
+      });
+    }
+
     let prompt = this.alertCtrl.create({
       title: String(this.utils.translateWord('delete')),
-      message: String(this.utils.translateWord('sureToDelete')),
-      buttons: [
-        {
-          text: String(this.utils.translateWord('cancel')),
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: String(this.utils.translateWord('delete')),
-          handler: data => {
-            console.log('Saved clicked');
-            this.promptDeleteEvent(event);
-          }
-        }
-      ]
+      message: String(this.utils.translateWord(event.parentId ? 'sureToDeleteMulti' : 'sureToDelete')),
+      buttons
     });
     prompt.present();
   }
