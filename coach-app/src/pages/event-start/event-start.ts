@@ -51,7 +51,7 @@ export class EventStartPage {
             } else {
                 this.canPressButton = false;
                 this.event.activityStartTime = this.moment().format(this.cnst.dateFormat);
-                this.eventService.edit(this.event).then(data => {
+                this.eventService.editTime(this.event).then(data => {
                     this.pauser.next(false);
                     this.playing = true;
                     var self = this;
@@ -69,7 +69,7 @@ export class EventStartPage {
         if (this.canPressButton){
             this.canPressButton = false;
             this.utils.adjustEventPassedTimeOnPause(this.event)
-            this.eventService.edit(this.event).then(data => {
+            this.eventService.editTime(this.event).then(data => {
                 this.pauser.next(true);
                 this.playing = false;
                 var self = this;

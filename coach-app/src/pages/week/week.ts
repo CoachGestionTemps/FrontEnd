@@ -111,8 +111,8 @@ export class WeekPage {
 
   getEventWidth(event, events){
     const sameTimeEvents = events.filter(x => x.id !== event.id 
-                                          && x.endTime >= event.startTime 
-                                          && x.startTime <= event.endTime);
+                                          && x.endTime > event.startTime 
+                                          && x.startTime < event.endTime);
 
     return (100 / (sameTimeEvents.length + 1)) + '%';
   }

@@ -68,7 +68,7 @@ export class EventPage {
     if (parseInt(this.event.passedTime) !== newPassedTime) {
       this.event.passedTime = newPassedTime;
       this.event.activityStartTime = null;
-      this.eventService.edit(this.event).then(data => {
+      this.eventService.editTime(this.event).then(data => {
   
       }, data => {
             this.utils.showError(this.alertCtrl, "errorTitle", data.error);
@@ -80,7 +80,7 @@ export class EventPage {
     var eventTime = moment.duration(moment(this.event.endTime).diff(moment(this.event.startTime)));
     this.event.passedTime = eventTime.asSeconds();
     this.event.activityStartTime = null;
-    this.eventService.edit(this.event).then(data => {
+    this.eventService.editTime(this.event).then(data => {
       
     }, data => {
           this.utils.showError(this.alertCtrl, "errorTitle", data.error);
@@ -90,7 +90,7 @@ export class EventPage {
   resetActivityTime(){
     this.event.passedTime = 0;
     this.event.activityStartTime = null;
-    this.eventService.edit(this.event).then(data => {
+    this.eventService.editTime(this.event).then(data => {
 
     }, data => {
           this.utils.showError(this.alertCtrl, "errorTitle", data.error);

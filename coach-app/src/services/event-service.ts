@@ -92,16 +92,37 @@ export class EventService {
         event.id = this.guid();
         event.userId = this.setting.getCIP();
 
-        // TODO : Handle repetition either server side or here
+        var events = [];
+
+        if (repetition > 0) {
+            event.parentId = event.id;
+
+            var startTime = this.moment(event.startTime, this.cnst.dateFormat);
+            var endTime = this.moment(event.endTime, this.cnst.dateFormat);
+
+            for (var i = 1; i <= repetition; i++) {
+                startTime = startTime.add(7, "days");
+                endTime = endTime.add(7, "days");
+
+                var nextEvent = JSON.parse(JSON.stringify(event));
+                nextEvent.id = this.guid();
+                nextEvent.startTime = startTime.format(this.cnst.dateFormat);
+                nextEvent.endTime = endTime.format(this.cnst.dateFormat);
+
+                events.push(nextEvent);
+            }
+        }
+        
+        events.unshift(event);
 
         return new Promise(
             (resolve, reject) => {
-                this.http.put(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
+                this.http.put(this.setting.getEndPointURL() + '/events', events, this.getOptions()).map((response) => {
                     return response.json();
                 }).toPromise().then(data => {
                     if (data.statut == "succes"){
-                        if (data.donnees && data.donnees.updatedRows > 0){
-                            this.addInCache(event);
+                        if (data.donnees && data.donnees.insertedEvents > 0){
+                            events.forEach(e => this.addInCache(e));
                             this.events.publish(this.cnst.eventUpdate);
                         } else {
                             reject({ error: "errorWhileSaving"});
@@ -119,16 +140,46 @@ export class EventService {
         var originalStartTime = event.originalStartTime;
         delete event.originalStartTime;
 
-        // TODO : if event.parentId is not null, you must edit all the repeated events
-
         return new Promise(
             (resolve, reject) => {
                 this.http.post(this.setting.getEndPointURL() + '/events', event, this.getOptions()).map((response) => {
                     return response.json();
                 }).toPromise().then(data => {
                     if (data.statut == this.cnst.successStatus){
-                        if (data.donnees && data.donnees.updatedRows > 0){
-                            this.updateInCache(event, originalStartTime);
+                        if (data.donnees && data.donnees.updatedEvents > 0){
+                            if (data.donnees.updatedEvents > 1) {
+                                this.refreshEvents().then(d => this.events.publish(this.cnst.eventUpdate));
+                            } else {
+                                this.updateInCache(event, originalStartTime);
+                                this.events.publish(this.cnst.eventUpdate);
+                            }
+                        } else {
+                            reject({ error: "errorEventDoesntExistOrNoFieldsChanged"});
+                        }
+                        resolve(data);
+                    } else {
+                        reject({ statut: data.statut })
+                    }
+                });
+            }
+        );
+    }
+
+    public editTime(event) : Promise<any> {
+        var data = {
+            id: event.id,
+            passedTime: event.passedTime,
+            activityStartTime: event.activityStartTime
+        };
+
+        return new Promise(
+            (resolve, reject) => {
+                this.http.post(this.setting.getEndPointURL() + '/events', data, this.getOptions()).map((response) => {
+                    return response.json();
+                }).toPromise().then(data => {
+                    if (data.statut == this.cnst.successStatus){
+                        if (data.donnees && data.donnees.updatedEvents > 0){
+                            this.updateInCache(event, null);
                             this.events.publish(this.cnst.eventUpdate);
                         } else {
                             reject({ error: "errorEventDoesntExistOrNoFieldsChanged"});
@@ -142,19 +193,23 @@ export class EventService {
         );
     }
 
-    public delete(event, deleteAllRepeatedEvents = false) : Promise<any> {
 
-        // TODO : handle deleteAllRepeatedEvents when event.parentId is not null.
+    public delete(event, deleteAllRepeatedEvents = false) : Promise<any> {
+        const parameter = deleteAllRepeatedEvents ? event.parentId + '?isDelAll=true' : event.id;
 
         return new Promise(
             (resolve, reject) => {
-                this.http.delete(this.setting.getEndPointURL() + '/events/' + event.id, this.getOptions()).map((response) => {
+                this.http.delete(this.setting.getEndPointURL() + '/events/' + parameter, this.getOptions()).map((response) => {
                     return response.json()
                 }).toPromise().then(data => {
                     if (data.statut == this.cnst.successStatus){
-                        if (data.donnees && data.donnees.updatedRows > 0){
-                            this.removeFromCache(event);
-                            this.events.publish(this.cnst.eventUpdate);
+                        if (data.donnees && data.donnees.deletedEvents > 0){
+                            if (data.donnees.deletedEvents > 1) {
+                                this.refreshEvents().then(d => this.events.publish(this.cnst.eventUpdate));
+                            } else {
+                                this.removeFromCache(event);
+                                this.events.publish(this.cnst.eventUpdate);
+                            }
                         } else {
                             reject({ error: "errorEventAlreadyDeleted"});
                         }
