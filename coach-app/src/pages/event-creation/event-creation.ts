@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, NavController, AlertController, Events } from 'ionic-angular';
+import { NavParams, NavController, AlertController, LoadingController, Events } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { Utils } from '../../services/utils';
 import { Const } from '../../services/const';
@@ -26,9 +26,10 @@ export class EventCreationPage {
     event: any;
     eventDate: any;
     originalStartTime: string;
+    isLoading: boolean;
 
     constructor(public navCtrl: NavController, navParams: NavParams, private events: Events, private utils: Utils,
-        private eventService: EventService, private alertCtrl: AlertController, private cnst: Const) {
+        private eventService: EventService, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private cnst: Const) {
         this.moment = moment;
         // TODO : Cleanup this logic
         // if edit an event
@@ -123,6 +124,12 @@ export class EventCreationPage {
 
         const repetition = parseInt(this.repetition);
 
+        let loading = this.loadingCtrl.create({
+            content: this.utils.translateWord("loading")
+        });
+
+        loading.present();
+        
         if (this.event) {
             eventToSave['id'] = this.event.id;
             eventToSave['userId'] = this.event.userId;
@@ -130,15 +137,19 @@ export class EventCreationPage {
             eventToSave['parentId'] = this.event.parentId;
             eventToSave.passedTime = this.event.passedTime;
             this.eventService.edit(eventToSave).then(data => {
+                loading.dismiss();
                 this.navCtrl.pop();
             }, data => {
+                loading.dismiss();
                 this.utils.showError(this.alertCtrl, "errorTitle", data.error);
                 this.navCtrl.pop();
             });
         } else {
             this.eventService.add(eventToSave, repetition).then(data => {
+                loading.dismiss();
                 this.navCtrl.pop();
             }, data => {
+                loading.dismiss();
                 this.utils.showError(this.alertCtrl, "errorTitle", data.error);
                 this.navCtrl.pop();
             });

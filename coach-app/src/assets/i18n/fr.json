@@ -114,6 +114,7 @@
     "times": "fois",
     "repetition": "Répéter cet évènement",
     "never": "Jamais",
+    "loading": "Opération en cours...",
     "saving": "Sauvegarde",
     "multiSaveMessage": "Voulez-vous appliquer ces changements à tous les évènements répétés ou seulement à celui-ci ? Appliquer ces changements seulement à cet évènement le séparera des autres auquel il était lié.",
     "editAllButton": "Modifier tous les évènements",

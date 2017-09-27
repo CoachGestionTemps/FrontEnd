@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { NavParams, NavController, Events, AlertController } from 'ionic-angular';
+import { NavParams, NavController, Events, AlertController, LoadingController } from 'ionic-angular';
 import { EventService } from '../../services/event-service';
 import { SettingService } from '../../services/setting-service';
 import { Utils } from '../../services/utils';
@@ -27,7 +27,7 @@ export class EventPage {
 
   constructor(public navCtrl: NavController, navParams: NavParams, public alertCtrl: AlertController,
               private eventService : EventService, private events: Events, private utils : Utils,
-              private translate: TranslateService, private setting : SettingService) {
+              private translate: TranslateService, private loadingCtrl: LoadingController, private setting : SettingService) {
     this.moment = moment;
     this.event = navParams.get("event");
     this.summary = this.event.summary ? this.event.summary.replace("%skip%", "\n") : null;
@@ -51,9 +51,17 @@ export class EventPage {
   }
 
   promptDeleteEvent(event, deleteAllRepeatedEvents) {
+      let loading = this.loadingCtrl.create({
+          content: this.utils.translateWord("loading")
+      });
+
+      loading.present();
+    
       this.eventService.delete(event, deleteAllRepeatedEvents).then(data => {
+          loading.dismiss();
           this.navCtrl.pop();
       }, data => {
+          loading.dismiss();
           this.utils.showError(this.alertCtrl, "errorTitle", data.error);
       });
   }
