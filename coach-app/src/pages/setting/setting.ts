@@ -43,7 +43,7 @@ export class SettingPage {
 
     disconnect() : void {
         this.settingService.logout().then(data => {
-            this.eventService.syncCourses();
+            location.reload();
         });
     }
 

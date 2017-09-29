@@ -89,10 +89,10 @@ export class SettingService {
     }
 
     logout() : Promise<any> {
-        localStorage.removeItem(this.lastUpdateKey);
-        localStorage.removeItem(this.cipKey);
         return new Promise((resolve, reject) => {
             this.http.get('https://cas.usherbrooke.ca/logout').toPromise().then(data => {
+                localStorage.removeItem(this.lastUpdateKey);
+                localStorage.removeItem(this.cipKey);
                 resolve();
             });
         });

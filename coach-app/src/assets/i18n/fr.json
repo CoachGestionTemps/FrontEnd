@@ -44,7 +44,7 @@
     "editTimePassed": "Modifier le temps écoulé",
     "save": "Sauvegarder",
     "delete": "Supprimer",
-    "deleteAllRepeatedEvents": "Supprimer tous les évènements répétés",
+    "deleteAllRepeatedEvents": "Supprimer tous",
     "errorTitle": "Erreur",
     "sureToDelete": "Êtes-vous certain de vouloir supprimer cet événement ?",
     "sureToDeleteMulti": "Êtes-vous certain de vouloir supprimer cet événement ? Comme il fait partie d'une série d'évènements répétés, vous pouvez aussi supprimer l'ensemble des évènements dont il fait partie.",
