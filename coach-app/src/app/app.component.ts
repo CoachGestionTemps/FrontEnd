@@ -22,6 +22,11 @@ export class MyApp {
     var loadApp = (!platform.is('ios') && !platform.is('android') && !platform.is('ipad')) || window.matchMedia('(display-mode: standalone)').matches || window.navigator['standalone'];
     this.rootPage = loadApp ? TabsPage : NotFullScreen;
 
+    if (localStorage.getItem('firstLoad') !== "true") {
+        localStorage.setItem('firstLoad', "true")
+        window.location.reload();
+    }
+
     if (loadApp){
       if (window.location.search){
           window.location.search.replace('?', '').split('&').forEach(param => {

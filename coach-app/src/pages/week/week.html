@@ -48,7 +48,7 @@
                             *ngFor="let event of getIndexedEvents(date, hour)"
                             [ngStyle]="{'margin-top': getEventMargin(event), height: getEventHeight(event), width: getEventWidth(event, date.events)}"
                             (click)="navigateToEvent(event, $event)"
-                            [ngClass]="{ 'active' : !!event.activityStartTime }" >
+                            [ngClass]="{ 'active' : !!event.activityStartTime && !utils.isEventConsideredDone(event) }" >
                             <span>
                                 {{ event.title }}
                             </span>

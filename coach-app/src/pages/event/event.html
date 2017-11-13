@@ -12,7 +12,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="{{ utils.getCategoryClass(event.category) }}">
-    <ion-item *ngIf="event.activityStartTime" class="in-progress">
+    <ion-item *ngIf="event.activityStartTime && !utils.isEventConsideredDone(event)" class="in-progress">
         {{ 'eventInProgress' | translate }}
     </ion-item>
     <ion-item *ngIf="utils.isEventConsideredDone(event)" class="done">
