@@ -22,11 +22,6 @@ export class MyApp {
     var loadApp = (!platform.is('ios') && !platform.is('android') && !platform.is('ipad')) || window.matchMedia('(display-mode: standalone)').matches || window.navigator['standalone'];
     this.rootPage = loadApp ? TabsPage : NotFullScreen;
 
-    if (localStorage.getItem('firstLoad') !== "true") {
-        localStorage.setItem('firstLoad', "true")
-        window.location.reload();
-    }
-
     if (loadApp){
       if (window.location.search){
           window.location.search.replace('?', '').split('&').forEach(param => {
@@ -39,12 +34,19 @@ export class MyApp {
                   }
               }
           });
+          
+          if (localStorage.getItem('firstLoad') !== "true") {
+            localStorage.setItem('firstLoad', "true")
+            window.location.reload();
+          }
+
           if(window.history != undefined && window.history.pushState != undefined) {
               window.history.pushState({}, document.title, window.location.pathname);
           }
       } else if (!setting.getCIP() || !setting.getEventToken()){
         this.eventService.syncCourses();
       }
+      
         platform.ready().then(() => {
         if (setting.isFirstUse()){
           this.modalCtrl.create(WalkthroughPage, {}, { enableBackdropDismiss: false }).present();
